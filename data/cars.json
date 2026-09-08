@@ -1,0 +1,37 @@
+[
+  {
+    "id": "civic-fe",
+    "brand": "Honda",
+    "model": "Civic FE (1.5 Turbo)",
+    "tankCapacity": 47,
+    "kmPerLiter": 15
+  },
+  {
+    "id": "city-turbo",
+    "brand": "Honda",
+    "model": "City 1.0 Turbo",
+    "tankCapacity": 40,
+    "kmPerLiter": 16
+  },
+  {
+    "id": "yaris-ativ",
+    "brand": "Toyota",
+    "model": "Yaris Ativ (1.2)",
+    "tankCapacity": 40,
+    "kmPerLiter": 18
+  },
+  {
+    "id": "cross-hybrid",
+    "brand": "Toyota",
+    "model": "Corolla Cross Hybrid",
+    "tankCapacity": 36,
+    "kmPerLiter": 20
+  },
+  {
+    "id": "dmax-19",
+    "brand": "Isuzu",
+    "model": "D-Max 1.9 Ddi",
+    "tankCapacity": 76,
+    "kmPerLiter": 14
+  }
+]

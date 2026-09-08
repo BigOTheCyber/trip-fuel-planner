@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Fuel Planner WebApp</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body class="bg-slate-900 min-h-screen flex justify-center items-start sm:py-6 font-sans antialiased selection:bg-blue-500 selection:text-white">
+
+  <!-- Mobile Frame Container -->
+  <div class="w-full max-w-md bg-slate-50 min-h-screen sm:min-h-[844px] sm:rounded-[40px] shadow-2xl flex flex-col justify-between overflow-hidden relative border-4 border-slate-800">
+    
+    <!-- Top App Bar -->
+    <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white px-5 pt-8 pb-6 rounded-b-[28px] shadow-lg">
+      <div class="flex justify-between items-center mb-2">
+        <span class="text-xs bg-blue-500/30 border border-blue-300/30 px-3 py-1 rounded-full text-blue-100 font-medium">Chiang Rai ➔ Bangkok</span>
+        <i class="fa-solid fa-gas-pump text-xl text-blue-300"></i>
+      </div>
+      <h1 class="text-xl font-extrabold tracking-tight">Trip Fuel Planner</h1>
+      <p class="text-xs text-blue-200 mt-1">ระบบคำนวณจุดแวะเติมน้ำมันฉลาดพร้อม Safety Buffer</p>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 p-5 space-y-5 overflow-y-auto">
+      
+      <!-- Car Selection Card -->
+      <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
+        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+          <i class="fa-solid fa-car-side text-blue-600"></i> เลือกรถยนต์ที่ใช้งาน
+        </label>
+        <select id="carSelect" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+        </select>
+      </div>
+
+      <!-- Current Location Marker Card -->
+      <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-2">
+        <div class="flex justify-between items-center">
+          <label class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+            <i class="fa-solid fa-location-dot text-red-500"></i> พิกัดปัจจุบัน (กม.)
+          </label>
+          <span class="text-xs text-slate-400">นับจากเชียงราย</span>
+        </div>
+        <div class="relative">
+          <input type="number" id="currentKm" value="0" min="0" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-base font-bold rounded-xl p-3 pl-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <span class="absolute right-4 top-3.5 text-xs font-bold text-slate-400">KM</span>
+        </div>
+      </div>
+
+      <!-- Fuel Level Selector (5-Level Gauge) -->
+      <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
+        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+          <i class="fa-solid fa-gauge-high text-amber-500"></i> ระดับน้ำมันคงเหลือ
+        </label>
+        <div class="grid grid-cols-5 gap-1.5" id="fuelGauge">
+          <button type="button" onclick="setFuel(1)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition">
+            <span class="text-sm">1/5</span>
+            <span class="text-[9px] font-normal text-red-500">ก้นถัง</span>
+          </button>
+          <button type="button" onclick="setFuel(2)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition">
+            <span class="text-sm">2/5</span>
+            <span class="text-[9px] font-normal text-amber-500">เตือน</span>
+          </button>
+          <button type="button" onclick="setFuel(3)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl bg-blue-600 text-white font-bold shadow-md transition">
+            <span class="text-sm">3/5</span>
+            <span class="text-[9px] font-normal opacity-80">ครึ่งถัง</span>
+          </button>
+          <button type="button" onclick="setFuel(4)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition">
+            <span class="text-sm">4/5</span>
+            <span class="text-[9px] font-normal text-slate-400">เกือบเต็ม</span>
+          </button>
+          <button type="button" onclick="setFuel(5)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition">
+            <span class="text-sm">5/5</span>
+            <span class="text-[9px] font-normal text-emerald-500">เต็มถัง</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Result Card Area -->
+      <div id="result" class="space-y-3"></div>
+
+    </main>
+
+    <!-- Bottom Action Bar -->
+    <div class="p-4 bg-white border-t border-slate-100 sm:rounded-b-[36px]">
+      <button onclick="calculateTrip()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 active:scale-[0.98] text-white font-bold py-3.5 rounded-2xl shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 text-base transition">
+        <i class="fa-solid fa-route"></i> คำนวณจุดแวะเติมน้ำมัน
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    let selectedFuel = 3;
+
+    async function loadCars() {
+      const res = await fetch('/api/cars');
+      const json = await res.json();
+      const select = document.getElementById('carSelect');
+      select.innerHTML = json.data.map(c => 
+        `<option value="${c.id}">${c.brand} ${c.model} (${c.tankCapacity}L)</option>`
+      ).join('');
+    }
+
+    function setFuel(level) {
+      selectedFuel = level;
+      const btns = document.querySelectorAll('.fuel-btn');
+      btns.forEach((btn, idx) => {
+        if (idx + 1 === level) {
+          btn.className = "fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl bg-blue-600 text-white font-bold shadow-md transition";
+        } else {
+          btn.className = "fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold hover:bg-slate-50 transition";
+        }
+      });
+    }
+
+    async function calculateTrip() {
+      const carId = document.getElementById('carSelect').value;
+      const currentKm = parseFloat(document.getElementById('currentKm').value) || 0;
+
+      const res = await fetch('/api/plan-trip', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ carId, fuelLevel: selectedFuel, selectedBrands: [], currentKm })
+      });
+
+      const data = await res.json();
+      const resultDiv = document.getElementById('result');
+
+      if (!data.recommendedStation) {
+        resultDiv.innerHTML = `
+          <div class="bg-red-50 border border-red-200 text-red-600 p-4 rounded-2xl text-xs font-bold flex items-center gap-3">
+            <i class="fa-solid fa-triangle-exclamation text-lg"></i>
+            <span>ไม่พบปั๊มในระยะปลอดภัย! แวะปั๊มข้างทางด่วนที่สุด</span>
+          </div>`;
+        return;
+      }
+
+      const rec = data.recommendedStation;
+      resultDiv.innerHTML = `
+        <div class="bg-emerald-500 text-white p-4 rounded-2xl shadow-lg space-y-2 relative overflow-hidden">
+          <div class="flex justify-between items-start">
+            <span class="bg-emerald-700/60 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">ปั๊มแนะนำหลัก</span>
+            <span class="text-xs opacity-90 font-mono">กม. ${rec.kmMarker}</span>
+          </div>
+          <div>
+            <h3 class="text-lg font-extrabold leading-tight">${rec.name}</h3>
+            <p class="text-xs text-emerald-100 mt-0.5">แบรนด์: ${rec.brand}</p>
+          </div>
+          <div class="pt-2 border-t border-emerald-400/40 flex justify-between items-center">
+            <div>
+              <span class="text-[10px] text-emerald-100 block">ระยะทางที่ต้องวิ่งอีก</span>
+              <span class="text-xl font-black">${rec.distanceFromUser} <span class="text-xs font-normal">กม.</span></span>
+            </div>
+            <a href="${rec.googleMapUrl}" target="_blank" class="bg-white text-emerald-700 hover:bg-emerald-50 font-bold px-3.5 py-2 rounded-xl text-xs shadow-sm flex items-center gap-1.5 transition">
+              <i class="fa-solid fa-location-arrow"></i> นำทาง
+            </a>
+          </div>
+        </div>
+      `;
+    }
+
+    loadCars();
+  </script>
+</body>
+</html>
