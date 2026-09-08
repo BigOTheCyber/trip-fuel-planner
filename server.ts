@@ -2,27 +2,39 @@ import { Elysia } from 'elysia';
 
 const PORT = Number(process.env.PORT) || 3000;
 
-// ฟังก์ชันอ่านไฟล์ CSV และแปลงเป็นข้อมูลปั๊ม
+// ฟังก์ชันอ่านไฟล์ CSV และคำนวณหลักกิโลเมตรสะสม
 async function getStationsFromCSV() {
   try {
     const fileText = await Bun.file('data/stations.csv').text();
-    const lines = fileText.trim().split('\n');
+    const lines = fileText.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
     if (lines.length <= 1) return [];
 
     const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
 
+    let accumulatedKm = 0;
+
     return lines.slice(1).map(line => {
       const values = line.split(',').map(v => v.trim().replace(/^"|"$/g, ''));
-      const station: any = {};
+      const row: any = {};
       headers.forEach((header, index) => {
-        station[header] = values[index];
+        row[header] = values[index];
       });
 
-      // ดึงหลักกิโลเมตร (kmMarker / km / km_marker)
-      const km = station.kmMarker || station.km_marker || station.km || 0;
-      station.kmMarker = Number(km);
+      // ดึงข้อมูลตามชื่อคอลัมน์ภาษาไทยในไฟล์ CSV ของเรา
+      const name = row['ชื่อปั๊มน้ำมัน'] || row['name'] || 'ปั๊มน้ำมัน';
+      const brand = row['แบรนด์'] || row['brand'] || 'Gas Station';
+      const mapUrl = row['Google Maps Link'] || row['googleMapUrl'] || '';
+      
+      // ดึงระยะห่างจากปั๊มก่อนหน้า แล้วบวกสะสมเป็น กม. รวม
+      const distFromPrev = parseFloat(row['ห่างจากปั๊มก่อนหน้า (KM)'] || '0') || 0;
+      accumulatedKm += distFromPrev;
 
-      return station;
+      return {
+        name,
+        brand,
+        googleMapUrl: mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name)}`,
+        kmMarker: accumulatedKm
+      };
     });
   } catch (error) {
     console.error('Error reading stations.csv:', error);
@@ -44,11 +56,10 @@ const app = new Elysia()
     }
   })
 
-  // 3. API คำนวณจุดแวะเติมน้ำมัน (ดึงปั๊มจาก data/stations.csv จริง!)
+  // 3. API คำนวณจุดแวะเติมน้ำมัน
   .post('/api/plan-trip', async ({ body }: { body: any }) => {
     const { carId, fuelLevel = 3, currentKm = 0 } = body || {};
 
-    // อ่านข้อมูลรถจาก data/cars.json
     let cars: any[] = [];
     try {
       const carsData = await Bun.file('data/cars.json').json();
@@ -61,16 +72,16 @@ const app = new Elysia()
     const tankCapacity = Number(selectedCar.tankCapacity) || 45;
     const fuelEfficiency = Number(selectedCar.fuelEfficiency) || 15;
 
-    // คำนวณระยะทางที่วิ่งได้จริง (คิด Safety Buffer ที่ 85% ของถัง)
+    // คำนวณระยะทางที่วิ่งได้จริง (Safety Buffer 85%)
     const fullRange = tankCapacity * fuelEfficiency;
     const currentFuelRatio = fuelLevel / 5;
     const remainingKmCapacity = fullRange * currentFuelRatio;
     const safeMaxKm = Number(currentKm) + (remainingKmCapacity * 0.85);
 
-    // อ่านปั๊มน้ำมันจากไฟล์ data/stations.csv ของเราจริงๆ
+    // ดึงข้อมูลปั๊มพร้อมหลัก กม. ที่คำนวณสะสมแล้ว
     const stations = await getStationsFromCSV();
 
-    // ค้นหาปั๊มที่เหมาะสมที่สุดก่อนน้ำมันหมด
+    // ค้นหาปั๊มที่เหมาะสมก่อนน้ำมันหมด
     const validStations = stations.filter(s => s.kmMarker > Number(currentKm) && s.kmMarker <= safeMaxKm);
     const recommended = validStations.length > 0 
       ? validStations[validStations.length - 1] 
@@ -82,11 +93,11 @@ const app = new Elysia()
 
     return {
       recommendedStation: {
-        name: recommended.name || recommended.stationName || recommended.station_name || 'ปั๊มน้ำมัน',
-        brand: recommended.brand || 'Gas Station',
-        kmMarker: recommended.kmMarker,
-        distanceFromUser: Math.max(0, recommended.kmMarker - Number(currentKm)),
-        googleMapUrl: recommended.googleMapUrl || recommended.url || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(recommended.name || 'ปั๊มน้ำมัน')}`
+        name: recommended.name,
+        brand: recommended.brand,
+        kmMarker: Math.round(recommended.kmMarker * 10) / 10,
+        distanceFromUser: Math.max(0, Math.round((recommended.kmMarker - Number(currentKm)) * 10) / 10),
+        googleMapUrl: recommended.googleMapUrl
       }
     };
   })
