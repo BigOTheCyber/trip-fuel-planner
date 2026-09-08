@@ -132,7 +132,6 @@
         const json = await res.json();
         allCars = Array.isArray(json) ? json : (json.data || []);
         
-        // สกัดยี่ห้อรถที่ไม่ซ้ำกัน
         const brands = [...new Set(allCars.map(c => c.brand))].sort();
         const brandSelect = document.getElementById('brandSelect');
         brandSelect.innerHTML = '<option value="">-- 1. เลือกยี่ห้อรถ --</option>' + 
@@ -142,7 +141,6 @@
       }
     }
 
-    // ค้นหาแบบพิมพ์ค้นหา (Search input)
     function onSearchCar() {
       const query = document.getElementById('carSearchInput').value.trim().toLowerCase();
       const resultsDiv = document.getElementById('searchResults');
@@ -178,19 +176,29 @@
       resultsDiv.classList.remove('hidden');
     }
 
+    // แก้ไขส่วนนี้: จัดลำดับการเซ็ตค่า Dropdown และ SelectedCarId ใหม่
     function selectCarFromSearch(carId) {
       const car = allCars.find(c => c.id === carId);
       if (!car) return;
 
-      document.getElementById('selectedCarId').value = car.id;
-      document.getElementById('carSearchInput').value = `${car.brand} - ${car.model}`;
-      document.getElementById('searchResults').classList.add('hidden');
-
-      // ซิงค์ค่าไปยัง Dropdown
+      // 1. ปรับค่าใน Dropdown ตามรถที่เลือก
       const brandSelect = document.getElementById('brandSelect');
       brandSelect.value = car.brand;
-      onBrandChange();
-      document.getElementById('modelSelect').value = car.id;
+
+      const filteredCars = allCars.filter(c => c.brand === car.brand);
+      const modelSelect = document.getElementById('modelSelect');
+      modelSelect.innerHTML = '<option value="">-- 2. เลือกรุ่นรถ --</option>' + 
+        filteredCars.map(c => `<option value="${c.id}">${c.model} (${c.tankCapacity}L)</option>`).join('');
+      modelSelect.disabled = false;
+      modelSelect.value = car.id;
+
+      // 2. กำหนดค่า ID และข้อความในช่องค้นหาอย่างถูกต้อง
+      document.getElementById('selectedCarId').value = car.id;
+      document.getElementById('carSearchInput').value = `${car.brand} - ${car.model}`;
+
+      // 3. ปิด Pop-up ค้นหา
+      document.getElementById('searchResults').classList.add('hidden');
+      document.getElementById('clearSearchBtn').classList.remove('hidden');
     }
 
     function clearCarSearch() {
@@ -200,7 +208,9 @@
       document.getElementById('clearSearchBtn').classList.add('hidden');
       
       document.getElementById('brandSelect').value = '';
-      onBrandChange();
+      const modelSelect = document.getElementById('modelSelect');
+      modelSelect.innerHTML = '<option value="">-- 2. เลือกรุ่นรถ --</option>';
+      modelSelect.disabled = true;
     }
 
     function onBrandChange() {
@@ -211,6 +221,8 @@
         modelSelect.innerHTML = '<option value="">-- 2. เลือกรุ่นรถ --</option>';
         modelSelect.disabled = true;
         document.getElementById('selectedCarId').value = '';
+        document.getElementById('carSearchInput').value = '';
+        document.getElementById('clearSearchBtn').classList.add('hidden');
         return;
       }
 
@@ -218,7 +230,10 @@
       modelSelect.innerHTML = '<option value="">-- 2. เลือกรุ่นรถ --</option>' + 
         filteredCars.map(c => `<option value="${c.id}">${c.model} (${c.tankCapacity}L)</option>`).join('');
       modelSelect.disabled = false;
+      
       document.getElementById('selectedCarId').value = '';
+      document.getElementById('carSearchInput').value = '';
+      document.getElementById('clearSearchBtn').classList.add('hidden');
     }
 
     function onModelChange() {
@@ -231,10 +246,9 @@
       }
     }
 
-    // ซ่อนผลลัพธ์การค้นหาเมื่อคลิกพื้นที่อื่น
     document.addEventListener('click', (e) => {
-      const container = document.getElementById('carSearchInput').closest('.relative');
-      if (!container.contains(e.target)) {
+      const searchBox = document.getElementById('carSearchInput');
+      if (searchBox && !searchBox.closest('.relative').contains(e.target)) {
         document.getElementById('searchResults').classList.add('hidden');
       }
     });
