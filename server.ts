@@ -20,12 +20,10 @@ async function getStationsFromCSV() {
         row[header] = values[index];
       });
 
-      // ดึงข้อมูลตามชื่อคอลัมน์ภาษาไทยในไฟล์ CSV ของเรา
       const name = row['ชื่อปั๊มน้ำมัน'] || row['name'] || 'ปั๊มน้ำมัน';
       const brand = row['แบรนด์'] || row['brand'] || 'Gas Station';
       const mapUrl = row['Google Maps Link'] || row['googleMapUrl'] || '';
       
-      // ดึงระยะห่างจากปั๊มก่อนหน้า แล้วบวกสะสมเป็น กม. รวม
       const distFromPrev = parseFloat(row['ห่างจากปั๊มก่อนหน้า (KM)'] || '0') || 0;
       accumulatedKm += distFromPrev;
 
@@ -56,7 +54,7 @@ const app = new Elysia()
     }
   })
 
-  // 3. API คำนวณจุดแวะเติมน้ำมัน
+  // 3. API คำนวณจุดแวะเติมน้ำมัน พร้อม Dynamic Safety Buffer
   .post('/api/plan-trip', async ({ body }: { body: any }) => {
     const { carId, fuelLevel = 3, currentKm = 0 } = body || {};
 
@@ -72,13 +70,21 @@ const app = new Elysia()
     const tankCapacity = Number(selectedCar.tankCapacity) || 45;
     const fuelEfficiency = Number(selectedCar.fuelEfficiency) || 15;
 
-    // คำนวณระยะทางที่วิ่งได้จริง (Safety Buffer 85%)
+    // คำนวณระยะทางคงเหลือทางทฤษฎี
     const fullRange = tankCapacity * fuelEfficiency;
-    const currentFuelRatio = fuelLevel / 5;
+    const currentFuelRatio = Number(fuelLevel) / 5;
     const remainingKmCapacity = fullRange * currentFuelRatio;
-    const safeMaxKm = Number(currentKm) + (remainingKmCapacity * 0.85);
 
-    // ดึงข้อมูลปั๊มพร้อมหลัก กม. ที่คำนวณสะสมแล้ว
+    // ปรับ Safety Buffer ตามระดับน้ำมันจริง (เพลย์เซฟตามระดับความเสี่ยง)
+    let bufferRatio = 0.85; // ปกติคิดที่ 85%
+    if (Number(fuelLevel) === 1) {
+      bufferRatio = 0.50; // ก้นถัง: บีบเหลือ 50% เพื่อเน้นหาปั๊มใกล้ที่สุด
+    } else if (Number(fuelLevel) === 2) {
+      bufferRatio = 0.70; // เตือน: บีบเหลือ 70% กันเหนียว
+    }
+
+    const safeMaxKm = Number(currentKm) + (remainingKmCapacity * bufferRatio);
+
     const stations = await getStationsFromCSV();
 
     // ค้นหาปั๊มที่เหมาะสมก่อนน้ำมันหมด
