@@ -95,12 +95,21 @@
     let selectedFuel = 3;
 
     async function loadCars() {
-      const res = await fetch('/api/cars');
-      const json = await res.json();
-      const select = document.getElementById('carSelect');
-      select.innerHTML = json.data.map(c => 
-        `<option value="${c.id}">${c.brand} ${c.model} (${c.tankCapacity}L)</option>`
-      ).join('');
+      try {
+        const res = await fetch('/api/cars');
+        const json = await res.json();
+        
+        // ปรับแก้ตรงนี้: เช็กว่าเป็น Array โดยตรง หรือซ้อนใน .data
+        const carsList = Array.isArray(json) ? json : (json.data || []);
+        
+        const select = document.getElementById('carSelect');
+        select.innerHTML = carsList.map(c => {
+          const tankText = c.tankCapacity ? ` (${c.tankCapacity}L)` : '';
+          return `<option value="${c.id}">${c.brand} ${c.model}${tankText}</option>`;
+        }).join('');
+      } catch (err) {
+        console.error('Error loading cars:', err);
+      }
     }
 
     function setFuel(level) {
