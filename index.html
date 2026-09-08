@@ -25,13 +25,44 @@
     <!-- Main Content Area -->
     <main class="flex-1 p-5 space-y-5 overflow-y-auto">
       
-      <!-- Car Selection Card -->
-      <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
+      <!-- Car Selection Card (Search + Dropdown) -->
+      <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 relative">
         <label class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
           <i class="fa-solid fa-car-side text-blue-600"></i> เลือกรถยนต์ที่ใช้งาน
         </label>
-        <select id="carSelect" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
-        </select>
+        
+        <!-- Quick Search Bar -->
+        <div class="relative">
+          <div class="relative">
+            <input type="text" id="carSearchInput" oninput="onSearchCar()" placeholder="🔍 พิมพ์ค้นหา (เช่น Civic, Revo, Toyota)..." class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:font-normal placeholder:text-slate-400">
+            <button id="clearSearchBtn" onclick="clearCarSearch()" class="hidden absolute right-3 top-3 text-slate-400 hover:text-slate-600">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </div>
+
+          <!-- Autocomplete Search Results Dropdown -->
+          <div id="searchResults" class="hidden absolute z-30 left-0 right-0 top-full mt-1 bg-white border border-slate-200 rounded-xl shadow-xl max-h-56 overflow-y-auto divide-y divide-slate-100"></div>
+        </div>
+
+        <div class="flex items-center gap-2 my-1">
+          <div class="h-px bg-slate-100 flex-1"></div>
+          <span class="text-[10px] font-bold text-slate-300 uppercase">หรือเลือกจากรายการ</span>
+          <div class="h-px bg-slate-100 flex-1"></div>
+        </div>
+
+        <div class="space-y-2">
+          <!-- Step 1: Select Brand -->
+          <select id="brandSelect" onchange="onBrandChange()" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="">-- 1. เลือกยี่ห้อรถ --</option>
+          </select>
+
+          <!-- Step 2: Select Model -->
+          <select id="modelSelect" onchange="onModelChange()" disabled class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed">
+            <option value="">-- 2. เลือกรุ่นรถ --</option>
+          </select>
+        </div>
+
+        <input type="hidden" id="selectedCarId" value="">
       </div>
 
       <!-- Current Location Marker Card -->
@@ -93,24 +124,120 @@
 
   <script>
     let selectedFuel = 3;
+    let allCars = [];
 
     async function loadCars() {
       try {
         const res = await fetch('/api/cars');
         const json = await res.json();
+        allCars = Array.isArray(json) ? json : (json.data || []);
         
-        // ปรับแก้ตรงนี้: เช็กว่าเป็น Array โดยตรง หรือซ้อนใน .data
-        const carsList = Array.isArray(json) ? json : (json.data || []);
-        
-        const select = document.getElementById('carSelect');
-        select.innerHTML = carsList.map(c => {
-          const tankText = c.tankCapacity ? ` (${c.tankCapacity}L)` : '';
-          return `<option value="${c.id}">${c.brand} ${c.model}${tankText}</option>`;
-        }).join('');
+        // สกัดยี่ห้อรถที่ไม่ซ้ำกัน
+        const brands = [...new Set(allCars.map(c => c.brand))].sort();
+        const brandSelect = document.getElementById('brandSelect');
+        brandSelect.innerHTML = '<option value="">-- 1. เลือกยี่ห้อรถ --</option>' + 
+          brands.map(b => `<option value="${b}">${b}</option>`).join('');
       } catch (err) {
         console.error('Error loading cars:', err);
       }
     }
+
+    // ค้นหาแบบพิมพ์ค้นหา (Search input)
+    function onSearchCar() {
+      const query = document.getElementById('carSearchInput').value.trim().toLowerCase();
+      const resultsDiv = document.getElementById('searchResults');
+      const clearBtn = document.getElementById('clearSearchBtn');
+
+      if (!query) {
+        resultsDiv.classList.add('hidden');
+        clearBtn.classList.add('hidden');
+        return;
+      }
+
+      clearBtn.classList.remove('hidden');
+
+      const matches = allCars.filter(c => 
+        c.brand.toLowerCase().includes(query) || 
+        c.model.toLowerCase().includes(query)
+      );
+
+      if (matches.length === 0) {
+        resultsDiv.innerHTML = `<div class="p-3 text-xs text-slate-400 text-center">ไม่พบรุ่นรถที่ค้นหา</div>`;
+      } else {
+        resultsDiv.innerHTML = matches.map(c => `
+          <div onclick="selectCarFromSearch('${c.id}')" class="p-3 hover:bg-blue-50 cursor-pointer flex justify-between items-center transition">
+            <div>
+              <span class="text-xs font-bold text-blue-600 block">${c.brand}</span>
+              <span class="text-sm font-semibold text-slate-800">${c.model}</span>
+            </div>
+            <span class="text-[10px] font-mono bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md">${c.tankCapacity}L</span>
+          </div>
+        `).join('');
+      }
+
+      resultsDiv.classList.remove('hidden');
+    }
+
+    function selectCarFromSearch(carId) {
+      const car = allCars.find(c => c.id === carId);
+      if (!car) return;
+
+      document.getElementById('selectedCarId').value = car.id;
+      document.getElementById('carSearchInput').value = `${car.brand} - ${car.model}`;
+      document.getElementById('searchResults').classList.add('hidden');
+
+      // ซิงค์ค่าไปยัง Dropdown
+      const brandSelect = document.getElementById('brandSelect');
+      brandSelect.value = car.brand;
+      onBrandChange();
+      document.getElementById('modelSelect').value = car.id;
+    }
+
+    function clearCarSearch() {
+      document.getElementById('carSearchInput').value = '';
+      document.getElementById('selectedCarId').value = '';
+      document.getElementById('searchResults').classList.add('hidden');
+      document.getElementById('clearSearchBtn').classList.add('hidden');
+      
+      document.getElementById('brandSelect').value = '';
+      onBrandChange();
+    }
+
+    function onBrandChange() {
+      const selectedBrand = document.getElementById('brandSelect').value;
+      const modelSelect = document.getElementById('modelSelect');
+      
+      if (!selectedBrand) {
+        modelSelect.innerHTML = '<option value="">-- 2. เลือกรุ่นรถ --</option>';
+        modelSelect.disabled = true;
+        document.getElementById('selectedCarId').value = '';
+        return;
+      }
+
+      const filteredCars = allCars.filter(c => c.brand === selectedBrand);
+      modelSelect.innerHTML = '<option value="">-- 2. เลือกรุ่นรถ --</option>' + 
+        filteredCars.map(c => `<option value="${c.id}">${c.model} (${c.tankCapacity}L)</option>`).join('');
+      modelSelect.disabled = false;
+      document.getElementById('selectedCarId').value = '';
+    }
+
+    function onModelChange() {
+      const carId = document.getElementById('modelSelect').value;
+      document.getElementById('selectedCarId').value = carId;
+      const car = allCars.find(c => c.id === carId);
+      if (car) {
+        document.getElementById('carSearchInput').value = `${car.brand} - ${car.model}`;
+        document.getElementById('clearSearchBtn').classList.remove('hidden');
+      }
+    }
+
+    // ซ่อนผลลัพธ์การค้นหาเมื่อคลิกพื้นที่อื่น
+    document.addEventListener('click', (e) => {
+      const container = document.getElementById('carSearchInput').closest('.relative');
+      if (!container.contains(e.target)) {
+        document.getElementById('searchResults').classList.add('hidden');
+      }
+    });
 
     function setFuel(level) {
       selectedFuel = level;
@@ -125,7 +252,13 @@
     }
 
     async function calculateTrip() {
-      const carId = document.getElementById('carSelect').value;
+      const carId = document.getElementById('selectedCarId').value;
+      
+      if (!carId) {
+        alert('กรุณาเลือกรถยนต์หรือพิมพ์ค้นหารุ่นรถก่อนครับ!');
+        return;
+      }
+
       const currentKm = parseFloat(document.getElementById('currentKm').value) || 0;
 
       const res = await fetch('/api/plan-trip', {
