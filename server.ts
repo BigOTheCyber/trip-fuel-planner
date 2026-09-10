@@ -2,7 +2,7 @@ import { Elysia } from 'elysia';
 
 const PORT = Number(process.env.PORT) || 3000;
 
-// ฟังก์ชันอ่านไฟล์ CSV และคำนวณหลักกิโลเมตรสะสม
+// ฟังก์ชันอ่านไฟล์ CSV
 async function getStationsFromCSV() {
   try {
     const fileText = await Bun.file('data/stations.csv').text();
@@ -23,6 +23,8 @@ async function getStationsFromCSV() {
       const name = row['ชื่อปั๊มน้ำมัน'] || row['name'] || 'ปั๊มน้ำมัน';
       const brand = row['แบรนด์'] || row['brand'] || 'Gas Station';
       const mapUrl = row['Google Maps Link'] || row['googleMapUrl'] || '';
+      const lat = parseFloat(row['Latitude'] || '0') || 0;
+      const lng = parseFloat(row['Longitude'] || '0') || 0;
       
       const distFromPrev = parseFloat(row['ห่างจากปั๊มก่อนหน้า (KM)'] || '0') || 0;
       accumulatedKm += distFromPrev;
@@ -30,6 +32,8 @@ async function getStationsFromCSV() {
       return {
         name,
         brand,
+        lat,
+        lng,
         googleMapUrl: mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name)}`,
         kmMarker: accumulatedKm
       };
@@ -41,11 +45,10 @@ async function getStationsFromCSV() {
 }
 
 const app = new Elysia()
-  // 1. หน้าเว็บหลัก
   .get('/', () => Bun.file('index.html'))
   .get('/index.html', () => Bun.file('index.html'))
 
-  // 2. API ดึงข้อมูลรถยนต์
+  // API ดึงข้อมูลรถยนต์
   .get('/api/cars', async () => {
     try {
       return await Bun.file('data/cars.json').json();
@@ -54,7 +57,12 @@ const app = new Elysia()
     }
   })
 
-  // 3. API คำนวณจุดแวะเติมน้ำมัน พร้อม Dynamic Safety Buffer
+  // API ดึงข้อมูลปั๊มทั้งหมด (สำหรับ GPS Tracking)
+  .get('/api/stations', async () => {
+    return await getStationsFromCSV();
+  })
+
+  // API คำนวณจุดแวะเติมน้ำมัน
   .post('/api/plan-trip', async ({ body }: { body: any }) => {
     const { carId, fuelLevel = 3, currentKm = 0 } = body || {};
 
@@ -70,24 +78,20 @@ const app = new Elysia()
     const tankCapacity = Number(selectedCar.tankCapacity) || 45;
     const fuelEfficiency = Number(selectedCar.fuelEfficiency) || 15;
 
-    // คำนวณระยะทางคงเหลือทางทฤษฎี
     const fullRange = tankCapacity * fuelEfficiency;
     const currentFuelRatio = Number(fuelLevel) / 5;
     const remainingKmCapacity = fullRange * currentFuelRatio;
 
-    // ปรับ Safety Buffer ตามระดับน้ำมันจริง (เพลย์เซฟตามระดับความเสี่ยง)
-    let bufferRatio = 0.85; // ปกติคิดที่ 85%
+    let bufferRatio = 0.85;
     if (Number(fuelLevel) === 1) {
-      bufferRatio = 0.50; // ก้นถัง: บีบเหลือ 50% เพื่อเน้นหาปั๊มใกล้ที่สุด
+      bufferRatio = 0.50;
     } else if (Number(fuelLevel) === 2) {
-      bufferRatio = 0.70; // เตือน: บีบเหลือ 70% กันเหนียว
+      bufferRatio = 0.70;
     }
 
     const safeMaxKm = Number(currentKm) + (remainingKmCapacity * bufferRatio);
-
     const stations = await getStationsFromCSV();
 
-    // ค้นหาปั๊มที่เหมาะสมก่อนน้ำมันหมด
     const validStations = stations.filter(s => s.kmMarker > Number(currentKm) && s.kmMarker <= safeMaxKm);
     const recommended = validStations.length > 0 
       ? validStations[validStations.length - 1] 
@@ -108,7 +112,6 @@ const app = new Elysia()
     };
   })
 
-  // 4. เริ่มรัน Server
   .listen({
     port: PORT,
     hostname: '0.0.0.0'
