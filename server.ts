@@ -2,7 +2,6 @@ import { Elysia } from 'elysia';
 
 const PORT = Number(process.env.PORT) || 3000;
 
-// ฟังก์ชันอ่านไฟล์ CSV
 async function getStationsFromCSV() {
   try {
     const fileText = await Bun.file('data/stations.csv').text();
@@ -10,18 +9,17 @@ async function getStationsFromCSV() {
     if (lines.length <= 1) return [];
 
     const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
-
     let accumulatedKm = 0;
 
-    return lines.slice(1).map(line => {
+    return lines.slice(1).map((line, index) => {
       const values = line.split(',').map(v => v.trim().replace(/^"|"$/g, ''));
       const row: any = {};
-      headers.forEach((header, index) => {
-        row[header] = values[index];
+      headers.forEach((header, i) => {
+        row[header] = values[i];
       });
 
-      const name = row['ชื่อปั๊มน้ำมัน'] || row['name'] || 'ปั๊มน้ำมัน';
-      const brand = row['แบรนด์'] || row['brand'] || 'Gas Station';
+      const name = row['ชื่อปั๊มน้ำมัน'] || row['name'] || 'Gas Station';
+      const brand = row['แบรนด์'] || row['brand'] || 'Station';
       const mapUrl = row['Google Maps Link'] || row['googleMapUrl'] || '';
       const lat = parseFloat(row['Latitude'] || '0') || 0;
       const lng = parseFloat(row['Longitude'] || '0') || 0;
@@ -30,6 +28,7 @@ async function getStationsFromCSV() {
       accumulatedKm += distFromPrev;
 
       return {
+        id: `station-${index}`,
         name,
         brand,
         lat,
@@ -48,7 +47,6 @@ const app = new Elysia()
   .get('/', () => Bun.file('index.html'))
   .get('/index.html', () => Bun.file('index.html'))
 
-  // API ดึงข้อมูลรถยนต์
   .get('/api/cars', async () => {
     try {
       return await Bun.file('data/cars.json').json();
@@ -57,12 +55,10 @@ const app = new Elysia()
     }
   })
 
-  // API ดึงข้อมูลปั๊มทั้งหมด (สำหรับ GPS Tracking)
   .get('/api/stations', async () => {
     return await getStationsFromCSV();
   })
 
-  // API คำนวณจุดแวะเติมน้ำมัน
   .post('/api/plan-trip', async ({ body }: { body: any }) => {
     const { carId, fuelLevel = 3, currentKm = 0 } = body || {};
 

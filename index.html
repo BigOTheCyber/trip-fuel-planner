@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Fuel Planner WebApp</title>
+  <title>Trip Fuel Planner</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
@@ -19,103 +19,105 @@
         <i class="fa-solid fa-gas-pump text-xl text-blue-300"></i>
       </div>
       <h1 class="text-xl font-extrabold tracking-tight">Trip Fuel Planner</h1>
-      <p class="text-xs text-blue-200 mt-1">ระบบคำนวณจุดแวะเติมน้ำมันฉลาดพร้อม Safety Buffer</p>
+      <p class="text-xs text-blue-200 mt-1">Smart Refuel Stop Finder with Safety Buffer</p>
     </header>
 
     <!-- Main Content Area -->
     <main class="flex-1 p-5 space-y-5 overflow-y-auto">
-      
-      <!-- GPS Tracking Toggle Bar -->
-      <div class="bg-gradient-to-r from-slate-800 to-slate-900 text-white p-3.5 rounded-2xl shadow-sm flex items-center justify-between">
-        <div class="flex items-center gap-3">
-          <div id="gpsStatusDot" class="w-3 h-3 rounded-full bg-slate-500"></div>
-          <div>
-            <span class="text-xs font-bold block" id="gpsStatusText">GPS Tracking Off</span>
-            <span class="text-[10px] text-slate-400 block" id="gpsSubText">แตะสวิตช์เพื่อดึงตำแหน่งจริง</span>
-          </div>
-        </div>
-        <button id="gpsToggleBtn" onclick="toggleGPS()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5">
-          <i class="fa-solid fa-location-crosshairs"></i> เปิด GPS
-        </button>
-      </div>
 
-      <!-- Car Selection Card (Search + Dropdown) -->
+      <!-- Car Selection Card -->
       <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 relative">
         <label class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
-          <i class="fa-solid fa-car-side text-blue-600"></i> เลือกรถยนต์ที่ใช้งาน
+          <i class="fa-solid fa-car-side text-blue-600"></i> Select Vehicle
         </label>
         
-        <!-- Quick Search Bar -->
+        <!-- Search Bar -->
         <div class="relative">
           <div class="relative">
-            <input type="text" id="carSearchInput" oninput="onSearchCar()" placeholder="🔍 พิมพ์ค้นหา (เช่น Civic, Revo, Toyota)..." class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:font-normal placeholder:text-slate-400">
+            <input type="text" id="carSearchInput" oninput="onSearchCar()" placeholder="🔍 Search model or brand (e.g. Civic, Revo)..." class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:font-normal placeholder:text-slate-400">
             <button id="clearSearchBtn" onclick="clearCarSearch()" class="hidden absolute right-3 top-3 text-slate-400 hover:text-slate-600">
               <i class="fa-solid fa-xmark"></i>
             </button>
           </div>
 
-          <!-- Autocomplete Search Results Dropdown -->
+          <!-- Autocomplete Results Dropdown -->
           <div id="searchResults" class="hidden absolute z-30 left-0 right-0 top-full mt-1 bg-white border border-slate-200 rounded-xl shadow-xl max-h-56 overflow-y-auto divide-y divide-slate-100"></div>
         </div>
 
         <div class="flex items-center gap-2 my-1">
           <div class="h-px bg-slate-100 flex-1"></div>
-          <span class="text-[10px] font-bold text-slate-300 uppercase">หรือเลือกจากรายการ</span>
+          <span class="text-[10px] font-bold text-slate-300 uppercase">OR SELECT FROM LIST</span>
           <div class="h-px bg-slate-100 flex-1"></div>
         </div>
 
         <div class="space-y-2">
           <select id="brandSelect" onchange="onBrandChange()" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option value="">-- 1. เลือกยี่ห้อรถ --</option>
+            <option value="">-- 1. Select Brand --</option>
           </select>
 
           <select id="modelSelect" onchange="onModelChange()" disabled class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed">
-            <option value="">-- 2. เลือกรุ่นรถ --</option>
+            <option value="">-- 2. Select Model --</option>
           </select>
         </div>
 
         <input type="hidden" id="selectedCarId" value="">
       </div>
 
-      <!-- Current Location Marker Card -->
-      <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-2">
+      <!-- Verified Location & Map Card -->
+      <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
         <div class="flex justify-between items-center">
           <label class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
-            <i class="fa-solid fa-location-dot text-red-500"></i> พิกัดปัจจุบัน (กม.)
+            <i class="fa-solid fa-location-dot text-red-500"></i> Current Location Verification
           </label>
-          <span class="text-xs text-slate-400">นับจากเชียงราย</span>
+          <span id="gpsBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">Detecting...</span>
         </div>
-        <div class="relative">
-          <input type="number" id="currentKm" value="0" min="0" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-base font-bold rounded-xl p-3 pl-4 focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <span class="absolute right-4 top-3.5 text-xs font-bold text-slate-400">KM</span>
+
+        <!-- Location Display & Change Button -->
+        <div class="bg-slate-50 border border-slate-200/80 p-3 rounded-xl flex items-center justify-between">
+          <div class="space-y-0.5">
+            <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Detected Station / Point</span>
+            <span id="currentStationName" class="text-xs font-bold text-slate-800 block">Locating via GPS...</span>
+          </div>
+          <button type="button" onclick="openStationModal()" class="text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg border border-blue-200/60 transition flex items-center gap-1">
+            <i class="fa-solid fa-pen-to-square"></i> Change
+          </button>
+        </div>
+
+        <!-- Embedded Interactive Google Map -->
+        <div class="w-full h-44 rounded-xl overflow-hidden border border-slate-200 relative bg-slate-100 flex items-center justify-center">
+          <iframe id="mapIframe" class="w-full h-full border-0 hidden" loading="lazy" allowfullscreen src=""></iframe>
+          <div id="mapPlaceholder" class="text-center p-4 text-slate-400 text-xs flex flex-col items-center gap-2">
+            <i class="fa-solid fa-circle-notch fa-spin text-2xl text-blue-500"></i>
+            <span>Fetching live GPS position...</span>
+          </div>
         </div>
       </div>
 
       <!-- Fuel Level Selector (5-Level Gauge) -->
       <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
         <label class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
-          <i class="fa-solid fa-gauge-high text-amber-500"></i> ระดับน้ำมันคงเหลือ
+          <i class="fa-solid fa-gauge-high text-amber-500"></i> Fuel Gauge Level
         </label>
         <div class="grid grid-cols-5 gap-1.5" id="fuelGauge">
           <button type="button" onclick="setFuel(1)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition">
             <span class="text-sm">1/5</span>
-            <span class="text-[9px] font-normal text-red-500">ก้นถัง</span>
+            <span class="text-[9px] font-normal text-red-500">Empty</span>
           </button>
           <button type="button" onclick="setFuel(2)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition">
             <span class="text-sm">2/5</span>
-            <span class="text-[9px] font-normal text-amber-500">เตือน</span>
+            <span class="text-[9px] font-normal text-amber-500">Low</span>
           </button>
           <button type="button" onclick="setFuel(3)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl bg-blue-600 text-white font-bold shadow-md transition">
             <span class="text-sm">3/5</span>
-            <span class="text-[9px] font-normal opacity-80">ครึ่งถัง</span>
+            <span class="text-[9px] font-normal opacity-80">Half</span>
           </button>
           <button type="button" onclick="setFuel(4)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition">
             <span class="text-sm">4/5</span>
-            <span class="text-[9px] font-normal text-slate-400">เกือบเต็ม</span>
+            <span class="text-[9px] font-normal text-slate-400">Good</span>
           </button>
           <button type="button" onclick="setFuel(5)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition">
             <span class="text-sm">5/5</span>
-            <span class="text-[9px] font-normal text-emerald-500">เต็มถัง</span>
+            <span class="text-[9px] font-normal text-emerald-500">Full</span>
           </button>
         </div>
       </div>
@@ -128,17 +130,48 @@
     <!-- Bottom Action Bar -->
     <div class="p-4 bg-white border-t border-slate-100 sm:rounded-b-[36px]">
       <button onclick="calculateTrip()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 active:scale-[0.98] text-white font-bold py-3.5 rounded-2xl shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 text-base transition">
-        <i class="fa-solid fa-route"></i> คำนวณจุดแวะเติมน้ำมัน
+        <i class="fa-solid fa-route"></i> Calculate Fuel Stop
       </button>
     </div>
 
+  </div>
+
+  <!-- Nearby Station Selection Modal -->
+  <div id="stationModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all duration-300">
+    <div class="bg-white w-full max-w-md rounded-t-[32px] sm:rounded-3xl p-5 shadow-2xl space-y-4 max-h-[80vh] flex flex-col animate-in slide-in-from-bottom duration-300">
+      <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+        <div>
+          <h3 class="font-extrabold text-slate-800 text-base">Select Nearby Station</h3>
+          <p class="text-xs text-slate-400">Pick your actual current starting station</p>
+        </div>
+        <button onclick="closeStationModal()" class="text-slate-400 hover:text-slate-600 p-2">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Search Station inside Modal -->
+      <input type="text" id="modalSearchInput" oninput="filterModalStations()" placeholder="🔍 Filter stations..." class="w-full bg-slate-50 border border-slate-200 text-xs font-medium rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+      <!-- Station List -->
+      <div id="modalStationList" class="overflow-y-auto flex-1 space-y-2 pr-1 divide-y divide-slate-100">
+        <!-- Station items will be rendered here -->
+      </div>
+    </div>
   </div>
 
   <script>
     let selectedFuel = 3;
     let allCars = [];
     let allStations = [];
-    let watchId = null;
+    let userLat = null;
+    let userLng = null;
+    let currentKm = 0;
+
+    async function initApp() {
+      await loadCars();
+      await loadStations();
+      autoTrackLocation();
+    }
 
     async function loadCars() {
       try {
@@ -148,7 +181,7 @@
         
         const brands = [...new Set(allCars.map(c => c.brand))].sort();
         const brandSelect = document.getElementById('brandSelect');
-        brandSelect.innerHTML = '<option value="">-- 1. เลือกยี่ห้อรถ --</option>' + 
+        brandSelect.innerHTML = '<option value="">-- 1. Select Brand --</option>' + 
           brands.map(b => `<option value="${b}">${b}</option>`).join('');
       } catch (err) {
         console.error('Error loading cars:', err);
@@ -164,9 +197,8 @@
       }
     }
 
-    // คำนวณระยะทางจากพิกัด (Haversine Formula) เป็นกิโลเมตร
     function getDistanceInKm(lat1, lon1, lat2, lon2) {
-      const R = 6371; // รัศมีโลก (กม.)
+      const R = 6371;
       const dLat = (lat2 - lat1) * Math.PI / 180;
       const dLon = (lon2 - lon1) * Math.PI / 180;
       const a = 
@@ -177,71 +209,133 @@
       return R * c;
     }
 
-    // สลับสถานะเปิด/ปิด GPS Tracking
-    function toggleGPS() {
-      if (watchId !== null) {
-        // ปิด GPS
-        navigator.geolocation.clearWatch(watchId);
-        watchId = null;
-        document.getElementById('gpsStatusDot').className = "w-3 h-3 rounded-full bg-slate-500";
-        document.getElementById('gpsStatusText').innerText = "GPS Tracking Off";
-        document.getElementById('gpsSubText').innerText = "แตะสวิตช์เพื่อดึงตำแหน่งจริง";
-        document.getElementById('gpsToggleBtn').className = "bg-blue-600 hover:bg-blue-500 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5";
-        document.getElementById('gpsToggleBtn').innerHTML = `<i class="fa-solid fa-location-crosshairs"></i> เปิด GPS`;
-      } else {
-        // เปิด GPS
-        if (!navigator.geolocation) {
-          alert('อุปกรณ์ของคุณไม่รองรับ GPS');
-          return;
-        }
+    // Auto GPS Tracking
+    function autoTrackLocation() {
+      if (!navigator.geolocation) {
+        fallbackStationSelection("GPS not supported by browser");
+        return;
+      }
 
-        document.getElementById('gpsStatusDot').className = "w-3 h-3 rounded-full bg-amber-400 animate-ping";
-        document.getElementById('gpsStatusText').innerText = "กำลังค้นหาสัญญาณ GPS...";
-        document.getElementById('gpsSubText').innerText = "โปรดอนุญาตสิทธิ์เข้าถึงพิกัด";
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          userLat = position.coords.latitude;
+          userLng = position.coords.longitude;
+          updateLocationAndMap(userLat, userLng);
+        },
+        (err) => {
+          console.warn('GPS location error or denied:', err);
+          fallbackStationSelection();
+        },
+        { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
+      );
+    }
 
-        watchId = navigator.geolocation.watchPosition(
-          (position) => {
-            const userLat = position.coords.latitude;
-            const userLng = position.coords.longitude;
+    function updateLocationAndMap(lat, lng, forcedStation = null) {
+      const mapIframe = document.getElementById('mapIframe');
+      const mapPlaceholder = document.getElementById('mapPlaceholder');
+      const gpsBadge = document.getElementById('gpsBadge');
+      const stationText = document.getElementById('currentStationName');
 
-            if (allStations.length === 0) return;
+      mapIframe.src = `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
+      mapIframe.classList.remove('hidden');
+      mapPlaceholder.classList.add('hidden');
 
-            // ค้นหาปั๊มน้ำมันที่อยู่ใกล้พิกัดผู้ใช้ที่สุด
-            let closestStation = null;
-            let minDistance = Infinity;
-
-            allStations.forEach(st => {
-              if (st.lat && st.lng) {
-                const dist = getDistanceInKm(userLat, userLng, st.lat, st.lng);
-                if (dist < minDistance) {
-                  minDistance = dist;
-                  closestStation = st;
-                }
-              }
-            });
-
-            if (closestStation) {
-              // อัปเดตช่อง KM ปัจจุบันตามปั๊มที่ใกล้ที่สุด
-              const estimatedKm = Math.round(closestStation.kmMarker * 10) / 10;
-              document.getElementById('currentKm').value = estimatedKm;
-
-              document.getElementById('gpsStatusDot').className = "w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]";
-              document.getElementById('gpsStatusText').innerText = "GPS Live Active 🟢";
-              document.getElementById('gpsSubText').innerText = `อัปเดตอัตโนมัติ: ใกล้ ${closestStation.name}`;
-              document.getElementById('gpsToggleBtn').className = "bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition flex items-center gap-1.5";
-              document.getElementById('gpsToggleBtn').innerHTML = `<i class="fa-solid fa-power-off"></i> ปิด GPS`;
+      let station = forcedStation;
+      if (!station && allStations.length > 0) {
+        let minDist = Infinity;
+        allStations.forEach(st => {
+          if (st.lat && st.lng) {
+            const dist = getDistanceInKm(lat, lng, st.lat, st.lng);
+            if (dist < minDist) {
+              minDist = dist;
+              station = st;
             }
-          },
-          (err) => {
-            console.error(err);
-            alert('ไม่สามารถดึงตำแหน่ง GPS ได้ โปรดเปิดอนุญาตระบุตำแหน่งในเบราว์เซอร์');
-            toggleGPS();
-          },
-          { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
-        );
+          }
+        });
+      }
+
+      if (station) {
+        currentKm = station.kmMarker;
+        stationText.innerText = `${station.name} (${station.brand})`;
+        gpsBadge.className = "text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700";
+        gpsBadge.innerText = "🟢 GPS Live";
       }
     }
 
+    function fallbackStationSelection(msg = "GPS Disabled / Not Found") {
+      const gpsBadge = document.getElementById('gpsBadge');
+      gpsBadge.className = "text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-700";
+      gpsBadge.innerText = "⚠️ Manual Mode";
+
+      if (allStations.length > 0) {
+        const defaultStation = allStations[0];
+        updateLocationAndMap(defaultStation.lat || 19.907, defaultStation.lng || 99.832, defaultStation);
+      }
+    }
+
+    // Modal Handlers
+    function openStationModal() {
+      const modal = document.getElementById('stationModal');
+      modal.classList.remove('hidden');
+      renderModalStations();
+    }
+
+    function closeStationModal() {
+      document.getElementById('stationModal').classList.add('hidden');
+    }
+
+    function renderModalStations(filterText = '') {
+      const listDiv = document.getElementById('modalStationList');
+      const query = filterText.toLowerCase();
+
+      let stationsWithDist = allStations.map(st => {
+        let dist = null;
+        if (userLat && userLng && st.lat && st.lng) {
+          dist = getDistanceInKm(userLat, userLng, st.lat, st.lng);
+        }
+        return { ...st, dist };
+      });
+
+      if (userLat && userLng) {
+        stationsWithDist.sort((a, b) => (a.dist || 9999) - (b.dist || 9999));
+      }
+
+      const filtered = stationsWithDist.filter(st => 
+        st.name.toLowerCase().includes(query) || 
+        st.brand.toLowerCase().includes(query)
+      );
+
+      if (filtered.length === 0) {
+        listDiv.innerHTML = `<div class="p-4 text-center text-xs text-slate-400">No stations found</div>`;
+        return;
+      }
+
+      listDiv.innerHTML = filtered.map(st => `
+        <div onclick="selectStationFromModal('${st.id}')" class="p-3 hover:bg-blue-50 cursor-pointer flex justify-between items-center transition rounded-xl">
+          <div>
+            <span class="text-xs font-bold text-slate-800 block">${st.name}</span>
+            <span class="text-[11px] text-slate-400 block">${st.brand} • KM ${Math.round(st.kmMarker)}</span>
+          </div>
+          ${st.dist !== null ? `<span class="text-[10px] font-bold bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md">${st.dist.toFixed(1)} km away</span>` : ''}
+        </div>
+      `).join('');
+    }
+
+    function filterModalStations() {
+      const query = document.getElementById('modalSearchInput').value;
+      renderModalStations(query);
+    }
+
+    function selectStationFromModal(stationId) {
+      const station = allStations.find(s => s.id === stationId);
+      if (!station) return;
+
+      currentKm = station.kmMarker;
+      updateLocationAndMap(station.lat, station.lng, station);
+      closeStationModal();
+    }
+
+    // Car Search & Selection Logic
     function onSearchCar() {
       const query = document.getElementById('carSearchInput').value.trim().toLowerCase();
       const resultsDiv = document.getElementById('searchResults');
@@ -261,7 +355,7 @@
       );
 
       if (matches.length === 0) {
-        resultsDiv.innerHTML = `<div class="p-3 text-xs text-slate-400 text-center">ไม่พบรุ่นรถที่ค้นหา</div>`;
+        resultsDiv.innerHTML = `<div class="p-3 text-xs text-slate-400 text-center">No vehicle found</div>`;
       } else {
         resultsDiv.innerHTML = matches.map(c => `
           <div onclick="selectCarFromSearch('${c.id}')" class="p-3 hover:bg-blue-50 cursor-pointer flex justify-between items-center transition">
@@ -286,7 +380,7 @@
 
       const filteredCars = allCars.filter(c => c.brand === car.brand);
       const modelSelect = document.getElementById('modelSelect');
-      modelSelect.innerHTML = '<option value="">-- 2. เลือกรุ่นรถ --</option>' + 
+      modelSelect.innerHTML = '<option value="">-- 2. Select Model --</option>' + 
         filteredCars.map(c => `<option value="${c.id}">${c.model} (${c.tankCapacity}L)</option>`).join('');
       modelSelect.disabled = false;
       modelSelect.value = car.id;
@@ -306,7 +400,7 @@
       
       document.getElementById('brandSelect').value = '';
       const modelSelect = document.getElementById('modelSelect');
-      modelSelect.innerHTML = '<option value="">-- 2. เลือกรุ่นรถ --</option>';
+      modelSelect.innerHTML = '<option value="">-- 2. Select Model --</option>';
       modelSelect.disabled = true;
     }
 
@@ -315,7 +409,7 @@
       const modelSelect = document.getElementById('modelSelect');
       
       if (!selectedBrand) {
-        modelSelect.innerHTML = '<option value="">-- 2. เลือกรุ่นรถ --</option>';
+        modelSelect.innerHTML = '<option value="">-- 2. Select Model --</option>';
         modelSelect.disabled = true;
         document.getElementById('selectedCarId').value = '';
         document.getElementById('carSearchInput').value = '';
@@ -324,7 +418,7 @@
       }
 
       const filteredCars = allCars.filter(c => c.brand === selectedBrand);
-      modelSelect.innerHTML = '<option value="">-- 2. เลือกรุ่นรถ --</option>' + 
+      modelSelect.innerHTML = '<option value="">-- 2. Select Model --</option>' + 
         filteredCars.map(c => `<option value="${c.id}">${c.model} (${c.tankCapacity}L)</option>`).join('');
       modelSelect.disabled = false;
       
@@ -366,11 +460,9 @@
       const carId = document.getElementById('selectedCarId').value;
       
       if (!carId) {
-        alert('กรุณาเลือกรถยนต์หรือพิมพ์ค้นหารุ่นรถก่อนครับ!');
+        alert('Please select or search your vehicle model first!');
         return;
       }
-
-      const currentKm = parseFloat(document.getElementById('currentKm').value) || 0;
 
       const res = await fetch('/api/plan-trip', {
         method: 'POST',
@@ -385,7 +477,7 @@
         resultDiv.innerHTML = `
           <div class="bg-red-50 border border-red-200 text-red-600 p-4 rounded-2xl text-xs font-bold flex items-center gap-3">
             <i class="fa-solid fa-triangle-exclamation text-lg"></i>
-            <span>ไม่พบปั๊มในระยะปลอดภัย! แวะปั๊มข้างทางด่วนที่สุด</span>
+            <span>No safe station found within range! Please stop at the nearest station immediately.</span>
           </div>`;
         return;
       }
@@ -394,28 +486,27 @@
       resultDiv.innerHTML = `
         <div class="bg-emerald-500 text-white p-4 rounded-2xl shadow-lg space-y-2 relative overflow-hidden">
           <div class="flex justify-between items-start">
-            <span class="bg-emerald-700/60 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">ปั๊มแนะนำหลัก</span>
-            <span class="text-xs opacity-90 font-mono">กม. ${rec.kmMarker}</span>
+            <span class="bg-emerald-700/60 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">Recommended Fuel Stop</span>
+            <span class="text-xs opacity-90 font-mono">KM ${rec.kmMarker}</span>
           </div>
           <div>
             <h3 class="text-lg font-extrabold leading-tight">${rec.name}</h3>
-            <p class="text-xs text-emerald-100 mt-0.5">แบรนด์: ${rec.brand}</p>
+            <p class="text-xs text-emerald-100 mt-0.5">Brand: ${rec.brand}</p>
           </div>
           <div class="pt-2 border-t border-emerald-400/40 flex justify-between items-center">
             <div>
-              <span class="text-[10px] text-emerald-100 block">ระยะทางที่ต้องวิ่งอีก</span>
-              <span class="text-xl font-black">${rec.distanceFromUser} <span class="text-xs font-normal">กม.</span></span>
+              <span class="text-[10px] text-emerald-100 block">Distance to Station</span>
+              <span class="text-xl font-black">${rec.distanceFromUser} <span class="text-xs font-normal">km</span></span>
             </div>
             <a href="${rec.googleMapUrl}" target="_blank" class="bg-white text-emerald-700 hover:bg-emerald-50 font-bold px-3.5 py-2 rounded-xl text-xs shadow-sm flex items-center gap-1.5 transition">
-              <i class="fa-solid fa-location-arrow"></i> นำทาง
+              <i class="fa-solid fa-location-arrow"></i> Navigate
             </a>
           </div>
         </div>
       `;
     }
 
-    loadCars();
-    loadStations();
+    initApp();
   </script>
 </body>
 </html>
