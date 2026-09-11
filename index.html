@@ -1,635 +1,423 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Trip Fuel Planner</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    body { font-family: 'Kanit', sans-serif; }
+    body { font-family: 'Kanit', sans-serif; background-color: #0f172a; }
   </style>
 </head>
-<body class="bg-slate-900 min-h-screen flex justify-center items-start sm:py-6 antialiased selection:bg-blue-500 selection:text-white">
+<body class="flex justify-center items-center min-h-screen p-2 sm:p-4">
 
-  <!-- Mobile Frame Container -->
-  <div class="w-full max-w-md bg-slate-50 min-h-screen sm:min-h-[844px] sm:rounded-[40px] shadow-2xl flex flex-col justify-between overflow-hidden relative border-4 border-slate-800">
+  <!-- Main Phone Frame -->
+  <div class="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100 min-h-[750px] flex flex-col justify-between my-auto">
     
-    <!-- Top Header Bar -->
-    <header class="bg-blue-700 text-white px-5 pt-6 pb-4 rounded-b-[28px] shadow-md">
-      <div class="flex justify-between items-center mb-3">
-        <div class="flex items-center gap-2">
-          <button id="backBtn" onclick="goToStep1()" class="hidden text-white hover:text-blue-200 transition pr-1">
-            <i class="fa-solid fa-arrow-left text-lg"></i>
-          </button>
-          <div class="w-7 h-7 bg-white/20 rounded-full flex items-center justify-center">
-            <i class="fa-solid fa-gas-pump text-sm text-blue-100"></i>
+    <!-- ==================== PAGE 1: INPUT FORM ==================== -->
+    <div id="page-1" class="flex flex-col justify-between h-full">
+      <div>
+        <!-- Top Header Banner -->
+        <div class="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-800 text-white p-6 rounded-b-3xl relative shadow-md">
+          <div class="flex justify-between items-center mb-2">
+            <span class="bg-blue-500/40 text-[11px] font-medium px-3 py-1 rounded-full border border-blue-300/30">Chiang Rai ➔ Bangkok</span>
+            <i class="fa-solid fa-gas-pump text-2xl text-blue-200"></i>
           </div>
-          <div>
-            <h1 class="text-base font-bold leading-tight">วางแผนเติมน้ำมัน</h1>
-            <p id="pageStepSubtitle" class="text-[11px] text-blue-200">หน้าที่ 1 จาก 2</p>
-          </div>
-        </div>
-        <i class="fa-regular fa-circle-question text-lg text-blue-200 cursor-pointer"></i>
-      </div>
-
-      <!-- Step Progress Bar -->
-      <div class="flex items-center justify-center gap-2 pt-2">
-        <div id="stepCircle1" class="w-7 h-7 rounded-full bg-blue-500 border-2 border-white text-white flex items-center justify-center text-xs font-bold">1</div>
-        <div id="stepLine1" class="w-12 h-1 bg-blue-400/50 rounded"></div>
-        <div id="stepCircle2" class="w-7 h-7 rounded-full bg-blue-800 border-2 border-blue-400 text-blue-200 flex items-center justify-center text-xs font-bold">2</div>
-      </div>
-    </header>
-
-    <!-- Main Content Area -->
-    <main class="flex-1 p-5 space-y-5 overflow-y-auto">
-
-      <!-- STEP 1: INPUT FORM -->
-      <div id="step1View" class="space-y-5">
-        
-        <!-- Vehicle Selection -->
-        <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 relative">
-          <label class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
-            <i class="fa-solid fa-car-side text-blue-600"></i> เลือกรถยนต์ (Select Vehicle)
-          </label>
-          
-          <div class="relative">
-            <input type="text" id="carSearchInput" oninput="onSearchCar()" placeholder="🔍 ค้นหารุ่นหรือแบรนด์ (เช่น Civic, Revo)..." class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-xs font-medium rounded-xl p-3 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <button id="clearSearchBtn" onclick="clearCarSearch()" class="hidden absolute right-3 top-3 text-slate-400 hover:text-slate-600">
-              <i class="fa-solid fa-xmark"></i>
-            </button>
-            <div id="searchResults" class="hidden absolute z-30 left-0 right-0 top-full mt-1 bg-white border border-slate-200 rounded-xl shadow-xl max-h-56 overflow-y-auto divide-y divide-slate-100"></div>
-          </div>
-
-          <div class="flex items-center gap-2 my-1">
-            <div class="h-px bg-slate-100 flex-1"></div>
-            <span class="text-[10px] font-bold text-slate-300 uppercase">หรือเลือกจากรายการ</span>
-            <div class="h-px bg-slate-100 flex-1"></div>
-          </div>
-
-          <div class="space-y-2">
-            <select id="brandSelect" onchange="onBrandChange()" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-xs font-semibold rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
-              <option value="">-- 1. เลือกยี่ห้อ (Brand) --</option>
-            </select>
-            <select id="modelSelect" onchange="onModelChange()" disabled class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-xs font-semibold rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50">
-              <option value="">-- 2. เลือกรุ่น (Model) --</option>
-            </select>
-          </div>
-          <input type="hidden" id="selectedCarId" value="">
+          <h1 class="text-2xl font-bold tracking-tight">Trip Fuel Planner</h1>
+          <p class="text-xs text-blue-200 font-light">Smart Refuel Stop Finder with Safety Buffer</p>
         </div>
 
-        <!-- Location Verification -->
-        <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
-          <div class="flex justify-between items-center">
-            <label class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
-              <i class="fa-solid fa-location-dot text-red-500"></i> จุดเริ่มต้นปัจจุบัน
+        <div class="p-5 space-y-4">
+          <!-- 1. Select Vehicle -->
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+            <label class="block text-xs font-bold text-slate-500 mb-2 tracking-wider flex items-center gap-1.5">
+              <i class="fa-solid fa-car text-blue-600"></i> SELECT VEHICLE
             </label>
-            <span id="gpsBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">Detecting...</span>
-          </div>
-
-          <div class="bg-slate-50 border border-slate-200/80 p-3 rounded-xl flex items-center justify-between">
-            <div class="space-y-0.5">
-              <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">ปั๊มเริ่มต้น</span>
-              <span id="currentStationName" class="text-xs font-bold text-slate-800 block">กำลังค้นหาพิกัด GPS...</span>
+            
+            <div class="relative mb-2.5">
+              <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-sm"></i>
+              <input type="text" id="car-search" oninput="filterCars()" placeholder="Search model or brand..." 
+                     class="w-full pl-9 pr-3 py-2 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700">
             </div>
-            <button type="button" onclick="openStationModal()" class="text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg border border-blue-200/60 transition flex items-center gap-1">
-              <i class="fa-solid fa-pen-to-square"></i> เปลี่ยน
-            </button>
+
+            <div class="text-[10px] text-center text-slate-400 font-semibold mb-2">OR SELECT FROM LIST</div>
+
+            <div class="space-y-2">
+              <select id="brand-select" onchange="onBrandChange()" class="w-full p-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700">
+                <option value="">-- Select Brand --</option>
+              </select>
+
+              <select id="model-select" onchange="onModelChange()" class="w-full p-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700">
+                <option value="">-- Select Model --</option>
+              </select>
+            </div>
           </div>
 
-          <div class="w-full h-40 rounded-xl overflow-hidden border border-slate-200 relative bg-slate-100 flex items-center justify-center">
-            <iframe id="mapIframe" class="w-full h-full border-0 hidden" loading="lazy" allowfullscreen src=""></iframe>
-            <div id="mapPlaceholder" class="text-center p-4 text-slate-400 text-xs flex flex-col items-center gap-2">
-              <i class="fa-solid fa-circle-notch fa-spin text-2xl text-blue-500"></i>
-              <span>กำลังดึงตำแหน่งพิกัด GPS...</span>
+          <!-- 2. Location Verification -->
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+            <div class="flex justify-between items-center mb-2">
+              <label class="text-xs font-bold text-slate-500 tracking-wider flex items-center gap-1.5">
+                <i class="fa-solid fa-location-dot text-red-500"></i> CURRENT LOCATION
+              </label>
+              <span class="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> GPS Live
+              </span>
+            </div>
+
+            <div class="bg-white p-2.5 rounded-xl border border-slate-200 flex justify-between items-center mb-2.5">
+              <div>
+                <div class="text-[9px] font-semibold text-slate-400 uppercase">Detected Station / Point</div>
+                <div class="text-xs font-bold text-slate-800" id="current-station-name">Caltex (คาลเท็กซ์)</div>
+              </div>
+              <button class="text-xs text-blue-600 bg-blue-50 border border-blue-200 font-medium px-2.5 py-1 rounded-lg">Change</button>
+            </div>
+
+            <div class="rounded-xl overflow-hidden border border-slate-200 h-24 relative bg-slate-200">
+              <iframe class="w-full h-full border-0" src="https://maps.google.com/maps?q=19.9071,99.8325&z=14&output=embed"></iframe>
+            </div>
+          </div>
+
+          <!-- 3. Fuel Gauge Level -->
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+            <label class="block text-xs font-bold text-slate-500 mb-2.5 tracking-wider flex items-center gap-1.5">
+              <i class="fa-solid fa-gauge text-amber-500"></i> FUEL GAUGE LEVEL
+            </label>
+            
+            <div class="grid grid-cols-5 gap-1.5">
+              <button onclick="selectFuel(0.2, this)" class="fuel-btn p-2 border border-slate-200 rounded-xl bg-white text-center">
+                <div class="text-xs font-bold text-slate-700">1/5</div><div class="text-[9px] text-red-500">Empty</div>
+              </button>
+              <button onclick="selectFuel(0.4, this)" class="fuel-btn p-2 border border-slate-200 rounded-xl bg-white text-center">
+                <div class="text-xs font-bold text-slate-700">2/5</div><div class="text-[9px] text-amber-500">Low</div>
+              </button>
+              <button onclick="selectFuel(0.6, this)" class="fuel-btn p-2 border-2 border-blue-600 bg-blue-600 text-white rounded-xl text-center shadow-sm">
+                <div class="text-xs font-bold">3/5</div><div class="text-[9px] text-blue-100">Half</div>
+              </button>
+              <button onclick="selectFuel(0.8, this)" class="fuel-btn p-2 border border-slate-200 rounded-xl bg-white text-center">
+                <div class="text-xs font-bold text-slate-700">4/5</div><div class="text-[9px] text-emerald-500">Good</div>
+              </button>
+              <button onclick="selectFuel(1.0, this)" class="fuel-btn p-2 border border-slate-200 rounded-xl bg-white text-center">
+                <div class="text-xs font-bold text-slate-700">5/5</div><div class="text-[9px] text-emerald-600">Full</div>
+              </button>
             </div>
           </div>
         </div>
-
-        <!-- Fuel Gauge Slider/Buttons -->
-        <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
-          <label class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
-            <i class="fa-solid fa-gauge-high text-amber-500"></i> ระดับน้ำมันคงเหลือในถัง
-          </label>
-          <div class="grid grid-cols-5 gap-1.5" id="fuelGauge">
-            <button type="button" onclick="setFuel(1)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition">
-              <span class="text-xs">1/5</span>
-              <span class="text-[9px] font-normal text-red-500">Empty</span>
-            </button>
-            <button type="button" onclick="setFuel(2)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition">
-              <span class="text-xs">2/5</span>
-              <span class="text-[9px] font-normal text-amber-500">Low</span>
-            </button>
-            <button type="button" onclick="setFuel(3)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl bg-blue-600 text-white font-bold shadow-md transition">
-              <span class="text-xs">3/5</span>
-              <span class="text-[9px] font-normal opacity-80">Half</span>
-            </button>
-            <button type="button" onclick="setFuel(4)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition">
-              <span class="text-xs">4/5</span>
-              <span class="text-[9px] font-normal text-slate-400">Good</span>
-            </button>
-            <button type="button" onclick="setFuel(5)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition">
-              <span class="text-xs">5/5</span>
-              <span class="text-[9px] font-normal text-emerald-500">Full</span>
-            </button>
-          </div>
-        </div>
-
       </div>
 
-      <!-- STEP 2: RESULT VIEW (ตามดีไซน์รูปภาพ) -->
-      <div id="step2View" class="hidden space-y-4">
-        
-        <h2 class="text-base font-bold text-slate-800 flex items-center gap-2">
-          <i class="fa-solid fa-calculator text-blue-600"></i> ผลการคำนวณ
-        </h2>
+      <!-- Action Button -->
+      <div class="p-5 pt-0">
+        <button onclick="goToPage2()" class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 text-base transition">
+          <i class="fa-solid fa-calculator"></i> Calculate Fuel Stop
+        </button>
+      </div>
+    </div>
 
-        <!-- KPI 2x2 Grid -->
-        <div class="grid grid-cols-2 gap-3">
-          
-          <!-- Card 1: Fuel Efficiency -->
-          <div class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between">
-            <div class="flex items-center gap-2 mb-2">
-              <div class="p-2 bg-blue-50 text-blue-600 rounded-xl">
-                <i class="fa-solid fa-gauge text-base"></i>
+
+    <!-- ==================== PAGE 2: RESULT DISPLAY ==================== -->
+    <div id="page-2" class="hidden flex-col justify-between h-full min-h-[750px]">
+      <div>
+        <!-- Step 2 Top Navigation Header -->
+        <div class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-5 rounded-b-3xl shadow-md">
+          <div class="flex justify-between items-center mb-3">
+            <div class="flex items-center gap-3">
+              <div class="w-9 h-9 bg-blue-500/30 rounded-full flex items-center justify-center border border-blue-400/40 text-blue-300">
+                <i class="fa-solid fa-droplet text-lg"></i>
               </div>
-              <span class="text-[11px] font-bold text-slate-500 leading-tight">อัตราการเผาผลาญน้ำมัน</span>
+              <div>
+                <h2 class="font-bold text-lg leading-tight">วางแผนเติมน้ำมัน</h2>
+                <p class="text-xs text-blue-200 font-light">หน้าที่ 2 จาก 3</p>
+              </div>
             </div>
-            <div>
-              <span id="resEfficiency" class="text-2xl font-black text-blue-600">12.5</span>
-              <span class="text-xs font-semibold text-slate-400 ml-1">กม./ลิตร</span>
-            </div>
+            <!-- Back to Page 1 Button -->
+            <button onclick="goToPage1()" title="แก้ไขข้อมูล" class="w-8 h-8 rounded-full bg-blue-800/60 hover:bg-blue-700 flex items-center justify-center text-blue-200 transition">
+              <i class="fa-solid fa-arrow-left text-sm"></i>
+            </button>
           </div>
 
-          <!-- Card 2: Estimated Range Left -->
-          <div class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between">
-            <div class="flex items-center gap-2 mb-2">
-              <div class="p-2 bg-emerald-50 text-emerald-600 rounded-xl">
-                <i class="fa-solid fa-road text-base"></i>
-              </div>
-              <span class="text-[11px] font-bold text-slate-500 leading-tight">คาดว่าวิ่งได้อีก</span>
-            </div>
-            <div>
-              <span class="text-xs font-semibold text-slate-400">ประมาณ</span>
-              <span id="resRange" class="text-2xl font-black text-emerald-600 ml-1">200</span>
-              <span class="text-xs font-semibold text-slate-400 ml-0.5">km</span>
-            </div>
+          <!-- Stepper Dots -->
+          <div class="flex items-center justify-center gap-2 pt-1">
+            <span class="w-6 h-6 rounded-full border border-blue-400/60 text-blue-300 text-xs flex items-center justify-center">1</span>
+            <span class="w-8 h-0.5 bg-blue-700"></span>
+            <span class="w-6 h-6 rounded-full bg-blue-500 text-white font-bold text-xs flex items-center justify-center ring-4 ring-blue-500/30">2</span>
+            <span class="w-8 h-0.5 bg-blue-700"></span>
+            <span class="w-6 h-6 rounded-full border border-blue-400/60 text-blue-300 text-xs flex items-center justify-center">3</span>
           </div>
-
-          <!-- Card 3: Target Stop -->
-          <div class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between">
-            <div class="flex items-center gap-2 mb-2">
-              <div class="p-2 bg-amber-50 text-amber-500 rounded-xl">
-                <i class="fa-solid fa-gas-pump text-base"></i>
-              </div>
-              <span class="text-[11px] font-bold text-slate-500 leading-tight">ควรแวะเติมที่</span>
-            </div>
-            <div>
-              <h3 id="resTargetStation" class="text-sm font-extrabold text-slate-800 leading-tight line-clamp-2">PTT Station</h3>
-              <p id="resTargetLocation" class="text-[11px] font-medium text-slate-400 mt-0.5">จังหวัดพะเยา</p>
-            </div>
-          </div>
-
-          <!-- Card 4: Distance to Stop -->
-          <div class="bg-white p-3.5 rounded-2xl border border-slate-100 shadow-sm flex flex-col justify-between">
-            <div class="flex items-center gap-2 mb-2">
-              <div class="p-2 bg-purple-50 text-purple-600 rounded-xl">
-                <i class="fa-solid fa-location-arrow text-base"></i>
-              </div>
-              <span class="text-[11px] font-bold text-slate-500 leading-tight">ห่างจากคุณ</span>
-            </div>
-            <div>
-              <span id="resDistance" class="text-2xl font-black text-purple-700">95</span>
-              <span class="text-xs font-semibold text-slate-400 ml-1">km</span>
-            </div>
-          </div>
-
         </div>
 
-        <!-- Safety Banner -->
-        <div class="bg-amber-50/80 border border-amber-200/80 p-3 rounded-2xl flex items-center justify-between text-amber-800">
-          <div class="flex items-center gap-2">
-            <i class="fa-solid fa-shield-halved text-amber-600 text-sm"></i>
-            <span class="text-xs font-semibold">ควรเติมก่อนน้ำมันหมด เพื่อความปลอดภัย</span>
+        <div class="p-4 space-y-4">
+          <!-- Section Title -->
+          <div class="flex items-center gap-2 text-slate-800 font-bold text-base">
+            <i class="fa-solid fa-calculator text-blue-600"></i>
+            <span>ผลการคำนวณ</span>
           </div>
-          <span class="text-xs font-bold bg-amber-200/60 px-2 py-0.5 rounded-lg">ระยะปลอดภัย <span id="resSafetyBuffer">40</span> km</span>
-        </div>
 
-        <!-- Recommended Station Card -->
-        <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-3">
-          <h3 class="text-sm font-extrabold text-slate-800">ปั๊มแนะนำ</h3>
-          
-          <a id="recStationLink" href="#" target="_blank" class="block bg-slate-50 hover:bg-blue-50/50 p-3.5 rounded-xl border border-slate-200/80 transition group">
-            <div class="flex items-start justify-between gap-2">
+          <!-- Metrics Grid (2x2) -->
+          <div class="grid grid-cols-2 gap-2.5">
+            <!-- Metric 1: Efficiency -->
+            <div class="bg-blue-50/60 border border-blue-100 p-3 rounded-2xl">
+              <div class="flex items-center gap-1.5 text-blue-600 text-[11px] font-medium mb-1">
+                <i class="fa-solid fa-gauge-high"></i>
+                <span>อัตราการเผาผลาญน้ำมัน</span>
+              </div>
+              <div class="text-2xl font-bold text-blue-950" id="res-efficiency">12.5</div>
+              <div class="text-[10px] text-slate-500">กม./ลิตร</div>
+            </div>
+
+            <!-- Metric 2: Estimated Range -->
+            <div class="bg-emerald-50/60 border border-emerald-100 p-3 rounded-2xl">
+              <div class="flex items-center gap-1.5 text-emerald-600 text-[11px] font-medium mb-1">
+                <i class="fa-solid fa-road"></i>
+                <span>คาดว่าจะวิ่งได้อีก</span>
+              </div>
+              <div class="text-2xl font-bold text-emerald-950"><span class="text-xs font-normal">ประมาณ </span><span id="res-range">200</span></div>
+              <div class="text-[10px] text-slate-500">km</div>
+            </div>
+
+            <!-- Metric 3: Recommended Stop Name -->
+            <div class="bg-amber-50/60 border border-amber-100 p-3 rounded-2xl">
+              <div class="flex items-center gap-1.5 text-amber-700 text-[11px] font-medium mb-1">
+                <i class="fa-solid fa-gas-pump"></i>
+                <span>ควรแวะเติมที่</span>
+              </div>
+              <div class="text-sm font-bold text-slate-800 leading-tight truncate" id="res-stop-title">PTT Station</div>
+              <div class="text-[11px] text-slate-500 truncate" id="res-stop-sub">จังหวัดพะเยา</div>
+            </div>
+
+            <!-- Metric 4: Distance From You -->
+            <div class="bg-purple-50/60 border border-purple-100 p-3 rounded-2xl">
+              <div class="flex items-center gap-1.5 text-purple-600 text-[11px] font-medium mb-1">
+                <i class="fa-solid fa-location-dot"></i>
+                <span>ห่างจากคุณ</span>
+              </div>
+              <div class="text-2xl font-bold text-purple-950" id="res-distance">95</div>
+              <div class="text-[10px] text-slate-500">km</div>
+            </div>
+          </div>
+
+          <!-- Safety Buffer Banner -->
+          <div class="bg-amber-50 border border-amber-200/90 rounded-2xl p-2.5 flex items-center justify-between text-xs text-amber-900 shadow-sm">
+            <div class="flex items-center gap-2">
+              <i class="fa-solid fa-shield-halved text-amber-600 text-sm"></i>
+              <span class="font-medium text-[11px]">ควรเติมก่อนน้ำมันหมด เพื่อความปลอดภัย</span>
+            </div>
+            <div class="font-bold text-amber-900 whitespace-nowrap bg-amber-100 px-2 py-0.5 rounded-md border border-amber-300/60 text-[11px]">
+              ระยะปลอดภัย 40 km
+            </div>
+          </div>
+
+          <!-- Recommended Station Card -->
+          <div>
+            <h3 class="text-sm font-bold text-slate-800 mb-2">ปั๊มแนะนำ</h3>
+            <div id="rec-card" onclick="openMapUrl(this.dataset.url)" class="bg-white border border-slate-200 rounded-2xl p-3.5 shadow-sm hover:border-blue-400 hover:shadow-md transition cursor-pointer relative">
               <div class="flex items-start gap-3">
-                <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 shrink-0 mt-0.5">
-                  <i class="fa-solid fa-gas-pump text-lg"></i>
+                <div class="w-11 h-11 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-lg flex-shrink-0">
+                  <i class="fa-solid fa-gas-pump"></i>
                 </div>
-                <div>
-                  <h4 id="recStationName" class="text-sm font-bold text-slate-800 group-hover:text-blue-600 transition">PTT Station สาขาพะเยา</h4>
-                  <div class="space-y-1 mt-1 text-xs text-slate-500">
-                    <div class="flex items-center gap-1.5">
-                      <i class="fa-solid fa-location-dot text-slate-400 text-[10px]"></i>
-                      <span>ห่างจากคุณ <strong id="recStationDist" class="text-slate-700">95 km</strong></span>
+                <div class="flex-grow min-w-0">
+                  <h4 class="font-bold text-slate-800 text-sm mb-1 truncate" id="rec-full-name">PTT Station สาขาพะเยา</h4>
+                  
+                  <div class="grid grid-cols-2 gap-y-1 text-xs text-slate-500 mb-2.5">
+                    <div class="flex items-center gap-1">
+                      <i class="fa-solid fa-location-dot text-slate-400"></i>
+                      <span>ห่างจากคุณ</span>
                     </div>
-                    <div class="flex items-center gap-1.5">
-                      <i class="fa-regular fa-clock text-slate-400 text-[10px]"></i>
-                      <span>ใช้เวลาเดินทาง <strong id="recStationTime" class="text-slate-700">1 ชม. 20 นาที</strong></span>
+                    <div class="font-semibold text-slate-700 text-right" id="rec-dist-text">95 km</div>
+                    
+                    <div class="flex items-center gap-1">
+                      <i class="fa-regular fa-clock text-slate-400"></i>
+                      <span>ใช้เวลาเดินทาง</span>
                     </div>
+                    <div class="font-semibold text-slate-700 text-right" id="rec-time-text">1 ชม. 20 นาที</div>
+                  </div>
+
+                  <div class="text-[10px] text-slate-400 mb-1">เชื้อเพลิงที่มีบริการ</div>
+                  <div class="flex flex-wrap gap-1">
+                    <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md text-[10px] font-medium">ดีเซล</span>
+                    <span class="px-2 py-0.5 bg-blue-50 text-blue-600 rounded-md text-[10px] font-medium">B20</span>
+                    <span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 rounded-md text-[10px] font-medium">แก๊สโซฮอล์ 95</span>
+                    <span class="px-2 py-0.5 bg-amber-50 text-amber-700 rounded-md text-[10px] font-medium">แก๊สโซฮอล์ 91</span>
                   </div>
                 </div>
               </div>
-              <i class="fa-solid fa-arrow-up-right-from-square text-xs text-slate-400 group-hover:text-blue-600"></i>
             </div>
+          </div>
 
-            <!-- Fuel Type Badges -->
-            <div class="mt-3 pt-2.5 border-t border-slate-200/60">
-              <span class="text-[10px] font-bold text-slate-400 block mb-1.5">เชื้อเพลิงที่มีบริการ</span>
-              <div class="flex flex-wrap gap-1.5">
-                <span class="text-[10px] font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md">ดีเซล</span>
-                <span class="text-[10px] font-bold bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md">B20</span>
-                <span class="text-[10px] font-bold bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-md">แก๊สโซฮอล์ 95</span>
-                <span class="text-[10px] font-bold bg-amber-100 text-amber-700 px-2 py-0.5 rounded-md">แก๊สโซฮอล์ 91</span>
-              </div>
+          <!-- Backup Stations List -->
+          <div>
+            <h3 class="text-sm font-bold text-slate-800 mb-2">ปั๊มสำรองใกล้เคียง</h3>
+            <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm divide-y divide-slate-100" id="backup-list-container">
+              <!-- Dynamic Items -->
             </div>
-          </a>
-        </div>
-
-        <!-- Backup Stations Section -->
-        <div class="bg-white p-4 rounded-2xl border border-slate-100 shadow-sm space-y-2.5">
-          <h3 class="text-sm font-extrabold text-slate-800">ปั๊มสำรองใกล้เคียง</h3>
-          <div id="backupStationsList" class="space-y-2">
-            <!-- Dynamic Backup Items rendered here -->
           </div>
         </div>
-
       </div>
 
-    </main>
-
-    <!-- Bottom Action Bar -->
-    <div class="p-4 bg-white border-t border-slate-100 sm:rounded-b-[36px]">
-      <button id="mainActionBtn" onclick="calculateTrip()" class="w-full bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white font-bold py-3.5 rounded-2xl shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 text-sm transition">
-        <i class="fa-solid fa-route"></i> คำนวณจุดเติมน้ำมัน
-      </button>
-    </div>
-
-  </div>
-
-  <!-- Modal สำหรับเลือกปั๊มเริ่มต้น -->
-  <div id="stationModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4">
-    <div class="bg-white w-full max-w-md rounded-t-[32px] sm:rounded-3xl p-5 shadow-2xl space-y-4 max-h-[80vh] flex flex-col">
-      <div class="flex justify-between items-center border-b border-slate-100 pb-3">
-        <div>
-          <h3 class="font-extrabold text-slate-800 text-sm">เลือกปั๊มน้ำมันเริ่มต้น</h3>
-          <p class="text-xs text-slate-400">เลือกปั๊มที่คุณอยู่ หรือจุดเริ่มต้นออกเดินทาง</p>
-        </div>
-        <button onclick="closeStationModal()" class="text-slate-400 hover:text-slate-600 p-2">
-          <i class="fa-solid fa-xmark text-lg"></i>
+      <!-- Bottom Primary Map Button -->
+      <div class="p-4 bg-white border-t border-slate-100">
+        <button id="btn-primary-map" onclick="openMapUrl(this.dataset.url)" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 text-sm transition">
+          <i class="fa-solid fa-map-location-dot"></i> ดูเส้นทางบนแผนที่
         </button>
       </div>
-      <input type="text" id="modalSearchInput" oninput="filterModalStations()" placeholder="🔍 ค้นหาชื่อปั๊ม..." class="w-full bg-slate-50 border border-slate-200 text-xs font-medium rounded-xl p-2.5">
-      <div id="modalStationList" class="overflow-y-auto flex-1 space-y-2 divide-y divide-slate-100 pr-1"></div>
     </div>
+
   </div>
 
+  <!-- JavaScript Switch & Calculation Logic -->
   <script>
-    let selectedFuel = 3;
-    let allCars = [];
-    let allStations = [];
-    let userLat = null;
-    let userLng = null;
-    let currentKm = 0;
-    let currentRecommendedStation = null;
+    let carsData = [];
+    let stationsData = [];
+    let selectedCar = null;
+    let selectedFuelRatio = 0.6; // Default 3/5
 
     async function initApp() {
-      await loadCars();
-      await loadStations();
-      autoTrackLocation();
-    }
-
-    async function loadCars() {
       try {
-        const res = await fetch('/api/cars');
-        const json = await res.json();
-        allCars = Array.isArray(json) ? json : (json.data || []);
-        
-        const brands = [...new Set(allCars.map(c => c.brand))].sort();
-        const brandSelect = document.getElementById('brandSelect');
-        brandSelect.innerHTML = '<option value="">-- 1. เลือกยี่ห้อ (Brand) --</option>' + 
-          brands.map(b => `<option value="${b}">${b}</option>`).join('');
+        const [carsRes, stationsRes] = await Promise.all([
+          fetch('/api/cars').catch(() => fetch('./data/cars.json')),
+          fetch('/api/stations').catch(() => fetch('./data/stations.json'))
+        ]);
+        carsData = await carsRes.json();
+        stationsData = await stationsRes.json();
+        populateBrands();
       } catch (err) {
-        console.error('Error loading cars:', err);
+        console.warn("Fallback client memory mode", err);
       }
     }
 
-    async function loadStations() {
-      try {
-        const res = await fetch('/api/stations');
-        allStations = await res.json();
-      } catch (err) {
-        console.error('Error loading stations:', err);
-      }
-    }
-
-    function getDistanceInKm(lat1, lon1, lat2, lon2) {
-      const R = 6371;
-      const dLat = (lat2 - lat1) * Math.PI / 180;
-      const dLon = (lon2 - lon1) * Math.PI / 180;
-      const a = 
-        Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-        Math.sin(dLon/2) * Math.sin(dLon/2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-      return R * c;
-    }
-
-    function autoTrackLocation() {
-      if (!navigator.geolocation) {
-        fallbackStationSelection();
-        return;
-      }
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          userLat = pos.coords.latitude;
-          userLng = pos.coords.longitude;
-          updateLocationAndMap(userLat, userLng);
-        },
-        () => fallbackStationSelection(),
-        { enableHighAccuracy: true, timeout: 8000 }
-      );
-    }
-
-    function updateLocationAndMap(lat, lng, forcedStation = null) {
-      const mapIframe = document.getElementById('mapIframe');
-      const mapPlaceholder = document.getElementById('mapPlaceholder');
-      const gpsBadge = document.getElementById('gpsBadge');
-      const stationText = document.getElementById('currentStationName');
-
-      mapIframe.src = `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
-      mapIframe.classList.remove('hidden');
-      mapPlaceholder.classList.add('hidden');
-
-      let station = forcedStation;
-      if (!station && allStations.length > 0) {
-        let minDist = Infinity;
-        allStations.forEach(st => {
-          if (st.lat && st.lng) {
-            const dist = getDistanceInKm(lat, lng, st.lat, st.lng);
-            if (dist < minDist) {
-              minDist = dist;
-              station = st;
-            }
-          }
-        });
-      }
-
-      if (station) {
-        currentKm = station.kmMarker;
-        stationText.innerText = `${station.name} (${station.brand})`;
-        gpsBadge.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-700";
-        gpsBadge.innerText = "🟢 GPS Live";
-      }
-    }
-
-    function fallbackStationSelection() {
-      const gpsBadge = document.getElementById('gpsBadge');
-      gpsBadge.className = "text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-700";
-      gpsBadge.innerText = "⚠️ Manual Mode";
-      if (allStations.length > 0) {
-        updateLocationAndMap(allStations[0].lat || 19.907, allStations[0].lng || 99.832, allStations[0]);
-      }
-    }
-
-    // Modal Handlers
-    function openStationModal() {
-      document.getElementById('stationModal').classList.remove('hidden');
-      renderModalStations();
-    }
-    function closeStationModal() {
-      document.getElementById('stationModal').classList.add('hidden');
-    }
-    function renderModalStations(filterText = '') {
-      const listDiv = document.getElementById('modalStationList');
-      const query = filterText.toLowerCase();
-
-      const filtered = allStations.filter(st => 
-        st.name.toLowerCase().includes(query) || st.brand.toLowerCase().includes(query)
-      );
-
-      listDiv.innerHTML = filtered.map(st => `
-        <div onclick="selectStationFromModal('${st.id}')" class="p-2.5 hover:bg-blue-50 cursor-pointer flex justify-between items-center rounded-xl transition">
-          <div>
-            <span class="text-xs font-bold text-slate-800 block">${st.name}</span>
-            <span class="text-[10px] text-slate-400 block">${st.brand} • KM ${Math.round(st.kmMarker)}</span>
-          </div>
-        </div>
-      `).join('');
-    }
-    function filterModalStations() {
-      renderModalStations(document.getElementById('modalSearchInput').value);
-    }
-    function selectStationFromModal(id) {
-      const st = allStations.find(s => s.id === id);
-      if (st) {
-        currentKm = st.kmMarker;
-        updateLocationAndMap(st.lat, st.lng, st);
-        closeStationModal();
-      }
-    }
-
-    // Car Selection
-    function onSearchCar() {
-      const q = document.getElementById('carSearchInput').value.trim().toLowerCase();
-      const resDiv = document.getElementById('searchResults');
-      const clearBtn = document.getElementById('clearSearchBtn');
-      if (!q) { resDiv.classList.add('hidden'); clearBtn.classList.add('hidden'); return; }
-      clearBtn.classList.remove('hidden');
-
-      const matches = allCars.filter(c => c.brand.toLowerCase().includes(q) || c.model.toLowerCase().includes(q));
-      resDiv.innerHTML = matches.map(c => `
-        <div onclick="selectCarFromSearch('${c.id}')" class="p-3 hover:bg-blue-50 cursor-pointer flex justify-between items-center">
-          <div>
-            <span class="text-xs font-bold text-blue-600 block">${c.brand}</span>
-            <span class="text-xs text-slate-800">${c.model}</span>
-          </div>
-          <span class="text-[10px] bg-slate-100 text-slate-600 px-2 py-0.5 rounded">${c.tankCapacity}L</span>
-        </div>
-      `).join('');
-      resDiv.classList.remove('hidden');
-    }
-
-    function selectCarFromSearch(id) {
-      const car = allCars.find(c => c.id === id);
-      if (!car) return;
-      document.getElementById('brandSelect').value = car.brand;
-      onBrandChange();
-      document.getElementById('modelSelect').value = car.id;
-      document.getElementById('selectedCarId').value = car.id;
-      document.getElementById('carSearchInput').value = `${car.brand} - ${car.model}`;
-      document.getElementById('searchResults').classList.add('hidden');
-    }
-
-    function clearCarSearch() {
-      document.getElementById('carSearchInput').value = '';
-      document.getElementById('selectedCarId').value = '';
-      document.getElementById('searchResults').classList.add('hidden');
-      document.getElementById('clearSearchBtn').classList.add('hidden');
-      document.getElementById('brandSelect').value = '';
-      document.getElementById('modelSelect').innerHTML = '<option value="">-- 2. เลือกรุ่น (Model) --</option>';
-      document.getElementById('modelSelect').disabled = true;
+    function populateBrands() {
+      const brandSelect = document.getElementById('brand-select');
+      const brands = [...new Set(carsData.map(c => c.brand))];
+      brandSelect.innerHTML = '<option value="">-- Select Brand --</option>' + 
+        brands.map(b => `<option value="${b}">${b}</option>`).join('');
     }
 
     function onBrandChange() {
-      const brand = document.getElementById('brandSelect').value;
-      const modelSelect = document.getElementById('modelSelect');
-      if (!brand) { modelSelect.disabled = true; return; }
-      const cars = allCars.filter(c => c.brand === brand);
-      modelSelect.innerHTML = '<option value="">-- 2. เลือกรุ่น (Model) --</option>' + 
-        cars.map(c => `<option value="${c.id}">${c.model} (${c.tankCapacity}L)</option>`).join('');
-      modelSelect.disabled = false;
+      const brand = document.getElementById('brand-select').value;
+      const modelSelect = document.getElementById('model-select');
+      modelSelect.innerHTML = '<option value="">-- Select Model --</option>';
+
+      if (!brand) return;
+      const models = carsData.filter(c => c.brand === brand);
+      modelSelect.innerHTML += models.map(m => 
+        `<option value="${m.id}">${m.model} (${m.tankCapacity}L)</option>`
+      ).join('');
     }
 
     function onModelChange() {
-      const carId = document.getElementById('modelSelect').value;
-      document.getElementById('selectedCarId').value = carId;
+      const modelId = document.getElementById('model-select').value;
+      selectedCar = carsData.find(c => c.id === modelId) || null;
     }
 
-    function setFuel(lvl) {
-      selectedFuel = lvl;
-      document.querySelectorAll('.fuel-btn').forEach((btn, idx) => {
-        btn.className = (idx + 1 === lvl)
-          ? "fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl bg-blue-600 text-white font-bold shadow-md transition"
-          : "fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold hover:bg-slate-50 transition";
+    function filterCars() {
+      const query = document.getElementById('car-search').value.toLowerCase().trim();
+      if (!query) return;
+      const matched = carsData.find(c => c.model.toLowerCase().includes(query) || c.brand.toLowerCase().includes(query));
+      if (matched) {
+        document.getElementById('brand-select').value = matched.brand;
+        onBrandChange();
+        document.getElementById('model-select').value = matched.id;
+        selectedCar = matched;
+      }
+    }
+
+    function selectFuel(ratio, btnElement) {
+      selectedFuelRatio = ratio;
+      document.querySelectorAll('.fuel-btn').forEach(btn => {
+        btn.className = "fuel-btn p-2 border border-slate-200 rounded-xl bg-white text-center";
+        btn.querySelector('div').className = "text-xs font-bold text-slate-700";
       });
+
+      btnElement.className = "fuel-btn p-2 border-2 border-blue-600 bg-blue-600 text-white rounded-xl text-center shadow-sm";
+      btnElement.querySelectorAll('div')[0].className = "text-xs font-bold text-white";
+      btnElement.querySelectorAll('div')[1].className = "text-[9px] text-blue-100";
     }
 
-    // MAIN TRIP CALCULATION & STEP NAVIGATION
-    async function calculateTrip() {
-      const carId = document.getElementById('selectedCarId').value;
-      if (!carId) {
-        alert('กรุณาเลือกรถยนต์ของคุณก่อนทำการคำนวณครับ!');
-        return;
-      }
+    // Navigation Switches
+    function goToPage2() {
+      calculateAndRender();
+      document.getElementById('page-1').classList.add('hidden');
+      document.getElementById('page-1').classList.remove('flex');
 
-      // If already on step 2, button acts as Map Navigation
-      if (!document.getElementById('step2View').classList.contains('hidden')) {
-        if (currentRecommendedStation && currentRecommendedStation.googleMapUrl) {
-          window.open(currentRecommendedStation.googleMapUrl, '_blank');
-        }
-        return;
-      }
-
-      try {
-        const res = await fetch('/api/plan-trip', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ carId, fuelLevel: selectedFuel, currentKm })
-        });
-
-        const data = await res.json();
-        if (!data.recommendedStation) {
-          alert('ไม่พบปั๊มน้ำมันที่อยู่ในระยะปลอดภัย กรุณาแวะปั๊มที่ใกล้ที่สุดทันที');
-          return;
-        }
-
-        renderStep2(data);
-        goToStep2();
-      } catch (err) {
-        console.error('Calculation error:', err);
-        alert('เกิดข้อผิดพลาดในการคำนวณ กรุณาลองใหม่อีกครั้ง');
-      }
+      document.getElementById('page-2').classList.remove('hidden');
+      document.getElementById('page-2').classList.add('flex');
     }
 
-    function renderStep2(data) {
-      const car = allCars.find(c => c.id === document.getElementById('selectedCarId').value);
-      const rec = data.recommendedStation;
-      currentRecommendedStation = rec;
+    function goToPage1() {
+      document.getElementById('page-2').classList.add('hidden');
+      document.getElementById('page-2').classList.remove('flex');
 
-      // KPI Values
-      const efficiency = car ? (car.fuelEfficiency || 12.5) : 12.5;
-      const range = car ? Math.round((car.tankCapacity * (selectedFuel / 5)) * efficiency) : 200;
+      document.getElementById('page-1').classList.remove('hidden');
+      document.getElementById('page-1').classList.add('flex');
+    }
+
+    function calculateAndRender() {
+      const car = selectedCar || carsData[0] || { tankCapacity: 50, fuelEfficiency: 12.5, model: "Civic FE" };
+      const safetyBuffer = 40;
       
-      document.getElementById('resEfficiency').innerText = efficiency;
-      document.getElementById('resRange').innerText = range;
-      document.getElementById('resTargetStation').innerText = rec.name || rec.brand;
-      document.getElementById('resTargetLocation').innerText = rec.province || rec.name || 'ตามเส้นทาง';
-      document.getElementById('resDistance').innerText = Math.round(rec.distanceFromUser || 95);
-      document.getElementById('resSafetyBuffer').innerText = data.safetyBufferKm || 40;
+      const efficiency = car.fuelEfficiency || 12.5;
+      const totalRange = Math.round(car.tankCapacity * efficiency * selectedFuelRatio);
+      const targetDist = Math.max(20, totalRange - safetyBuffer);
 
-      // Recommended Station Card
-      document.getElementById('recStationName').innerText = rec.name;
-      document.getElementById('recStationDist').innerText = `${Math.round(rec.distanceFromUser || 95)} km`;
-      
-      // Estimated travel time calculation (~75 km/h avg)
-      const hours = Math.floor((rec.distanceFromUser || 95) / 75);
-      const mins = Math.round((((rec.distanceFromUser || 95) / 75) - hours) * 60);
-      const timeStr = hours > 0 ? `${hours} ชม. ${mins} นาที` : `${mins} นาที`;
-      document.getElementById('recStationTime').innerText = timeStr;
-      
-      const recLink = document.getElementById('recStationLink');
-      recLink.href = rec.googleMapUrl || `https://maps.google.com/?q=${rec.lat},${rec.lng}`;
+      let recStation = null;
+      let backupList = [];
 
-      // Render Backup Stations (ปั๊มสำรองใกล้เคียง)
-      const backupContainer = document.getElementById('backupStationsList');
-      const backups = data.backupStations || [];
-
-      if (backups.length === 0) {
-        backupContainer.innerHTML = `<p class="text-xs text-slate-400 py-2">ไม่มีปั๊มสำรองในระยะ</p>`;
+      if (stationsData.length > 0) {
+        const eligible = stationsData.filter(s => s.kmMarker <= targetDist);
+        recStation = eligible.length > 0 ? eligible[eligible.length - 1] : stationsData[0];
+        backupList = eligible.length >= 3 ? eligible.slice(-3, -1).reverse() : stationsData.slice(1, 3);
       } else {
-        backupContainer.innerHTML = backups.map(st => {
-          const mapUrl = st.googleMapUrl || `https://maps.google.com/?q=${st.lat},${st.lng}`;
-          return `
-            <a href="${mapUrl}" target="_blank" class="flex justify-between items-center p-3 rounded-xl border border-slate-100 bg-slate-50 hover:bg-blue-50 transition group">
-              <div class="flex items-center gap-2.5">
-                <div class="w-7 h-7 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-xs">
-                  <i class="fa-solid fa-gas-pump"></i>
-                </div>
-                <span class="text-xs font-bold text-slate-700 group-hover:text-blue-600">${st.name}</span>
-              </div>
-              <div class="flex items-center gap-2">
-                <span class="text-xs font-semibold text-slate-500">${Math.round(st.distanceFromUser)} km</span>
-                <i class="fa-solid fa-chevron-right text-xs text-slate-300 group-hover:text-blue-500"></i>
-              </div>
-            </a>
-          `;
-        }).join('');
+        recStation = { name: "PTT Station สาขาพะเยา", kmMarker: 95, googleMapUrl: "https://maps.google.com/?q=PTT+Station+Phayao" };
+        backupList = [
+          { name: "Bangchak พะเยา", kmMarker: 108, googleMapUrl: "https://maps.google.com/?q=Bangchak+Phayao" },
+          { name: "PT Station พะเยา", kmMarker: 121, googleMapUrl: "https://maps.google.com/?q=PT+Station+Phayao" }
+        ];
       }
+
+      // Calculations
+      document.getElementById('res-efficiency').innerText = efficiency;
+      document.getElementById('res-range').innerText = totalRange;
+      
+      const nameParts = recStation.name.split(' ');
+      document.getElementById('res-stop-title').innerText = nameParts.slice(0, 2).join(' ');
+      document.getElementById('res-stop-sub').innerText = nameParts.slice(2).join(' ') || "จังหวัดพะเยา";
+      document.getElementById('res-distance').innerText = recStation.kmMarker;
+
+      // Recommended Station
+      document.getElementById('rec-full-name').innerText = recStation.name;
+      document.getElementById('rec-dist-text').innerText = `${recStation.kmMarker} km`;
+      document.getElementById('rec-time-text').innerText = `${Math.floor(recStation.kmMarker/70)} ชม. ${Math.round((recStation.kmMarker%70)*60/70)} นาที`;
+      
+      const mapUrl = recStation.googleMapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(recStation.name)}`;
+      document.getElementById('rec-card').dataset.url = mapUrl;
+      document.getElementById('btn-primary-map').dataset.url = mapUrl;
+
+      // Backup List
+      const backupContainer = document.getElementById('backup-list-container');
+      backupContainer.innerHTML = backupList.map(st => {
+        const bUrl = st.googleMapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(st.name)}`;
+        return `
+          <div onclick="openMapUrl('${bUrl}')" class="p-3 flex items-center justify-between hover:bg-slate-50 transition cursor-pointer">
+            <div class="flex items-center gap-2.5">
+              <div class="w-7 h-7 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-xs">
+                <i class="fa-solid fa-gas-pump"></i>
+              </div>
+              <span class="font-semibold text-slate-700 text-xs">${st.name}</span>
+            </div>
+            <div class="flex items-center gap-2 text-xs text-slate-500">
+              <span>${st.kmMarker} km</span>
+              <i class="fa-solid fa-chevron-right text-slate-300 text-[10px]"></i>
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
-    function goToStep2() {
-      document.getElementById('step1View').classList.add('hidden');
-      document.getElementById('step2View').classList.remove('hidden');
-      document.getElementById('backBtn').classList.remove('hidden');
-      document.getElementById('pageStepSubtitle').innerText = "หน้าที่ 2 จาก 2";
-
-      // Active Circle 2 UI
-      document.getElementById('stepCircle2').className = "w-7 h-7 rounded-full bg-blue-500 border-2 border-white text-white flex items-center justify-center text-xs font-bold";
-      document.getElementById('stepLine1').className = "w-12 h-1 bg-blue-200 rounded";
-
-      // Change Bottom Button to Map Navigation
-      const btn = document.getElementById('mainActionBtn');
-      btn.innerHTML = `<i class="fa-regular fa-map text-base"></i> ดูเส้นทางบนแผนที่`;
-      btn.className = "w-full bg-blue-600 hover:bg-blue-700 active:scale-[0.98] text-white font-bold py-3.5 rounded-2xl shadow-lg shadow-blue-500/20 flex items-center justify-center gap-2 text-sm transition";
+    function openMapUrl(url) {
+      if (url) window.open(url, '_blank');
     }
 
-    function goToStep1() {
-      document.getElementById('step2View').classList.add('hidden');
-      document.getElementById('step1View').classList.remove('hidden');
-      document.getElementById('backBtn').classList.add('hidden');
-      document.getElementById('pageStepSubtitle').innerText = "หน้าที่ 1 จาก 2";
-
-      // Reset Step Circles
-      document.getElementById('stepCircle2').className = "w-7 h-7 rounded-full bg-blue-800 border-2 border-blue-400 text-blue-200 flex items-center justify-center text-xs font-bold";
-      document.getElementById('stepLine1').className = "w-12 h-1 bg-blue-400/50 rounded";
-
-      // Reset Bottom Button
-      const btn = document.getElementById('mainActionBtn');
-      btn.innerHTML = `<i class="fa-solid fa-route"></i> คำนวณจุดเติมน้ำมัน`;
-    }
-
-    initApp();
+    window.addEventListener('DOMContentLoaded', initApp);
   </script>
 </body>
 </html>
