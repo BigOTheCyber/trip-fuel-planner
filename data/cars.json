@@ -1,39 +1,431 @@
 [
-  { "id": "toyota-yaris-ativ", "brand": "Toyota", "model": "Yaris Ativ (1.2)", "tankCapacity": 40, "fuelEfficiency": 18 },
-  { "id": "toyota-yaris-cross", "brand": "Toyota", "model": "Yaris Cross (1.5 Hybrid)", "tankCapacity": 36, "fuelEfficiency": 24 },
-  { "id": "toyota-corolla-cross", "brand": "Toyota", "model": "Corolla Cross (1.8 Hybrid)", "tankCapacity": 36, "fuelEfficiency": 22 },
-  { "id": "toyota-camry", "brand": "Toyota", "model": "Camry (2.5 Premium)", "tankCapacity": 50, "fuelEfficiency": 16 },
-  { "id": "toyota-revo-24", "brand": "Toyota", "model": "Hilux Revo (2.4 Diesel)", "tankCapacity": 80, "fuelEfficiency": 13 },
-  { "id": "toyota-fortuner-28", "brand": "Toyota", "model": "Fortuner (2.8 Diesel)", "tankCapacity": 80, "fuelEfficiency": 12 },
-
-  { "id": "honda-city-10", "brand": "Honda", "model": "City (1.0 Turbo)", "tankCapacity": 40, "fuelEfficiency": 17 },
-  { "id": "honda-city-ehev", "brand": "Honda", "model": "City (e:HEV 1.5)", "tankCapacity": 40, "fuelEfficiency": 25 },
-  { "id": "honda-civic-fe", "brand": "Honda", "model": "Civic FE (1.5 Turbo)", "tankCapacity": 47, "fuelEfficiency": 15 },
-  { "id": "honda-hrv-ehev", "brand": "Honda", "model": "HR-V (e:HEV 1.5)", "tankCapacity": 40, "fuelEfficiency": 23 },
-  { "id": "honda-crv-ehev", "brand": "Honda", "model": "CR-V (2.0 e:HEV)", "tankCapacity": 57, "fuelEfficiency": 18 },
-
-  { "id": "isuzu-dmax-19", "brand": "Isuzu", "model": "D-Max (1.9 Ddi)", "tankCapacity": 76, "fuelEfficiency": 14 },
-  { "id": "isuzu-dmax-30", "brand": "Isuzu", "model": "D-Max (3.0 Ddi)", "tankCapacity": 76, "fuelEfficiency": 12 },
-  { "id": "isuzu-mux-30", "brand": "Isuzu", "model": "MU-X (3.0 Ddi)", "tankCapacity": 80, "fuelEfficiency": 12 },
-
-  { "id": "mazda-2-13", "brand": "Mazda", "model": "Mazda 2 (1.3 เบนซิน)", "tankCapacity": 35, "fuelEfficiency": 18 },
-  { "id": "mazda-2-15d", "brand": "Mazda", "model": "Mazda 2 (1.5 ดีเซล)", "tankCapacity": 44, "fuelEfficiency": 22 },
-  { "id": "mazda-cx30", "brand": "Mazda", "model": "CX-30 (2.0 เบนซิน)", "tankCapacity": 51, "fuelEfficiency": 13 },
-
-  { "id": "nissan-almera", "brand": "Nissan", "model": "Almera (1.0 Turbo)", "tankCapacity": 35, "fuelEfficiency": 18 },
-  { "id": "nissan-kicks", "brand": "Nissan", "model": "Kicks (e-POWER)", "tankCapacity": 41, "fuelEfficiency": 20 },
-  { "id": "nissan-navara", "brand": "Nissan", "model": "Navara (2.3 Twin Turbo)", "tankCapacity": 80, "fuelEfficiency": 13 },
-
-  { "id": "mitsubishi-attrage", "brand": "Mitsubishi", "model": "Attrage (1.2)", "tankCapacity": 42, "fuelEfficiency": 19 },
-  { "id": "mitsubishi-xpander", "brand": "Mitsubishi", "model": "Xpander (1.5)", "tankCapacity": 45, "fuelEfficiency": 14 },
-  { "id": "mitsubishi-pajero", "brand": "Mitsubishi", "model": "Pajero Sport (2.4 Diesel)", "tankCapacity": 68, "fuelEfficiency": 12 },
-
-  { "id": "ford-ranger-20", "brand": "Ford", "model": "Ranger (2.0 Single Turbo)", "tankCapacity": 80, "fuelEfficiency": 13 },
-  { "id": "ford-everest-20", "brand": "Ford", "model": "Everest (2.0 Bi-Turbo)", "tankCapacity": 80, "fuelEfficiency": 11 },
-
-  { "id": "suzuki-swift", "brand": "Suzuki", "model": "Swift (1.2 Dualjet)", "tankCapacity": 37, "fuelEfficiency": 20 },
-  { "id": "suzuki-xl7", "brand": "Suzuki", "model": "XL7 (1.5)", "tankCapacity": 45, "fuelEfficiency": 15 },
-
-  { "id": "mg-zs", "brand": "MG", "model": "MG ZS (1.5)", "tankCapacity": 48, "fuelEfficiency": 13 },
-  { "id": "mg-vs-hev", "brand": "MG", "model": "MG VS (HEV 1.5)", "tankCapacity": 48, "fuelEfficiency": 18 }
+  {
+    "id": "honda-city-10",
+    "brand": "Honda",
+    "model": "City (1.0 Turbo)",
+    "category": "Sedan (เก๋งซีดาน)",
+    "engine": "1.0 VTEC Turbo",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 91, 95, E20)",
+    "tankCapacity": 40,
+    "fuelEfficiency": 17
+  },
+  {
+    "id": "honda-city-ehev",
+    "brand": "Honda",
+    "model": "City (e:HEV 1.5)",
+    "category": "Sedan (เก๋งซีดาน)",
+    "engine": "1.5 e:HEV (Hybrid)",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 91, 95, E20)",
+    "tankCapacity": 40,
+    "fuelEfficiency": 25
+  },
+  {
+    "id": "toyota-yaris-ativ",
+    "brand": "Toyota",
+    "model": "Yaris Ativ (1.2)",
+    "category": "Sedan (เก๋งซีดาน)",
+    "engine": "1.2 Dual VVT-iE",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 91, 95, E20)",
+    "tankCapacity": 40,
+    "fuelEfficiency": 18
+  },
+  {
+    "id": "honda-civic-fe",
+    "brand": "Honda",
+    "model": "Civic FE (1.5 Turbo)",
+    "category": "Sedan (เก๋งซีดาน)",
+    "engine": "1.5 VTEC Turbo",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 95, E20)",
+    "tankCapacity": 47,
+    "fuelEfficiency": 15
+  },
+  {
+    "id": "nissan-almera",
+    "brand": "Nissan",
+    "model": "Almera (1.0 Turbo)",
+    "category": "Sedan (เก๋งซีดาน)",
+    "engine": "1.0 Turbo",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 91, 95, E20)",
+    "tankCapacity": 35,
+    "fuelEfficiency": 18
+  },
+  {
+    "id": "mitsubishi-attrage",
+    "brand": "Mitsubishi",
+    "model": "Attrage (1.2)",
+    "category": "Sedan (เก๋งซีดาน)",
+    "engine": "1.2 MIVEC",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 91, 95, E20)",
+    "tankCapacity": 42,
+    "fuelEfficiency": 19
+  },
+  {
+    "id": "mazda-2-13",
+    "brand": "Mazda",
+    "model": "Mazda 2 (1.3 เบนซิน)",
+    "category": "Sedan (เก๋งซีดาน)",
+    "engine": "1.3 Skyactiv-G",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 91, 95, E20)",
+    "tankCapacity": 35,
+    "fuelEfficiency": 18
+  },
+  {
+    "id": "mazda-2-15d",
+    "brand": "Mazda",
+    "model": "Mazda 2 (1.5 ดีเซล)",
+    "category": "Sedan (เก๋งซีดาน)",
+    "engine": "1.5 Skyactiv-D",
+    "fuelType": "Diesel (B7)",
+    "tankCapacity": 44,
+    "fuelEfficiency": 22
+  },
+  {
+    "id": "suzuki-swift",
+    "brand": "Suzuki",
+    "model": "Swift (1.2 Dualjet)",
+    "category": "Hatchback (เก๋ง 5 ประตู)",
+    "engine": "1.2 Dualjet",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 91, 95, E20)",
+    "tankCapacity": 37,
+    "fuelEfficiency": 20
+  },
+  {
+    "id": "toyota-yaris-hatchback",
+    "brand": "Toyota",
+    "model": "Yaris Hatchback (1.2)",
+    "category": "Hatchback (เก๋ง 5 ประตู)",
+    "engine": "1.2 Dual VVT-i",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 91, 95, E20)",
+    "tankCapacity": 42,
+    "fuelEfficiency": 19
+  },
+  {
+    "id": "honda-city-hatchback",
+    "brand": "Honda",
+    "model": "City Hatchback (1.0 Turbo)",
+    "category": "Hatchback (เก๋ง 5 ประตู)",
+    "engine": "1.0 VTEC Turbo",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 91, 95, E20)",
+    "tankCapacity": 40,
+    "fuelEfficiency": 18.5
+  },
+  {
+    "id": "toyota-camry",
+    "brand": "Toyota",
+    "model": "Camry (2.5 Premium)",
+    "category": "Executive Sedan",
+    "engine": "2.5 Dynamic Force / Hybrid",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 91, 95, E20)",
+    "tankCapacity": 50,
+    "fuelEfficiency": 16
+  },
+  {
+    "id": "honda-accord-ehev",
+    "brand": "Honda",
+    "model": "Accord (2.0 e:HEV)",
+    "category": "Executive Sedan",
+    "engine": "2.0 e:HEV (Hybrid)",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 91, 95, E20)",
+    "tankCapacity": 48,
+    "fuelEfficiency": 23.5
+  },
+  {
+    "id": "bmw-3-series",
+    "brand": "BMW",
+    "model": "3 Series (320d / 330e)",
+    "category": "Premium / Luxury Sedan",
+    "engine": "2.0 Diesel / Plug-in Hybrid",
+    "fuelType": "Diesel (B7) / Gasoline (แก๊สโซฮอล์ 95)",
+    "tankCapacity": 59,
+    "fuelEfficiency": 20.5
+  },
+  {
+    "id": "mercedes-c-class",
+    "brand": "Mercedes-Benz",
+    "model": "C-Class (C 220 d)",
+    "category": "Premium / Luxury Sedan",
+    "engine": "2.0 Diesel",
+    "fuelType": "Diesel (B7)",
+    "tankCapacity": 66,
+    "fuelEfficiency": 21.5
+  },
+  {
+    "id": "toyota-yaris-cross",
+    "brand": "Toyota",
+    "model": "Yaris Cross (1.5 Hybrid)",
+    "category": "Compact Crossover B-SUV",
+    "engine": "1.5 HEV (Hybrid)",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 91, 95, E20)",
+    "tankCapacity": 36,
+    "fuelEfficiency": 24
+  },
+  {
+    "id": "toyota-corolla-cross",
+    "brand": "Toyota",
+    "model": "Corolla Cross (1.8 Hybrid)",
+    "category": "SUV / Crossover",
+    "engine": "1.8 Hybrid",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 95, E20)",
+    "tankCapacity": 36,
+    "fuelEfficiency": 22
+  },
+  {
+    "id": "honda-hrv-ehev",
+    "brand": "Honda",
+    "model": "HR-V (e:HEV 1.5)",
+    "category": "SUV / Crossover",
+    "engine": "1.5 e:HEV (Hybrid)",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 95, E20)",
+    "tankCapacity": 40,
+    "fuelEfficiency": 23
+  },
+  {
+    "id": "honda-crv-ehev",
+    "brand": "Honda",
+    "model": "CR-V (2.0 e:HEV)",
+    "category": "SUV / Crossover",
+    "engine": "2.0 e:HEV (Hybrid)",
+    "fuelType": "Gasoline / Diesel (B7)",
+    "tankCapacity": 57,
+    "fuelEfficiency": 18
+  },
+  {
+    "id": "nissan-kicks",
+    "brand": "Nissan",
+    "model": "Kicks (e-POWER)",
+    "category": "Compact Crossover B-SUV",
+    "engine": "1.2 e-POWER",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 91, 95, E20)",
+    "tankCapacity": 41,
+    "fuelEfficiency": 20
+  },
+  {
+    "id": "mazda-cx30",
+    "brand": "Mazda",
+    "model": "CX-30 (2.0 เบนซิน)",
+    "category": "SUV / Crossover",
+    "engine": "2.0 Skyactiv-G",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 91, 95, E20)",
+    "tankCapacity": 51,
+    "fuelEfficiency": 13
+  },
+  {
+    "id": "mg-zs",
+    "brand": "MG",
+    "model": "MG ZS (1.5)",
+    "category": "SUV / Crossover",
+    "engine": "1.5 VTi-TECH",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 91, 95, E20)",
+    "tankCapacity": 48,
+    "fuelEfficiency": 13
+  },
+  {
+    "id": "mg-vs-hev",
+    "brand": "MG",
+    "model": "MG VS (HEV 1.5)",
+    "category": "SUV / Crossover",
+    "engine": "1.5 Hybrid",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 91, 95, E20)",
+    "tankCapacity": 48,
+    "fuelEfficiency": 18
+  },
+  {
+    "id": "toyota-veloz",
+    "brand": "Toyota",
+    "model": "Veloz (1.5)",
+    "category": "MPV / Van",
+    "engine": "1.5 Dual VVT-i",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 91, 95, E20)",
+    "tankCapacity": 43,
+    "fuelEfficiency": 15
+  },
+  {
+    "id": "mitsubishi-xpander",
+    "brand": "Mitsubishi",
+    "model": "Xpander (1.5)",
+    "category": "MPV / Van",
+    "engine": "1.5 MIVEC",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 91, 95, E20)",
+    "tankCapacity": 45,
+    "fuelEfficiency": 14
+  },
+  {
+    "id": "suzuki-xl7",
+    "brand": "Suzuki",
+    "model": "XL7 (1.5)",
+    "category": "MPV / Van",
+    "engine": "1.5 K15B",
+    "fuelType": "Gasoline (แก๊สโซฮอล์ 91, 95, E20)",
+    "tankCapacity": 45,
+    "fuelEfficiency": 15
+  },
+  {
+    "id": "toyota-commuter",
+    "brand": "Toyota", "model": "Commuter / Hiace (2.8)",
+    "category": "MPV / Van",
+    "engine": "2.8 ดีเซล",
+    "fuelType": "Diesel (B7)",
+    "tankCapacity": 70,
+    "fuelEfficiency": 10.5
+  },
+  {
+    "id": "isuzu-dmax-19",
+    "brand": "Isuzu",
+    "model": "D-Max (1.9 Ddi)",
+    "category": "Pickup (กระบะ)",
+    "engine": "1.9 Ddi Blue Power",
+    "fuelType": "Diesel (B7)",
+    "tankCapacity": 76,
+    "fuelEfficiency": 14
+  },
+  {
+    "id": "isuzu-dmax-30",
+    "brand": "Isuzu",
+    "model": "D-Max (3.0 Ddi)",
+    "category": "Pickup (กระบะ)",
+    "engine": "3.0 Ddi Blue Power",
+    "fuelType": "Diesel (B7)",
+    "tankCapacity": 76,
+    "fuelEfficiency": 12
+  },
+  {
+    "id": "toyota-revo-24",
+    "brand": "Toyota",
+    "model": "Hilux Revo (2.4 Diesel)",
+    "category": "Pickup (กระบะ)",
+    "engine": "2.4 GD Super Power",
+    "fuelType": "Diesel (B7)",
+    "tankCapacity": 80,
+    "fuelEfficiency": 13
+  },
+  {
+    "id": "ford-ranger-20",
+    "brand": "Ford",
+    "model": "Ranger (2.0 Single Turbo)",
+    "category": "Pickup (กระบะ)",
+    "engine": "2.0 Single Turbo",
+    "fuelType": "Diesel (B7)",
+    "tankCapacity": 80,
+    "fuelEfficiency": 13
+  },
+  {
+    "id": "nissan-navara",
+    "brand": "Nissan",
+    "model": "Navara (2.3 Twin Turbo)",
+    "category": "Pickup (กระบะ)",
+    "engine": "2.3 Twin Turbo",
+    "fuelType": "Diesel (B7)",
+    "tankCapacity": 80,
+    "fuelEfficiency": 13
+  },
+  {
+    "id": "toyota-fortuner-28",
+    "brand": "Toyota",
+    "model": "Fortuner (2.8 Diesel)",
+    "category": "PPV (อเนกประสงค์กระบะ)",
+    "engine": "2.8 GD Super Power ดีเซล",
+    "fuelType": "Diesel (B7, B10, B20)",
+    "tankCapacity": 80,
+    "fuelEfficiency": 12
+  },
+  {
+    "id": "isuzu-mux-30",
+    "brand": "Isuzu",
+    "model": "MU-X (3.0 Ddi)",
+    "category": "PPV (อเนกประสงค์กระบะ)",
+    "engine": "3.0 Ddi Blue Power ดีเซล",
+    "fuelType": "Diesel (B7, B10, B20)",
+    "tankCapacity": 80,
+    "fuelEfficiency": 12
+  },
+  {
+    "id": "ford-everest-20",
+    "brand": "Ford",
+    "model": "Everest (2.0 Bi-Turbo)",
+    "category": "PPV (อเนกประสงค์กระบะ)",
+    "engine": "2.0 Bi-Turbo ดีเซล",
+    "fuelType": "Diesel (B7)",
+    "tankCapacity": 80,
+    "fuelEfficiency": 11
+  },
+  {
+    "id": "mitsubishi-pajero",
+    "brand": "Mitsubishi",
+    "model": "Pajero Sport (2.4 Diesel)",
+    "category": "PPV (อเนกประสงค์กระบะ)",
+    "engine": "2.4 MIVEC ดีเซล",
+    "fuelType": "Diesel (B7)",
+    "tankCapacity": 68,
+    "fuelEfficiency": 12
+  },
+  {
+    "id": "isuzu-elf",
+    "brand": "Isuzu",
+    "model": "Elf (3.0 ดีเซล)",
+    "category": "Light Truck (บรรทุก 4 ล้อ)",
+    "engine": "3.0 ดีเซล",
+    "fuelType": "Diesel (B7)",
+    "tankCapacity": 75,
+    "fuelEfficiency": 9.5
+  },
+  {
+    "id": "hino-dutro",
+    "brand": "Hino",
+    "model": "Dutro (4.0 ดีเซล)",
+    "category": "Light Truck (บรรทุก 4 ล้อ)",
+    "engine": "4.0 ดีเซล",
+    "fuelType": "Diesel (B7)",
+    "tankCapacity": 100,
+    "fuelEfficiency": 9.5
+  },
+  {
+    "id": "byd-atto-3",
+    "brand": "BYD",
+    "model": "Atto 3",
+    "category": "EV (ไฟฟ้า 100%)",
+    "engine": "มอเตอร์ไฟฟ้า (60.48 kWh)",
+    "fuelType": "ไฟฟ้า 100%",
+    "tankCapacity": 60.48,
+    "fuelEfficiency": 7
+  },
+  {
+    "id": "mg-zs-ev",
+    "brand": "MG",
+    "model": "ZS EV",
+    "category": "EV (ไฟฟ้า 100%)",
+    "engine": "มอเตอร์ไฟฟ้า (50.3 kWh)",
+    "fuelType": "ไฟฟ้า 100%",
+    "tankCapacity": 50.3,
+    "fuelEfficiency": 6.5
+  },
+  {
+    "id": "neta-v",
+    "brand": "NETA",
+    "model": "V / V-II",
+    "category": "EV (ไฟฟ้า 100%)",
+    "engine": "มอเตอร์ไฟฟ้า (36.1 kWh)",
+    "fuelType": "ไฟฟ้า 100%",
+    "tankCapacity": 36.1,
+    "fuelEfficiency": 8
+  },
+  {
+    "id": "ora-good-cat",
+    "brand": "ORA",
+    "model": "Good Cat",
+    "category": "EV (ไฟฟ้า 100%)",
+    "engine": "มอเตอร์ไฟฟ้า (57.7 kWh)",
+    "fuelType": "ไฟฟ้า 100%",
+    "tankCapacity": 57.7,
+    "fuelEfficiency": 7.3
+  },
+  {
+    "id": "deepal-s07",
+    "brand": "Deepal",
+    "model": "S07",
+    "category": "EV (ไฟฟ้า 100%)",
+    "engine": "มอเตอร์ไฟฟ้า (79.97 kWh)",
+    "fuelType": "ไฟฟ้า 100%",
+    "tankCapacity": 79.97,
+    "fuelEfficiency": 6.5
+  }
 ]
