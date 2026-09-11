@@ -1,116 +1,85 @@
-import { Elysia } from 'elysia';
+import express, { Request, Response } from 'express';
+import fs from 'fs';
+import path from 'path';
 
-const PORT = Number(process.env.PORT) || 3000;
+const app = express();
+app.use(express.json());
+app.use(express.static('public')); // หรือโฟลเดอร์ที่เก็บ index.html
 
-async function getStationsFromCSV() {
-  try {
-    const fileText = await Bun.file('data/stations.csv').text();
-    const lines = fileText.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
-    if (lines.length <= 1) return [];
+// โหลดข้อมูลจากไฟล์ JSON/CSV
+const carsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'cars.json'), 'utf-8'));
+const stationsData = JSON.parse(fs.readFileSync(path.join(__dirname, 'stations.json'), 'utf-8')); 
 
-    const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
-    let accumulatedKm = 0;
+// API ดึงรายการรถ
+app.get('/api/cars', (req: Request, res: Response) => {
+  res.json(carsData);
+});
 
-    return lines.slice(1).map((line, index) => {
-      const values = line.split(',').map(v => v.trim().replace(/^"|"$/g, ''));
-      const row: any = {};
-      headers.forEach((header, i) => {
-        row[header] = values[i];
-      });
+// API ดึงรายการปั๊มทั้งหมด
+app.get('/api/stations', (req: Request, res: Response) => {
+  res.json(stationsData);
+});
 
-      const name = row['ชื่อปั๊มน้ำมัน'] || row['name'] || 'Gas Station';
-      const brand = row['แบรนด์'] || row['brand'] || 'Station';
-      const mapUrl = row['Google Maps Link'] || row['googleMapUrl'] || '';
-      const lat = parseFloat(row['Latitude'] || '0') || 0;
-      const lng = parseFloat(row['Longitude'] || '0') || 0;
-      
-      const distFromPrev = parseFloat(row['ห่างจากปั๊มก่อนหน้า (KM)'] || '0') || 0;
-      accumulatedKm += distFromPrev;
+// API คำนวณจุดเติมน้ำมัน
+app.post('/api/plan-trip', (req: Request, res: Response) => {
+  const { carId, fuelLevel, currentKm } = req.body;
 
-      return {
-        id: `station-${index}`,
-        name,
-        brand,
-        lat,
-        lng,
-        googleMapUrl: mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name)}`,
-        kmMarker: accumulatedKm
-      };
-    });
-  } catch (error) {
-    console.error('Error reading stations.csv:', error);
-    return [];
+  // 1. ค้นหารายละเอียดรถ
+  const car = carsData.find((c: any) => c.id === carId);
+  if (!car) {
+    return res.status(400).json({ error: 'Car not found' });
   }
-}
 
-const app = new Elysia()
-  .get('/', () => Bun.file('index.html'))
-  .get('/index.html', () => Bun.file('index.html'))
+  const fuelEfficiency = car.fuelEfficiency || 12.5; // กม./ลิตร
+  const tankCapacity = car.tankCapacity || 50;       // ลิตร
+  const currentFuelLiters = (tankCapacity * (fuelLevel / 5));
+  
+  // ระยะทางที่รถยังวิ่งได้จริง (กม.)
+  const totalRangeKm = currentFuelLiters * fuelEfficiency;
+  
+  // ระยะปลอดภัย (Safety Buffer)
+  const safetyBufferKm = 40; 
+  
+  // ระยะทางสูงสุดที่วิ่งได้อย่างปลอดภัยก่อนต้องเติมน้ำมัน
+  const safeDriveKm = Math.max(0, totalRangeKm - safetyBufferKm);
+  const targetKm = currentKm + safeDriveKm;
 
-  .get('/api/cars', async () => {
-    try {
-      return await Bun.file('data/cars.json').json();
-    } catch (error) {
-      return { status: 'error', message: 'Cars data not found' };
-    }
-  })
+  // 2. ค้นหาปั๊มที่อยู่ข้างหน้า (เรียงตามระยะทาง KM Marker)
+  const upcomingStations = stationsData
+    .filter((s: any) => s.kmMarker > currentKm)
+    .map((s: any) => ({
+      ...s,
+      distanceFromUser: s.kmMarker - currentKm
+    }))
+    .sort((a: any, b: any) => a.kmMarker - b.kmMarker);
 
-  .get('/api/stations', async () => {
-    return await getStationsFromCSV();
-  })
+  if (upcomingStations.length === 0) {
+    return res.json({ recommendedStation: null, backupStations: [], safetyBufferKm });
+  }
 
-  .post('/api/plan-trip', async ({ body }: { body: any }) => {
-    const { carId, fuelLevel = 3, currentKm = 0 } = body || {};
+  // 3. หาปั๊มแนะนำ (ปั๊มที่ไกลที่สุดแต่ยังอยู่ในระยะ safeDriveKm)
+  let recommended = upcomingStations
+    .filter((s: any) => s.kmMarker <= targetKm)
+    .pop();
 
-    let cars: any[] = [];
-    try {
-      const carsData = await Bun.file('data/cars.json').json();
-      cars = Array.isArray(carsData) ? carsData : (carsData.data || []);
-    } catch (e) {
-      cars = [];
-    }
+  // ถ้าไม่มีปั๊มไหนอยู่ในระยะปลอดภัยเลย ให้เลือกปั๊มแรกที่ใกล้ที่สุด
+  if (!recommended) {
+    recommended = upcomingStations[0];
+  }
 
-    const selectedCar = cars.find(c => String(c.id) === String(carId)) || { tankCapacity: 45, fuelEfficiency: 15 };
-    const tankCapacity = Number(selectedCar.tankCapacity) || 45;
-    const fuelEfficiency = Number(selectedCar.fuelEfficiency) || 15;
+  // 4. หาปั๊มสำรองใกล้เคียง (เลือกปั๊มที่อยู่ก่อนหน้าหรือถัดไปจากปั๊มแนะนำ 2 ปั๊ม)
+  const backupStations = upcomingStations
+    .filter((s: any) => s.id !== recommended.id)
+    .slice(0, 2);
 
-    const fullRange = tankCapacity * fuelEfficiency;
-    const currentFuelRatio = Number(fuelLevel) / 5;
-    const remainingKmCapacity = fullRange * currentFuelRatio;
-
-    let bufferRatio = 0.85;
-    if (Number(fuelLevel) === 1) {
-      bufferRatio = 0.50;
-    } else if (Number(fuelLevel) === 2) {
-      bufferRatio = 0.70;
-    }
-
-    const safeMaxKm = Number(currentKm) + (remainingKmCapacity * bufferRatio);
-    const stations = await getStationsFromCSV();
-
-    const validStations = stations.filter(s => s.kmMarker > Number(currentKm) && s.kmMarker <= safeMaxKm);
-    const recommended = validStations.length > 0 
-      ? validStations[validStations.length - 1] 
-      : stations.find(s => s.kmMarker > Number(currentKm));
-
-    if (!recommended) {
-      return { recommendedStation: null };
-    }
-
-    return {
-      recommendedStation: {
-        name: recommended.name,
-        brand: recommended.brand,
-        kmMarker: Math.round(recommended.kmMarker * 10) / 10,
-        distanceFromUser: Math.max(0, Math.round((recommended.kmMarker - Number(currentKm)) * 10) / 10),
-        googleMapUrl: recommended.googleMapUrl
-      }
-    };
-  })
-
-  .listen({
-    port: PORT,
-    hostname: '0.0.0.0'
-  }, (server) => {
-    console.log(`🚀 Trip Fuel Planner is running at http://${server.hostname}:${server.port}`);
+  return res.json({
+    recommendedStation: recommended,
+    backupStations: backupStations,
+    safetyBufferKm: safetyBufferKm
   });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
