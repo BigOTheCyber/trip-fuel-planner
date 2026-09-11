@@ -8,55 +8,61 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
-    body { font-family: 'Kanit', sans-serif; background-color: #0f172a; }
+    body { 
+      font-family: 'Kanit', sans-serif; 
+      background-color: #0f172a; 
+    }
+    .smooth-transition {
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
   </style>
 </head>
 <body class="flex justify-center items-center min-h-screen p-2 sm:p-4">
 
-  <!-- Main Phone Frame -->
-  <div class="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100 min-h-[750px] flex flex-col justify-between my-auto">
+  <!-- Main Mobile App Frame -->
+  <div class="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100 min-h-[720px] flex flex-col justify-between my-auto relative">
     
     <!-- ==================== PAGE 1: INPUT FORM ==================== -->
-    <div id="page-1" class="flex flex-col justify-between h-full">
+    <div id="page-1" class="flex flex-col justify-between h-full min-h-[720px] smooth-transition">
       <div>
         <!-- Top Header Banner -->
-        <div class="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-800 text-white p-6 rounded-b-3xl relative shadow-md">
+        <div class="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-800 text-white p-5 rounded-b-3xl relative shadow-md">
           <div class="flex justify-between items-center mb-2">
-            <span class="bg-blue-500/40 text-[11px] font-medium px-3 py-1 rounded-full border border-blue-300/30">Chiang Rai ➔ Bangkok</span>
-            <i class="fa-solid fa-gas-pump text-2xl text-blue-200"></i>
+            <span class="bg-blue-500/40 text-[11px] font-medium px-3 py-0.5 rounded-full border border-blue-300/30">Chiang Rai ➔ Bangkok</span>
+            <i class="fa-solid fa-gas-pump text-xl text-blue-200"></i>
           </div>
-          <h1 class="text-2xl font-bold tracking-tight">Trip Fuel Planner</h1>
+          <h1 class="text-xl font-bold tracking-tight">Trip Fuel Planner</h1>
           <p class="text-xs text-blue-200 font-light">Smart Refuel Stop Finder with Safety Buffer</p>
         </div>
 
-        <div class="p-5 space-y-4">
+        <div class="p-4 space-y-3.5">
           <!-- 1. Select Vehicle -->
-          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+          <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80">
             <label class="block text-xs font-bold text-slate-500 mb-2 tracking-wider flex items-center gap-1.5">
               <i class="fa-solid fa-car text-blue-600"></i> SELECT VEHICLE
             </label>
             
-            <div class="relative mb-2.5">
-              <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-slate-400 text-sm"></i>
+            <div class="relative mb-2">
+              <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
               <input type="text" id="car-search" oninput="filterCars()" placeholder="Search model or brand..." 
-                     class="w-full pl-9 pr-3 py-2 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700">
+                     class="w-full pl-8 pr-3 py-1.5 text-xs bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700">
             </div>
 
-            <div class="text-[10px] text-center text-slate-400 font-semibold mb-2">OR SELECT FROM LIST</div>
+            <div class="text-[9px] text-center text-slate-400 font-semibold mb-1.5">OR SELECT FROM LIST</div>
 
-            <div class="space-y-2">
-              <select id="brand-select" onchange="onBrandChange()" class="w-full p-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700">
+            <div class="space-y-1.5">
+              <select id="brand-select" onchange="onBrandChange()" class="w-full p-2 text-xs bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700">
                 <option value="">-- Select Brand --</option>
               </select>
 
-              <select id="model-select" onchange="onModelChange()" class="w-full p-2.5 text-sm bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700">
+              <select id="model-select" onchange="onModelChange()" class="w-full p-2 text-xs bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700">
                 <option value="">-- Select Model --</option>
               </select>
             </div>
           </div>
 
           <!-- 2. Location Verification -->
-          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
+          <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80">
             <div class="flex justify-between items-center mb-2">
               <label class="text-xs font-bold text-slate-500 tracking-wider flex items-center gap-1.5">
                 <i class="fa-solid fa-location-dot text-red-500"></i> CURRENT LOCATION
@@ -66,39 +72,41 @@
               </span>
             </div>
 
-            <div class="bg-white p-2.5 rounded-xl border border-slate-200 flex justify-between items-center mb-2.5">
+            <div class="bg-white p-2.5 rounded-xl border border-slate-200 flex justify-between items-center mb-2">
               <div>
                 <div class="text-[9px] font-semibold text-slate-400 uppercase">Detected Station / Point</div>
                 <div class="text-xs font-bold text-slate-800" id="current-station-name">Caltex (คาลเท็กซ์)</div>
               </div>
-              <button class="text-xs text-blue-600 bg-blue-50 border border-blue-200 font-medium px-2.5 py-1 rounded-lg">Change</button>
+              <button onclick="changeCurrentStation()" class="text-xs text-blue-600 hover:bg-blue-100 bg-blue-50 border border-blue-200 font-medium px-2.5 py-1 rounded-lg transition">
+                Change
+              </button>
             </div>
 
             <div class="rounded-xl overflow-hidden border border-slate-200 h-24 relative bg-slate-200">
-              <iframe class="w-full h-full border-0" src="https://maps.google.com/maps?q=19.9071,99.8325&z=14&output=embed"></iframe>
+              <iframe id="gps-map-frame" class="w-full h-full border-0" src="https://maps.google.com/maps?q=19.9071,99.8325&z=14&output=embed"></iframe>
             </div>
           </div>
 
           <!-- 3. Fuel Gauge Level -->
-          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200/80">
-            <label class="block text-xs font-bold text-slate-500 mb-2.5 tracking-wider flex items-center gap-1.5">
+          <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80">
+            <label class="block text-xs font-bold text-slate-500 mb-2 tracking-wider flex items-center gap-1.5">
               <i class="fa-solid fa-gauge text-amber-500"></i> FUEL GAUGE LEVEL
             </label>
             
             <div class="grid grid-cols-5 gap-1.5">
-              <button onclick="selectFuel(0.2, this)" class="fuel-btn p-2 border border-slate-200 rounded-xl bg-white text-center">
+              <button onclick="selectFuel(0.2, this)" class="fuel-btn p-1.5 border border-slate-200 rounded-xl bg-white text-center transition">
                 <div class="text-xs font-bold text-slate-700">1/5</div><div class="text-[9px] text-red-500">Empty</div>
               </button>
-              <button onclick="selectFuel(0.4, this)" class="fuel-btn p-2 border border-slate-200 rounded-xl bg-white text-center">
+              <button onclick="selectFuel(0.4, this)" class="fuel-btn p-1.5 border border-slate-200 rounded-xl bg-white text-center transition">
                 <div class="text-xs font-bold text-slate-700">2/5</div><div class="text-[9px] text-amber-500">Low</div>
               </button>
-              <button onclick="selectFuel(0.6, this)" class="fuel-btn p-2 border-2 border-blue-600 bg-blue-600 text-white rounded-xl text-center shadow-sm">
-                <div class="text-xs font-bold">3/5</div><div class="text-[9px] text-blue-100">Half</div>
+              <button onclick="selectFuel(0.6, this)" class="fuel-btn p-1.5 border-2 border-blue-600 bg-blue-600 text-white rounded-xl text-center shadow-sm transition">
+                <div class="text-xs font-bold text-white">3/5</div><div class="text-[9px] text-blue-100">Half</div>
               </button>
-              <button onclick="selectFuel(0.8, this)" class="fuel-btn p-2 border border-slate-200 rounded-xl bg-white text-center">
+              <button onclick="selectFuel(0.8, this)" class="fuel-btn p-1.5 border border-slate-200 rounded-xl bg-white text-center transition">
                 <div class="text-xs font-bold text-slate-700">4/5</div><div class="text-[9px] text-emerald-500">Good</div>
               </button>
-              <button onclick="selectFuel(1.0, this)" class="fuel-btn p-2 border border-slate-200 rounded-xl bg-white text-center">
+              <button onclick="selectFuel(1.0, this)" class="fuel-btn p-1.5 border border-slate-200 rounded-xl bg-white text-center transition">
                 <div class="text-xs font-bold text-slate-700">5/5</div><div class="text-[9px] text-emerald-600">Full</div>
               </button>
             </div>
@@ -106,9 +114,9 @@
         </div>
       </div>
 
-      <!-- Action Button -->
-      <div class="p-5 pt-0">
-        <button onclick="goToPage2()" class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 text-base transition">
+      <!-- Calculate Action Button -->
+      <div class="p-4 pt-0">
+        <button onclick="goToPage2()" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 text-sm transition transform active:scale-95">
           <i class="fa-solid fa-calculator"></i> Calculate Fuel Stop
         </button>
       </div>
@@ -116,128 +124,128 @@
 
 
     <!-- ==================== PAGE 2: RESULT DISPLAY ==================== -->
-    <div id="page-2" class="hidden flex-col justify-between h-full min-h-[750px]">
+    <div id="page-2" class="hidden flex-col justify-between h-full min-h-[720px] smooth-transition">
       <div>
         <!-- Step 2 Top Navigation Header -->
-        <div class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-5 rounded-b-3xl shadow-md">
-          <div class="flex justify-between items-center mb-3">
-            <div class="flex items-center gap-3">
-              <div class="w-9 h-9 bg-blue-500/30 rounded-full flex items-center justify-center border border-blue-400/40 text-blue-300">
-                <i class="fa-solid fa-droplet text-lg"></i>
+        <div class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-4 rounded-b-3xl shadow-md">
+          <div class="flex justify-between items-center mb-2">
+            <div class="flex items-center gap-2.5">
+              <div class="w-8 h-8 bg-blue-500/30 rounded-full flex items-center justify-center border border-blue-400/40 text-blue-300">
+                <i class="fa-solid fa-droplet text-sm"></i>
               </div>
               <div>
-                <h2 class="font-bold text-lg leading-tight">วางแผนเติมน้ำมัน</h2>
-                <p class="text-xs text-blue-200 font-light">หน้าที่ 2 จาก 3</p>
+                <h2 class="font-bold text-base leading-tight">วางแผนเติมน้ำมัน</h2>
+                <p class="text-[10px] text-blue-200 font-light">หน้าที่ 2 จาก 3</p>
               </div>
             </div>
-            <!-- Back to Page 1 Button -->
-            <button onclick="goToPage1()" title="แก้ไขข้อมูล" class="w-8 h-8 rounded-full bg-blue-800/60 hover:bg-blue-700 flex items-center justify-center text-blue-200 transition">
-              <i class="fa-solid fa-arrow-left text-sm"></i>
+            <!-- Back Button to Page 1 -->
+            <button onclick="goToPage1()" title="แก้ไขข้อมูล" class="w-8 h-8 rounded-full bg-blue-800/60 hover:bg-blue-700 flex items-center justify-center text-blue-200 transition active:scale-90">
+              <i class="fa-solid fa-arrow-left text-xs"></i>
             </button>
           </div>
 
           <!-- Stepper Dots -->
           <div class="flex items-center justify-center gap-2 pt-1">
-            <span class="w-6 h-6 rounded-full border border-blue-400/60 text-blue-300 text-xs flex items-center justify-center">1</span>
-            <span class="w-8 h-0.5 bg-blue-700"></span>
-            <span class="w-6 h-6 rounded-full bg-blue-500 text-white font-bold text-xs flex items-center justify-center ring-4 ring-blue-500/30">2</span>
-            <span class="w-8 h-0.5 bg-blue-700"></span>
-            <span class="w-6 h-6 rounded-full border border-blue-400/60 text-blue-300 text-xs flex items-center justify-center">3</span>
+            <span class="w-5 h-5 rounded-full border border-blue-400/60 text-blue-300 text-[10px] flex items-center justify-center">1</span>
+            <span class="w-6 h-0.5 bg-blue-700"></span>
+            <span class="w-5 h-5 rounded-full bg-blue-500 text-white font-bold text-[10px] flex items-center justify-center ring-4 ring-blue-500/30">2</span>
+            <span class="w-6 h-0.5 bg-blue-700"></span>
+            <span class="w-5 h-5 rounded-full border border-blue-400/60 text-blue-300 text-[10px] flex items-center justify-center">3</span>
           </div>
         </div>
 
-        <div class="p-4 space-y-4">
+        <div class="p-4 space-y-3">
           <!-- Section Title -->
-          <div class="flex items-center gap-2 text-slate-800 font-bold text-base">
-            <i class="fa-solid fa-calculator text-blue-600"></i>
+          <div class="flex items-center gap-2 text-slate-800 font-bold text-sm">
+            <i class="fa-solid fa-chart-pie text-blue-600"></i>
             <span>ผลการคำนวณ</span>
           </div>
 
           <!-- Metrics Grid (2x2) -->
-          <div class="grid grid-cols-2 gap-2.5">
+          <div class="grid grid-cols-2 gap-2">
             <!-- Metric 1: Efficiency -->
-            <div class="bg-blue-50/60 border border-blue-100 p-3 rounded-2xl">
-              <div class="flex items-center gap-1.5 text-blue-600 text-[11px] font-medium mb-1">
+            <div class="bg-blue-50/70 border border-blue-100 p-2.5 rounded-2xl">
+              <div class="flex items-center gap-1 text-blue-600 text-[10px] font-medium mb-0.5">
                 <i class="fa-solid fa-gauge-high"></i>
-                <span>อัตราการเผาผลาญน้ำมัน</span>
+                <span>อัตราการเผาผลาญ</span>
               </div>
-              <div class="text-2xl font-bold text-blue-950" id="res-efficiency">12.5</div>
-              <div class="text-[10px] text-slate-500">กม./ลิตร</div>
+              <div class="text-xl font-bold text-blue-950" id="res-efficiency">12.5</div>
+              <div class="text-[9px] text-slate-500">กม./ลิตร</div>
             </div>
 
             <!-- Metric 2: Estimated Range -->
-            <div class="bg-emerald-50/60 border border-emerald-100 p-3 rounded-2xl">
-              <div class="flex items-center gap-1.5 text-emerald-600 text-[11px] font-medium mb-1">
+            <div class="bg-emerald-50/70 border border-emerald-100 p-2.5 rounded-2xl">
+              <div class="flex items-center gap-1 text-emerald-600 text-[10px] font-medium mb-0.5">
                 <i class="fa-solid fa-road"></i>
                 <span>คาดว่าจะวิ่งได้อีก</span>
               </div>
-              <div class="text-2xl font-bold text-emerald-950"><span class="text-xs font-normal">ประมาณ </span><span id="res-range">200</span></div>
-              <div class="text-[10px] text-slate-500">km</div>
+              <div class="text-xl font-bold text-emerald-950"><span class="text-xs font-normal">ประมาณ </span><span id="res-range">200</span></div>
+              <div class="text-[9px] text-slate-500">km</div>
             </div>
 
             <!-- Metric 3: Recommended Stop Name -->
-            <div class="bg-amber-50/60 border border-amber-100 p-3 rounded-2xl">
-              <div class="flex items-center gap-1.5 text-amber-700 text-[11px] font-medium mb-1">
+            <div class="bg-amber-50/70 border border-amber-100 p-2.5 rounded-2xl">
+              <div class="flex items-center gap-1 text-amber-700 text-[10px] font-medium mb-0.5">
                 <i class="fa-solid fa-gas-pump"></i>
                 <span>ควรแวะเติมที่</span>
               </div>
-              <div class="text-sm font-bold text-slate-800 leading-tight truncate" id="res-stop-title">PTT Station</div>
-              <div class="text-[11px] text-slate-500 truncate" id="res-stop-sub">จังหวัดพะเยา</div>
+              <div class="text-xs font-bold text-slate-800 truncate" id="res-stop-title">PTT Station</div>
+              <div class="text-[10px] text-slate-500 truncate" id="res-stop-sub">จังหวัดพะเยา</div>
             </div>
 
             <!-- Metric 4: Distance From You -->
-            <div class="bg-purple-50/60 border border-purple-100 p-3 rounded-2xl">
-              <div class="flex items-center gap-1.5 text-purple-600 text-[11px] font-medium mb-1">
+            <div class="bg-purple-50/70 border border-purple-100 p-2.5 rounded-2xl">
+              <div class="flex items-center gap-1 text-purple-600 text-[10px] font-medium mb-0.5">
                 <i class="fa-solid fa-location-dot"></i>
                 <span>ห่างจากคุณ</span>
               </div>
-              <div class="text-2xl font-bold text-purple-950" id="res-distance">95</div>
-              <div class="text-[10px] text-slate-500">km</div>
+              <div class="text-xl font-bold text-purple-950" id="res-distance">95</div>
+              <div class="text-[9px] text-slate-500">km</div>
             </div>
           </div>
 
           <!-- Safety Buffer Banner -->
-          <div class="bg-amber-50 border border-amber-200/90 rounded-2xl p-2.5 flex items-center justify-between text-xs text-amber-900 shadow-sm">
-            <div class="flex items-center gap-2">
-              <i class="fa-solid fa-shield-halved text-amber-600 text-sm"></i>
-              <span class="font-medium text-[11px]">ควรเติมก่อนน้ำมันหมด เพื่อความปลอดภัย</span>
+          <div class="bg-amber-50 border border-amber-200/90 rounded-2xl p-2 flex items-center justify-between text-xs text-amber-900 shadow-sm">
+            <div class="flex items-center gap-1.5">
+              <i class="fa-solid fa-shield-halved text-amber-600 text-xs"></i>
+              <span class="font-medium text-[10px]">ควรเติมก่อนน้ำมันหมดเพื่อความปลอดภัย</span>
             </div>
-            <div class="font-bold text-amber-900 whitespace-nowrap bg-amber-100 px-2 py-0.5 rounded-md border border-amber-300/60 text-[11px]">
+            <div class="font-bold text-amber-900 whitespace-nowrap bg-amber-100 px-2 py-0.5 rounded-md border border-amber-300/60 text-[10px]">
               ระยะปลอดภัย 40 km
             </div>
           </div>
 
           <!-- Recommended Station Card -->
           <div>
-            <h3 class="text-sm font-bold text-slate-800 mb-2">ปั๊มแนะนำ</h3>
-            <div id="rec-card" onclick="openMapUrl(this.dataset.url)" class="bg-white border border-slate-200 rounded-2xl p-3.5 shadow-sm hover:border-blue-400 hover:shadow-md transition cursor-pointer relative">
-              <div class="flex items-start gap-3">
-                <div class="w-11 h-11 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-lg flex-shrink-0">
+            <h3 class="text-xs font-bold text-slate-800 mb-1.5">ปั๊มแนะนำ</h3>
+            <div id="rec-card" onclick="openMapUrl(this.dataset.url)" class="bg-white border border-slate-200 rounded-2xl p-3 shadow-sm hover:border-blue-400 hover:shadow-md transition cursor-pointer">
+              <div class="flex items-start gap-2.5">
+                <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-base flex-shrink-0">
                   <i class="fa-solid fa-gas-pump"></i>
                 </div>
                 <div class="flex-grow min-w-0">
-                  <h4 class="font-bold text-slate-800 text-sm mb-1 truncate" id="rec-full-name">PTT Station สาขาพะเยา</h4>
+                  <h4 class="font-bold text-slate-800 text-xs mb-1 truncate" id="rec-full-name">PTT Station สาขาพะเยา</h4>
                   
-                  <div class="grid grid-cols-2 gap-y-1 text-xs text-slate-500 mb-2.5">
+                  <div class="grid grid-cols-2 gap-y-1 text-[11px] text-slate-500 mb-2">
                     <div class="flex items-center gap-1">
-                      <i class="fa-solid fa-location-dot text-slate-400"></i>
+                      <i class="fa-solid fa-location-dot text-slate-400 text-[10px]"></i>
                       <span>ห่างจากคุณ</span>
                     </div>
                     <div class="font-semibold text-slate-700 text-right" id="rec-dist-text">95 km</div>
                     
                     <div class="flex items-center gap-1">
-                      <i class="fa-regular fa-clock text-slate-400"></i>
+                      <i class="fa-regular fa-clock text-slate-400 text-[10px]"></i>
                       <span>ใช้เวลาเดินทาง</span>
                     </div>
                     <div class="font-semibold text-slate-700 text-right" id="rec-time-text">1 ชม. 20 นาที</div>
                   </div>
 
-                  <div class="text-[10px] text-slate-400 mb-1">เชื้อเพลิงที่มีบริการ</div>
+                  <div class="text-[9px] text-slate-400 mb-1">เชื้อเพลิงที่มีบริการ</div>
                   <div class="flex flex-wrap gap-1">
-                    <span class="px-2 py-0.5 bg-slate-100 text-slate-600 rounded-md text-[10px] font-medium">ดีเซล</span>
-                    <span class="px-2 py-0.5 bg-blue-50 text-blue-600 rounded-md text-[10px] font-medium">B20</span>
-                    <span class="px-2 py-0.5 bg-emerald-50 text-emerald-600 rounded-md text-[10px] font-medium">แก๊สโซฮอล์ 95</span>
-                    <span class="px-2 py-0.5 bg-amber-50 text-amber-700 rounded-md text-[10px] font-medium">แก๊สโซฮอล์ 91</span>
+                    <span class="px-1.5 py-0.5 bg-slate-100 text-slate-600 rounded text-[9px] font-medium">ดีเซล</span>
+                    <span class="px-1.5 py-0.5 bg-blue-50 text-blue-600 rounded text-[9px] font-medium">B20</span>
+                    <span class="px-1.5 py-0.5 bg-emerald-50 text-emerald-600 rounded text-[9px] font-medium">แก๊สโซฮอล์ 95</span>
+                    <span class="px-1.5 py-0.5 bg-amber-50 text-amber-700 rounded text-[9px] font-medium">แก๊สโซฮอล์ 91</span>
                   </div>
                 </div>
               </div>
@@ -246,7 +254,7 @@
 
           <!-- Backup Stations List -->
           <div>
-            <h3 class="text-sm font-bold text-slate-800 mb-2">ปั๊มสำรองใกล้เคียง</h3>
+            <h3 class="text-xs font-bold text-slate-800 mb-1.5">ปั๊มสำรองใกล้เคียง</h3>
             <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm divide-y divide-slate-100" id="backup-list-container">
               <!-- Dynamic Items -->
             </div>
@@ -254,9 +262,9 @@
         </div>
       </div>
 
-      <!-- Bottom Primary Map Button -->
+      <!-- Bottom Primary Navigation Button -->
       <div class="p-4 bg-white border-t border-slate-100">
-        <button id="btn-primary-map" onclick="openMapUrl(this.dataset.url)" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 text-sm transition">
+        <button id="btn-primary-map" onclick="openMapUrl(this.dataset.url)" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 text-xs transition transform active:scale-95">
           <i class="fa-solid fa-map-location-dot"></i> ดูเส้นทางบนแผนที่
         </button>
       </div>
@@ -264,7 +272,7 @@
 
   </div>
 
-  <!-- JavaScript Switch & Calculation Logic -->
+  <!-- JavaScript Functions -->
   <script>
     let carsData = [];
     let stationsData = [];
@@ -281,7 +289,13 @@
         stationsData = await stationsRes.json();
         populateBrands();
       } catch (err) {
-        console.warn("Fallback client memory mode", err);
+        console.warn("API fallback to inline mode", err);
+        carsData = [
+          { id: "c1", brand: "Honda", model: "Civic FE", tankCapacity: 47, fuelEfficiency: 14.5 },
+          { id: "c2", brand: "Toyota", model: "Corolla Cross", tankCapacity: 36, fuelEfficiency: 23.3 },
+          { id: "c3", brand: "Isuzu", model: "D-Max", tankCapacity: 76, fuelEfficiency: 12.0 }
+        ];
+        populateBrands();
       }
     }
 
@@ -321,14 +335,21 @@
       }
     }
 
+    function changeCurrentStation() {
+      const name = prompt("ระบุชื่อปั๊มหรือสถานที่เริ่มต้นปัจจุบันของคุณ:", "Caltex (คาลเท็กซ์)");
+      if (name) {
+        document.getElementById('current-station-name').innerText = name;
+      }
+    }
+
     function selectFuel(ratio, btnElement) {
       selectedFuelRatio = ratio;
       document.querySelectorAll('.fuel-btn').forEach(btn => {
-        btn.className = "fuel-btn p-2 border border-slate-200 rounded-xl bg-white text-center";
-        btn.querySelector('div').className = "text-xs font-bold text-slate-700";
+        btn.className = "fuel-btn p-1.5 border border-slate-200 rounded-xl bg-white text-center transition";
+        btn.querySelectorAll('div')[0].className = "text-xs font-bold text-slate-700";
       });
 
-      btnElement.className = "fuel-btn p-2 border-2 border-blue-600 bg-blue-600 text-white rounded-xl text-center shadow-sm";
+      btnElement.className = "fuel-btn p-1.5 border-2 border-blue-600 bg-blue-600 text-white rounded-xl text-center shadow-sm transition";
       btnElement.querySelectorAll('div')[0].className = "text-xs font-bold text-white";
       btnElement.querySelectorAll('div')[1].className = "text-[9px] text-blue-100";
     }
@@ -336,19 +357,26 @@
     // Navigation Switches
     function goToPage2() {
       calculateAndRender();
-      document.getElementById('page-1').classList.add('hidden');
-      document.getElementById('page-1').classList.remove('flex');
+      
+      const p1 = document.getElementById('page-1');
+      const p2 = document.getElementById('page-2');
 
-      document.getElementById('page-2').classList.remove('hidden');
-      document.getElementById('page-2').classList.add('flex');
+      p1.classList.add('hidden');
+      p1.classList.remove('flex');
+
+      p2.classList.remove('hidden');
+      p2.classList.add('flex');
     }
 
     function goToPage1() {
-      document.getElementById('page-2').classList.add('hidden');
-      document.getElementById('page-2').classList.remove('flex');
+      const p1 = document.getElementById('page-1');
+      const p2 = document.getElementById('page-2');
 
-      document.getElementById('page-1').classList.remove('hidden');
-      document.getElementById('page-1').classList.add('flex');
+      p2.classList.add('hidden');
+      p2.classList.remove('flex');
+
+      p1.classList.remove('hidden');
+      p1.classList.add('flex');
     }
 
     function calculateAndRender() {
@@ -374,7 +402,7 @@
         ];
       }
 
-      // Calculations
+      // Calculations Display
       document.getElementById('res-efficiency').innerText = efficiency;
       document.getElementById('res-range').innerText = totalRange;
       
@@ -383,7 +411,7 @@
       document.getElementById('res-stop-sub').innerText = nameParts.slice(2).join(' ') || "จังหวัดพะเยา";
       document.getElementById('res-distance').innerText = recStation.kmMarker;
 
-      // Recommended Station
+      // Recommended Station Display
       document.getElementById('rec-full-name').innerText = recStation.name;
       document.getElementById('rec-dist-text').innerText = `${recStation.kmMarker} km`;
       document.getElementById('rec-time-text').innerText = `${Math.floor(recStation.kmMarker/70)} ชม. ${Math.round((recStation.kmMarker%70)*60/70)} นาที`;
@@ -392,21 +420,21 @@
       document.getElementById('rec-card').dataset.url = mapUrl;
       document.getElementById('btn-primary-map').dataset.url = mapUrl;
 
-      // Backup List
+      // Backup List Display
       const backupContainer = document.getElementById('backup-list-container');
       backupContainer.innerHTML = backupList.map(st => {
         const bUrl = st.googleMapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(st.name)}`;
         return `
-          <div onclick="openMapUrl('${bUrl}')" class="p-3 flex items-center justify-between hover:bg-slate-50 transition cursor-pointer">
-            <div class="flex items-center gap-2.5">
-              <div class="w-7 h-7 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-xs">
+          <div onclick="openMapUrl('${bUrl}')" class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition cursor-pointer">
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-[10px]">
                 <i class="fa-solid fa-gas-pump"></i>
               </div>
               <span class="font-semibold text-slate-700 text-xs">${st.name}</span>
             </div>
             <div class="flex items-center gap-2 text-xs text-slate-500">
-              <span>${st.kmMarker} km</span>
-              <i class="fa-solid fa-chevron-right text-slate-300 text-[10px]"></i>
+              <span class="font-medium text-[11px]">${st.kmMarker} km</span>
+              <i class="fa-solid fa-chevron-right text-slate-300 text-[9px]"></i>
             </div>
           </div>
         `;
