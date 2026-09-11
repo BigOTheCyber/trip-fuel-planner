@@ -15,7 +15,7 @@ function resolveFilePath(filename: string): string {
   return path.join(__dirname, filename);
 }
 
-// โหลดข้อมูลแบบปลอดภัย ไม่ค้างแม้เปลี่ยนที่เก็บไฟล์
+// โหลดข้อมูลแบบปลอดภัย
 const carsPath = resolveFilePath('cars.json');
 const carsData = fs.existsSync(carsPath) 
   ? JSON.parse(fs.readFileSync(carsPath, 'utf-8')) 
@@ -30,8 +30,8 @@ const stationsData = fs.existsSync(stationsPath)
 app.get('/api/cars', (req, res) => res.json(carsData));
 app.get('/api/stations', (req, res) => res.json(stationsData));
 
-// Serve Index HTML
-app.get('*', (req, res) => {
+// Fallback Route (ใช้ app.use แทน app.get('*') เพื่อป้องกัน path-to-regexp Error)
+app.use((req, res) => {
   const indexPath = resolveFilePath('index.html');
   if (fs.existsSync(indexPath)) {
     res.sendFile(indexPath);
