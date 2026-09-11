@@ -1,451 +1,512 @@
 <!DOCTYPE html>
-<html lang="th">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Trip Fuel Planner</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
-  <style>
-    body { 
-      font-family: 'Kanit', sans-serif; 
-      background-color: #0f172a; 
-    }
-    .smooth-transition {
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-  </style>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>
-<body class="flex justify-center items-center min-h-screen p-2 sm:p-4">
+<body class="bg-slate-900 min-h-screen flex justify-center items-start sm:py-6 font-sans antialiased selection:bg-blue-500 selection:text-white">
 
-  <!-- Main Mobile App Frame -->
-  <div class="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-100 min-h-[720px] flex flex-col justify-between my-auto relative">
+  <!-- Mobile Frame Container -->
+  <div class="w-full max-w-md bg-slate-50 min-h-screen sm:min-h-[844px] sm:rounded-[40px] shadow-2xl flex flex-col justify-between overflow-hidden relative border-4 border-slate-800">
     
-    <!-- ==================== PAGE 1: INPUT FORM ==================== -->
-    <div id="page-1" class="flex flex-col justify-between h-full min-h-[720px] smooth-transition">
-      <div>
-        <!-- Top Header Banner -->
-        <div class="bg-gradient-to-r from-blue-700 via-blue-600 to-indigo-800 text-white p-5 rounded-b-3xl relative shadow-md">
-          <div class="flex justify-between items-center mb-2">
-            <span class="bg-blue-500/40 text-[11px] font-medium px-3 py-0.5 rounded-full border border-blue-300/30">Chiang Rai ➔ Bangkok</span>
-            <i class="fa-solid fa-gas-pump text-xl text-blue-200"></i>
-          </div>
-          <h1 class="text-xl font-bold tracking-tight">Trip Fuel Planner</h1>
-          <p class="text-xs text-blue-200 font-light">Smart Refuel Stop Finder with Safety Buffer</p>
-        </div>
-
-        <div class="p-4 space-y-3.5">
-          <!-- 1. Select Vehicle -->
-          <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80">
-            <label class="block text-xs font-bold text-slate-500 mb-2 tracking-wider flex items-center gap-1.5">
-              <i class="fa-solid fa-car text-blue-600"></i> SELECT VEHICLE
-            </label>
-            
-            <div class="relative mb-2">
-              <i class="fa-solid fa-magnifying-glass absolute left-3 top-2.5 text-slate-400 text-xs"></i>
-              <input type="text" id="car-search" oninput="filterCars()" placeholder="Search model or brand..." 
-                     class="w-full pl-8 pr-3 py-1.5 text-xs bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700">
-            </div>
-
-            <div class="text-[9px] text-center text-slate-400 font-semibold mb-1.5">OR SELECT FROM LIST</div>
-
-            <div class="space-y-1.5">
-              <select id="brand-select" onchange="onBrandChange()" class="w-full p-2 text-xs bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700">
-                <option value="">-- Select Brand --</option>
-              </select>
-
-              <select id="model-select" onchange="onModelChange()" class="w-full p-2 text-xs bg-white border border-slate-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-700">
-                <option value="">-- Select Model --</option>
-              </select>
-            </div>
-          </div>
-
-          <!-- 2. Location Verification -->
-          <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80">
-            <div class="flex justify-between items-center mb-2">
-              <label class="text-xs font-bold text-slate-500 tracking-wider flex items-center gap-1.5">
-                <i class="fa-solid fa-location-dot text-red-500"></i> CURRENT LOCATION
-              </label>
-              <span class="bg-emerald-100 text-emerald-700 text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span> GPS Live
-              </span>
-            </div>
-
-            <div class="bg-white p-2.5 rounded-xl border border-slate-200 flex justify-between items-center mb-2">
-              <div>
-                <div class="text-[9px] font-semibold text-slate-400 uppercase">Detected Station / Point</div>
-                <div class="text-xs font-bold text-slate-800" id="current-station-name">Caltex (คาลเท็กซ์)</div>
-              </div>
-              <button onclick="changeCurrentStation()" class="text-xs text-blue-600 hover:bg-blue-100 bg-blue-50 border border-blue-200 font-medium px-2.5 py-1 rounded-lg transition">
-                Change
-              </button>
-            </div>
-
-            <div class="rounded-xl overflow-hidden border border-slate-200 h-24 relative bg-slate-200">
-              <iframe id="gps-map-frame" class="w-full h-full border-0" src="https://maps.google.com/maps?q=19.9071,99.8325&z=14&output=embed"></iframe>
-            </div>
-          </div>
-
-          <!-- 3. Fuel Gauge Level -->
-          <div class="bg-slate-50 p-3.5 rounded-2xl border border-slate-200/80">
-            <label class="block text-xs font-bold text-slate-500 mb-2 tracking-wider flex items-center gap-1.5">
-              <i class="fa-solid fa-gauge text-amber-500"></i> FUEL GAUGE LEVEL
-            </label>
-            
-            <div class="grid grid-cols-5 gap-1.5">
-              <button onclick="selectFuel(0.2, this)" class="fuel-btn p-1.5 border border-slate-200 rounded-xl bg-white text-center transition">
-                <div class="text-xs font-bold text-slate-700">1/5</div><div class="text-[9px] text-red-500">Empty</div>
-              </button>
-              <button onclick="selectFuel(0.4, this)" class="fuel-btn p-1.5 border border-slate-200 rounded-xl bg-white text-center transition">
-                <div class="text-xs font-bold text-slate-700">2/5</div><div class="text-[9px] text-amber-500">Low</div>
-              </button>
-              <button onclick="selectFuel(0.6, this)" class="fuel-btn p-1.5 border-2 border-blue-600 bg-blue-600 text-white rounded-xl text-center shadow-sm transition">
-                <div class="text-xs font-bold text-white">3/5</div><div class="text-[9px] text-blue-100">Half</div>
-              </button>
-              <button onclick="selectFuel(0.8, this)" class="fuel-btn p-1.5 border border-slate-200 rounded-xl bg-white text-center transition">
-                <div class="text-xs font-bold text-slate-700">4/5</div><div class="text-[9px] text-emerald-500">Good</div>
-              </button>
-              <button onclick="selectFuel(1.0, this)" class="fuel-btn p-1.5 border border-slate-200 rounded-xl bg-white text-center transition">
-                <div class="text-xs font-bold text-slate-700">5/5</div><div class="text-[9px] text-emerald-600">Full</div>
-              </button>
-            </div>
-          </div>
-        </div>
+    <!-- Top App Bar -->
+    <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white px-5 pt-8 pb-6 rounded-b-[28px] shadow-lg">
+      <div class="flex justify-between items-center mb-2">
+        <span class="text-xs bg-blue-500/30 border border-blue-300/30 px-3 py-1 rounded-full text-blue-100 font-medium">Chiang Rai ➔ Bangkok</span>
+        <i class="fa-solid fa-gas-pump text-xl text-blue-300"></i>
       </div>
+      <h1 class="text-xl font-extrabold tracking-tight">Trip Fuel Planner</h1>
+      <p class="text-xs text-blue-200 mt-1">Smart Refuel Stop Finder with Safety Buffer</p>
+    </header>
 
-      <!-- Calculate Action Button -->
-      <div class="p-4 pt-0">
-        <button onclick="goToPage2()" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 text-sm transition transform active:scale-95">
-          <i class="fa-solid fa-calculator"></i> Calculate Fuel Stop
-        </button>
-      </div>
-    </div>
+    <!-- Main Content Area -->
+    <main class="flex-1 p-5 space-y-5 overflow-y-auto">
 
-
-    <!-- ==================== PAGE 2: RESULT DISPLAY ==================== -->
-    <div id="page-2" class="hidden flex-col justify-between h-full min-h-[720px] smooth-transition">
-      <div>
-        <!-- Step 2 Top Navigation Header -->
-        <div class="bg-gradient-to-r from-blue-900 to-indigo-900 text-white p-4 rounded-b-3xl shadow-md">
-          <div class="flex justify-between items-center mb-2">
-            <div class="flex items-center gap-2.5">
-              <div class="w-8 h-8 bg-blue-500/30 rounded-full flex items-center justify-center border border-blue-400/40 text-blue-300">
-                <i class="fa-solid fa-droplet text-sm"></i>
-              </div>
-              <div>
-                <h2 class="font-bold text-base leading-tight">วางแผนเติมน้ำมัน</h2>
-                <p class="text-[10px] text-blue-200 font-light">หน้าที่ 2 จาก 3</p>
-              </div>
-            </div>
-            <!-- Back Button to Page 1 -->
-            <button onclick="goToPage1()" title="แก้ไขข้อมูล" class="w-8 h-8 rounded-full bg-blue-800/60 hover:bg-blue-700 flex items-center justify-center text-blue-200 transition active:scale-90">
-              <i class="fa-solid fa-arrow-left text-xs"></i>
+      <!-- Car Selection Card -->
+      <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 relative">
+        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+          <i class="fa-solid fa-car-side text-blue-600"></i> Select Vehicle
+        </label>
+        
+        <!-- Search Bar -->
+        <div class="relative">
+          <div class="relative">
+            <input type="text" id="carSearchInput" oninput="onSearchCar()" placeholder="🔍 Search model or brand (e.g. Civic, Revo)..." class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:font-normal placeholder:text-slate-400">
+            <button id="clearSearchBtn" onclick="clearCarSearch()" class="hidden absolute right-3 top-3 text-slate-400 hover:text-slate-600">
+              <i class="fa-solid fa-xmark"></i>
             </button>
           </div>
 
-          <!-- Stepper Dots -->
-          <div class="flex items-center justify-center gap-2 pt-1">
-            <span class="w-5 h-5 rounded-full border border-blue-400/60 text-blue-300 text-[10px] flex items-center justify-center">1</span>
-            <span class="w-6 h-0.5 bg-blue-700"></span>
-            <span class="w-5 h-5 rounded-full bg-blue-500 text-white font-bold text-[10px] flex items-center justify-center ring-4 ring-blue-500/30">2</span>
-            <span class="w-6 h-0.5 bg-blue-700"></span>
-            <span class="w-5 h-5 rounded-full border border-blue-400/60 text-blue-300 text-[10px] flex items-center justify-center">3</span>
-          </div>
+          <!-- Autocomplete Results Dropdown -->
+          <div id="searchResults" class="hidden absolute z-30 left-0 right-0 top-full mt-1 bg-white border border-slate-200 rounded-xl shadow-xl max-h-56 overflow-y-auto divide-y divide-slate-100"></div>
         </div>
 
-        <div class="p-4 space-y-3">
-          <!-- Section Title -->
-          <div class="flex items-center gap-2 text-slate-800 font-bold text-sm">
-            <i class="fa-solid fa-chart-pie text-blue-600"></i>
-            <span>ผลการคำนวณ</span>
+        <div class="flex items-center gap-2 my-1">
+          <div class="h-px bg-slate-100 flex-1"></div>
+          <span class="text-[10px] font-bold text-slate-300 uppercase">OR SELECT FROM LIST</span>
+          <div class="h-px bg-slate-100 flex-1"></div>
+        </div>
+
+        <div class="space-y-2">
+          <select id="brandSelect" onchange="onBrandChange()" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="">-- 1. Select Brand --</option>
+          </select>
+
+          <select id="modelSelect" onchange="onModelChange()" disabled class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed">
+            <option value="">-- 2. Select Model --</option>
+          </select>
+        </div>
+
+        <input type="hidden" id="selectedCarId" value="">
+      </div>
+
+      <!-- Verified Location & Map Card -->
+      <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
+        <div class="flex justify-between items-center">
+          <label class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+            <i class="fa-solid fa-location-dot text-red-500"></i> Current Location Verification
+          </label>
+          <span id="gpsBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">Detecting...</span>
+        </div>
+
+        <!-- Location Display & Change Button -->
+        <div class="bg-slate-50 border border-slate-200/80 p-3 rounded-xl flex items-center justify-between">
+          <div class="space-y-0.5">
+            <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Detected Station / Point</span>
+            <span id="currentStationName" class="text-xs font-bold text-slate-800 block">Locating via GPS...</span>
           </div>
+          <button type="button" onclick="openStationModal()" class="text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg border border-blue-200/60 transition flex items-center gap-1">
+            <i class="fa-solid fa-pen-to-square"></i> Change
+          </button>
+        </div>
 
-          <!-- Metrics Grid (2x2) -->
-          <div class="grid grid-cols-2 gap-2">
-            <!-- Metric 1: Efficiency -->
-            <div class="bg-blue-50/70 border border-blue-100 p-2.5 rounded-2xl">
-              <div class="flex items-center gap-1 text-blue-600 text-[10px] font-medium mb-0.5">
-                <i class="fa-solid fa-gauge-high"></i>
-                <span>อัตราการเผาผลาญ</span>
-              </div>
-              <div class="text-xl font-bold text-blue-950" id="res-efficiency">12.5</div>
-              <div class="text-[9px] text-slate-500">กม./ลิตร</div>
-            </div>
-
-            <!-- Metric 2: Estimated Range -->
-            <div class="bg-emerald-50/70 border border-emerald-100 p-2.5 rounded-2xl">
-              <div class="flex items-center gap-1 text-emerald-600 text-[10px] font-medium mb-0.5">
-                <i class="fa-solid fa-road"></i>
-                <span>คาดว่าจะวิ่งได้อีก</span>
-              </div>
-              <div class="text-xl font-bold text-emerald-950"><span class="text-xs font-normal">ประมาณ </span><span id="res-range">200</span></div>
-              <div class="text-[9px] text-slate-500">km</div>
-            </div>
-
-            <!-- Metric 3: Recommended Stop Name -->
-            <div class="bg-amber-50/70 border border-amber-100 p-2.5 rounded-2xl">
-              <div class="flex items-center gap-1 text-amber-700 text-[10px] font-medium mb-0.5">
-                <i class="fa-solid fa-gas-pump"></i>
-                <span>ควรแวะเติมที่</span>
-              </div>
-              <div class="text-xs font-bold text-slate-800 truncate" id="res-stop-title">PTT Station</div>
-              <div class="text-[10px] text-slate-500 truncate" id="res-stop-sub">จังหวัดพะเยา</div>
-            </div>
-
-            <!-- Metric 4: Distance From You -->
-            <div class="bg-purple-50/70 border border-purple-100 p-2.5 rounded-2xl">
-              <div class="flex items-center gap-1 text-purple-600 text-[10px] font-medium mb-0.5">
-                <i class="fa-solid fa-location-dot"></i>
-                <span>ห่างจากคุณ</span>
-              </div>
-              <div class="text-xl font-bold text-purple-950" id="res-distance">95</div>
-              <div class="text-[9px] text-slate-500">km</div>
-            </div>
-          </div>
-
-          <!-- Safety Buffer Banner -->
-          <div class="bg-amber-50 border border-amber-200/90 rounded-2xl p-2 flex items-center justify-between text-xs text-amber-900 shadow-sm">
-            <div class="flex items-center gap-1.5">
-              <i class="fa-solid fa-shield-halved text-amber-600 text-xs"></i>
-              <span class="font-medium text-[10px]">ควรเติมก่อนน้ำมันหมดเพื่อความปลอดภัย</span>
-            </div>
-            <div class="font-bold text-amber-900 whitespace-nowrap bg-amber-100 px-2 py-0.5 rounded-md border border-amber-300/60 text-[10px]">
-              ระยะปลอดภัย 40 km
-            </div>
-          </div>
-
-          <!-- Recommended Station Card -->
-          <div>
-            <h3 class="text-xs font-bold text-slate-800 mb-1.5">ปั๊มแนะนำ</h3>
-            <div id="rec-card" onclick="openMapUrl(this.dataset.url)" class="bg-white border border-slate-200 rounded-2xl p-3 shadow-sm hover:border-blue-400 hover:shadow-md transition cursor-pointer">
-              <div class="flex items-start gap-2.5">
-                <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-base flex-shrink-0">
-                  <i class="fa-solid fa-gas-pump"></i>
-                </div>
-                <div class="flex-grow min-w-0">
-                  <h4 class="font-bold text-slate-800 text-xs mb-1 truncate" id="rec-full-name">PTT Station สาขาพะเยา</h4>
-                  
-                  <div class="grid grid-cols-2 gap-y-1 text-[11px] text-slate-500 mb-2">
-                    <div class="flex items-center gap-1">
-                      <i class="fa-solid fa-location-dot text-slate-400 text-[10px]"></i>
-                      <span>ห่างจากคุณ</span>
-                    </div>
-                    <div class="font-semibold text-slate-700 text-right" id="rec-dist-text">95 km</div>
-                    
-                    <div class="flex items-center gap-1">
-                      <i class="fa-regular fa-clock text-slate-400 text-[10px]"></i>
-                      <span>ใช้เวลาเดินทาง</span>
-                    </div>
-                    <div class="font-semibold text-slate-700 text-right" id="rec-time-text">1 ชม. 20 นาที</div>
-                  </div>
-
-                  <div class="text-[9px] text-slate-400 mb-1">เชื้อเพลิงที่มีบริการ</div>
-                  <div class="flex flex-wrap gap-1">
-                    <span class="px-1.5 py-0.5 bg-slate-100 text-slate-600 rounded text-[9px] font-medium">ดีเซล</span>
-                    <span class="px-1.5 py-0.5 bg-blue-50 text-blue-600 rounded text-[9px] font-medium">B20</span>
-                    <span class="px-1.5 py-0.5 bg-emerald-50 text-emerald-600 rounded text-[9px] font-medium">แก๊สโซฮอล์ 95</span>
-                    <span class="px-1.5 py-0.5 bg-amber-50 text-amber-700 rounded text-[9px] font-medium">แก๊สโซฮอล์ 91</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Backup Stations List -->
-          <div>
-            <h3 class="text-xs font-bold text-slate-800 mb-1.5">ปั๊มสำรองใกล้เคียง</h3>
-            <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm divide-y divide-slate-100" id="backup-list-container">
-              <!-- Dynamic Items -->
-            </div>
+        <!-- Embedded Interactive Google Map -->
+        <div class="w-full h-44 rounded-xl overflow-hidden border border-slate-200 relative bg-slate-100 flex items-center justify-center">
+          <iframe id="mapIframe" class="w-full h-full border-0 hidden" loading="lazy" allowfullscreen src=""></iframe>
+          <div id="mapPlaceholder" class="text-center p-4 text-slate-400 text-xs flex flex-col items-center gap-2">
+            <i class="fa-solid fa-circle-notch fa-spin text-2xl text-blue-500"></i>
+            <span>Fetching live GPS position...</span>
           </div>
         </div>
       </div>
 
-      <!-- Bottom Primary Navigation Button -->
-      <div class="p-4 bg-white border-t border-slate-100">
-        <button id="btn-primary-map" onclick="openMapUrl(this.dataset.url)" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-2xl shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 text-xs transition transform active:scale-95">
-          <i class="fa-solid fa-map-location-dot"></i> ดูเส้นทางบนแผนที่
-        </button>
+      <!-- Fuel Level Selector (5-Level Gauge) -->
+      <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
+        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+          <i class="fa-solid fa-gauge-high text-amber-500"></i> Fuel Gauge Level
+        </label>
+        <div class="grid grid-cols-5 gap-1.5" id="fuelGauge">
+          <button type="button" onclick="setFuel(1)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition">
+            <span class="text-sm">1/5</span>
+            <span class="text-[9px] font-normal text-red-500">Empty</span>
+          </button>
+          <button type="button" onclick="setFuel(2)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition">
+            <span class="text-sm">2/5</span>
+            <span class="text-[9px] font-normal text-amber-500">Low</span>
+          </button>
+          <button type="button" onclick="setFuel(3)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl bg-blue-600 text-white font-bold shadow-md transition">
+            <span class="text-sm">3/5</span>
+            <span class="text-[9px] font-normal opacity-80">Half</span>
+          </button>
+          <button type="button" onclick="setFuel(4)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition">
+            <span class="text-sm">4/5</span>
+            <span class="text-[9px] font-normal text-slate-400">Good</span>
+          </button>
+          <button type="button" onclick="setFuel(5)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition">
+            <span class="text-sm">5/5</span>
+            <span class="text-[9px] font-normal text-emerald-500">Full</span>
+          </button>
+        </div>
       </div>
+
+      <!-- Result Card Area -->
+      <div id="result" class="space-y-3"></div>
+
+    </main>
+
+    <!-- Bottom Action Bar -->
+    <div class="p-4 bg-white border-t border-slate-100 sm:rounded-b-[36px]">
+      <button onclick="calculateTrip()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 active:scale-[0.98] text-white font-bold py-3.5 rounded-2xl shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 text-base transition">
+        <i class="fa-solid fa-route"></i> Calculate Fuel Stop
+      </button>
     </div>
 
   </div>
 
-  <!-- JavaScript Functions -->
+  <!-- Nearby Station Selection Modal -->
+  <div id="stationModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all duration-300">
+    <div class="bg-white w-full max-w-md rounded-t-[32px] sm:rounded-3xl p-5 shadow-2xl space-y-4 max-h-[80vh] flex flex-col animate-in slide-in-from-bottom duration-300">
+      <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+        <div>
+          <h3 class="font-extrabold text-slate-800 text-base">Select Nearby Station</h3>
+          <p class="text-xs text-slate-400">Pick your actual current starting station</p>
+        </div>
+        <button onclick="closeStationModal()" class="text-slate-400 hover:text-slate-600 p-2">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Search Station inside Modal -->
+      <input type="text" id="modalSearchInput" oninput="filterModalStations()" placeholder="🔍 Filter stations..." class="w-full bg-slate-50 border border-slate-200 text-xs font-medium rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+      <!-- Station List -->
+      <div id="modalStationList" class="overflow-y-auto flex-1 space-y-2 pr-1 divide-y divide-slate-100">
+        <!-- Station items will be rendered here -->
+      </div>
+    </div>
+  </div>
+
   <script>
-    let carsData = [];
-    let stationsData = [];
-    let selectedCar = null;
-    let selectedFuelRatio = 0.6; // Default 3/5
+    let selectedFuel = 3;
+    let allCars = [];
+    let allStations = [];
+    let userLat = null;
+    let userLng = null;
+    let currentKm = 0;
 
     async function initApp() {
+      await loadCars();
+      await loadStations();
+      autoTrackLocation();
+    }
+
+    async function loadCars() {
       try {
-        const [carsRes, stationsRes] = await Promise.all([
-          fetch('/api/cars').catch(() => fetch('./data/cars.json')),
-          fetch('/api/stations').catch(() => fetch('./data/stations.json'))
-        ]);
-        carsData = await carsRes.json();
-        stationsData = await stationsRes.json();
-        populateBrands();
+        const res = await fetch('/api/cars');
+        const json = await res.json();
+        allCars = Array.isArray(json) ? json : (json.data || []);
+        
+        const brands = [...new Set(allCars.map(c => c.brand))].sort();
+        const brandSelect = document.getElementById('brandSelect');
+        brandSelect.innerHTML = '<option value="">-- 1. Select Brand --</option>' + 
+          brands.map(b => `<option value="${b}">${b}</option>`).join('');
       } catch (err) {
-        console.warn("API fallback to inline mode", err);
-        carsData = [
-          { id: "c1", brand: "Honda", model: "Civic FE", tankCapacity: 47, fuelEfficiency: 14.5 },
-          { id: "c2", brand: "Toyota", model: "Corolla Cross", tankCapacity: 36, fuelEfficiency: 23.3 },
-          { id: "c3", brand: "Isuzu", model: "D-Max", tankCapacity: 76, fuelEfficiency: 12.0 }
-        ];
-        populateBrands();
+        console.error('Error loading cars:', err);
       }
     }
 
-    function populateBrands() {
-      const brandSelect = document.getElementById('brand-select');
-      const brands = [...new Set(carsData.map(c => c.brand))];
-      brandSelect.innerHTML = '<option value="">-- Select Brand --</option>' + 
-        brands.map(b => `<option value="${b}">${b}</option>`).join('');
+    async function loadStations() {
+      try {
+        const res = await fetch('/api/stations');
+        allStations = await res.json();
+      } catch (err) {
+        console.error('Error loading stations:', err);
+      }
+    }
+
+    function getDistanceInKm(lat1, lon1, lat2, lon2) {
+      const R = 6371;
+      const dLat = (lat2 - lat1) * Math.PI / 180;
+      const dLon = (lon2 - lon1) * Math.PI / 180;
+      const a = 
+        Math.sin(dLat/2) * Math.sin(dLat/2) +
+        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
+        Math.sin(dLon/2) * Math.sin(dLon/2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      return R * c;
+    }
+
+    // Auto GPS Tracking
+    function autoTrackLocation() {
+      if (!navigator.geolocation) {
+        fallbackStationSelection("GPS not supported by browser");
+        return;
+      }
+
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          userLat = position.coords.latitude;
+          userLng = position.coords.longitude;
+          updateLocationAndMap(userLat, userLng);
+        },
+        (err) => {
+          console.warn('GPS location error or denied:', err);
+          fallbackStationSelection();
+        },
+        { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
+      );
+    }
+
+    function updateLocationAndMap(lat, lng, forcedStation = null) {
+      const mapIframe = document.getElementById('mapIframe');
+      const mapPlaceholder = document.getElementById('mapPlaceholder');
+      const gpsBadge = document.getElementById('gpsBadge');
+      const stationText = document.getElementById('currentStationName');
+
+      mapIframe.src = `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
+      mapIframe.classList.remove('hidden');
+      mapPlaceholder.classList.add('hidden');
+
+      let station = forcedStation;
+      if (!station && allStations.length > 0) {
+        let minDist = Infinity;
+        allStations.forEach(st => {
+          if (st.lat && st.lng) {
+            const dist = getDistanceInKm(lat, lng, st.lat, st.lng);
+            if (dist < minDist) {
+              minDist = dist;
+              station = st;
+            }
+          }
+        });
+      }
+
+      if (station) {
+        currentKm = station.kmMarker;
+        stationText.innerText = `${station.name} (${station.brand})`;
+        gpsBadge.className = "text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700";
+        gpsBadge.innerText = "🟢 GPS Live";
+      }
+    }
+
+    function fallbackStationSelection(msg = "GPS Disabled / Not Found") {
+      const gpsBadge = document.getElementById('gpsBadge');
+      gpsBadge.className = "text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-700";
+      gpsBadge.innerText = "⚠️ Manual Mode";
+
+      if (allStations.length > 0) {
+        const defaultStation = allStations[0];
+        updateLocationAndMap(defaultStation.lat || 19.907, defaultStation.lng || 99.832, defaultStation);
+      }
+    }
+
+    // Modal Handlers
+    function openStationModal() {
+      const modal = document.getElementById('stationModal');
+      modal.classList.remove('hidden');
+      renderModalStations();
+    }
+
+    function closeStationModal() {
+      document.getElementById('stationModal').classList.add('hidden');
+    }
+
+    function renderModalStations(filterText = '') {
+      const listDiv = document.getElementById('modalStationList');
+      const query = filterText.toLowerCase();
+
+      let stationsWithDist = allStations.map(st => {
+        let dist = null;
+        if (userLat && userLng && st.lat && st.lng) {
+          dist = getDistanceInKm(userLat, userLng, st.lat, st.lng);
+        }
+        return { ...st, dist };
+      });
+
+      if (userLat && userLng) {
+        stationsWithDist.sort((a, b) => (a.dist || 9999) - (b.dist || 9999));
+      }
+
+      const filtered = stationsWithDist.filter(st => 
+        st.name.toLowerCase().includes(query) || 
+        st.brand.toLowerCase().includes(query)
+      );
+
+      if (filtered.length === 0) {
+        listDiv.innerHTML = `<div class="p-4 text-center text-xs text-slate-400">No stations found</div>`;
+        return;
+      }
+
+      listDiv.innerHTML = filtered.map(st => `
+        <div onclick="selectStationFromModal('${st.id}')" class="p-3 hover:bg-blue-50 cursor-pointer flex justify-between items-center transition rounded-xl">
+          <div>
+            <span class="text-xs font-bold text-slate-800 block">${st.name}</span>
+            <span class="text-[11px] text-slate-400 block">${st.brand} • KM ${Math.round(st.kmMarker)}</span>
+          </div>
+          ${st.dist !== null ? `<span class="text-[10px] font-bold bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md">${st.dist.toFixed(1)} km away</span>` : ''}
+        </div>
+      `).join('');
+    }
+
+    function filterModalStations() {
+      const query = document.getElementById('modalSearchInput').value;
+      renderModalStations(query);
+    }
+
+    function selectStationFromModal(stationId) {
+      const station = allStations.find(s => s.id === stationId);
+      if (!station) return;
+
+      currentKm = station.kmMarker;
+      updateLocationAndMap(station.lat, station.lng, station);
+      closeStationModal();
+    }
+
+    // Car Search & Selection Logic
+    function onSearchCar() {
+      const query = document.getElementById('carSearchInput').value.trim().toLowerCase();
+      const resultsDiv = document.getElementById('searchResults');
+      const clearBtn = document.getElementById('clearSearchBtn');
+
+      if (!query) {
+        resultsDiv.classList.add('hidden');
+        clearBtn.classList.add('hidden');
+        return;
+      }
+
+      clearBtn.classList.remove('hidden');
+
+      const matches = allCars.filter(c => 
+        c.brand.toLowerCase().includes(query) || 
+        c.model.toLowerCase().includes(query)
+      );
+
+      if (matches.length === 0) {
+        resultsDiv.innerHTML = `<div class="p-3 text-xs text-slate-400 text-center">No vehicle found</div>`;
+      } else {
+        resultsDiv.innerHTML = matches.map(c => `
+          <div onclick="selectCarFromSearch('${c.id}')" class="p-3 hover:bg-blue-50 cursor-pointer flex justify-between items-center transition">
+            <div>
+              <span class="text-xs font-bold text-blue-600 block">${c.brand}</span>
+              <span class="text-sm font-semibold text-slate-800">${c.model}</span>
+            </div>
+            <span class="text-[10px] font-mono bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md">${c.tankCapacity}L</span>
+          </div>
+        `).join('');
+      }
+
+      resultsDiv.classList.remove('hidden');
+    }
+
+    function selectCarFromSearch(carId) {
+      const car = allCars.find(c => c.id === carId);
+      if (!car) return;
+
+      const brandSelect = document.getElementById('brandSelect');
+      brandSelect.value = car.brand;
+
+      const filteredCars = allCars.filter(c => c.brand === car.brand);
+      const modelSelect = document.getElementById('modelSelect');
+      modelSelect.innerHTML = '<option value="">-- 2. Select Model --</option>' + 
+        filteredCars.map(c => `<option value="${c.id}">${c.model} (${c.tankCapacity}L)</option>`).join('');
+      modelSelect.disabled = false;
+      modelSelect.value = car.id;
+
+      document.getElementById('selectedCarId').value = car.id;
+      document.getElementById('carSearchInput').value = `${car.brand} - ${car.model}`;
+
+      document.getElementById('searchResults').classList.add('hidden');
+      document.getElementById('clearSearchBtn').classList.remove('hidden');
+    }
+
+    function clearCarSearch() {
+      document.getElementById('carSearchInput').value = '';
+      document.getElementById('selectedCarId').value = '';
+      document.getElementById('searchResults').classList.add('hidden');
+      document.getElementById('clearSearchBtn').classList.add('hidden');
+      
+      document.getElementById('brandSelect').value = '';
+      const modelSelect = document.getElementById('modelSelect');
+      modelSelect.innerHTML = '<option value="">-- 2. Select Model --</option>';
+      modelSelect.disabled = true;
     }
 
     function onBrandChange() {
-      const brand = document.getElementById('brand-select').value;
-      const modelSelect = document.getElementById('model-select');
-      modelSelect.innerHTML = '<option value="">-- Select Model --</option>';
+      const selectedBrand = document.getElementById('brandSelect').value;
+      const modelSelect = document.getElementById('modelSelect');
+      
+      if (!selectedBrand) {
+        modelSelect.innerHTML = '<option value="">-- 2. Select Model --</option>';
+        modelSelect.disabled = true;
+        document.getElementById('selectedCarId').value = '';
+        document.getElementById('carSearchInput').value = '';
+        document.getElementById('clearSearchBtn').classList.add('hidden');
+        return;
+      }
 
-      if (!brand) return;
-      const models = carsData.filter(c => c.brand === brand);
-      modelSelect.innerHTML += models.map(m => 
-        `<option value="${m.id}">${m.model} (${m.tankCapacity}L)</option>`
-      ).join('');
+      const filteredCars = allCars.filter(c => c.brand === selectedBrand);
+      modelSelect.innerHTML = '<option value="">-- 2. Select Model --</option>' + 
+        filteredCars.map(c => `<option value="${c.id}">${c.model} (${c.tankCapacity}L)</option>`).join('');
+      modelSelect.disabled = false;
+      
+      document.getElementById('selectedCarId').value = '';
+      document.getElementById('carSearchInput').value = '';
+      document.getElementById('clearSearchBtn').classList.add('hidden');
     }
 
     function onModelChange() {
-      const modelId = document.getElementById('model-select').value;
-      selectedCar = carsData.find(c => c.id === modelId) || null;
-    }
-
-    function filterCars() {
-      const query = document.getElementById('car-search').value.toLowerCase().trim();
-      if (!query) return;
-      const matched = carsData.find(c => c.model.toLowerCase().includes(query) || c.brand.toLowerCase().includes(query));
-      if (matched) {
-        document.getElementById('brand-select').value = matched.brand;
-        onBrandChange();
-        document.getElementById('model-select').value = matched.id;
-        selectedCar = matched;
+      const carId = document.getElementById('modelSelect').value;
+      document.getElementById('selectedCarId').value = carId;
+      const car = allCars.find(c => c.id === carId);
+      if (car) {
+        document.getElementById('carSearchInput').value = `${car.brand} - ${car.model}`;
+        document.getElementById('clearSearchBtn').classList.remove('hidden');
       }
     }
 
-    function changeCurrentStation() {
-      const name = prompt("ระบุชื่อปั๊มหรือสถานที่เริ่มต้นปัจจุบันของคุณ:", "Caltex (คาลเท็กซ์)");
-      if (name) {
-        document.getElementById('current-station-name').innerText = name;
+    document.addEventListener('click', (e) => {
+      const searchBox = document.getElementById('carSearchInput');
+      if (searchBox && !searchBox.closest('.relative').contains(e.target)) {
+        document.getElementById('searchResults').classList.add('hidden');
       }
+    });
+
+    function setFuel(level) {
+      selectedFuel = level;
+      const btns = document.querySelectorAll('.fuel-btn');
+      btns.forEach((btn, idx) => {
+        if (idx + 1 === level) {
+          btn.className = "fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl bg-blue-600 text-white font-bold shadow-md transition";
+        } else {
+          btn.className = "fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold hover:bg-slate-50 transition";
+        }
+      });
     }
 
-    function selectFuel(ratio, btnElement) {
-      selectedFuelRatio = ratio;
-      document.querySelectorAll('.fuel-btn').forEach(btn => {
-        btn.className = "fuel-btn p-1.5 border border-slate-200 rounded-xl bg-white text-center transition";
-        btn.querySelectorAll('div')[0].className = "text-xs font-bold text-slate-700";
+    async function calculateTrip() {
+      const carId = document.getElementById('selectedCarId').value;
+      
+      if (!carId) {
+        alert('Please select or search your vehicle model first!');
+        return;
+      }
+
+      const res = await fetch('/api/plan-trip', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ carId, fuelLevel: selectedFuel, selectedBrands: [], currentKm })
       });
 
-      btnElement.className = "fuel-btn p-1.5 border-2 border-blue-600 bg-blue-600 text-white rounded-xl text-center shadow-sm transition";
-      btnElement.querySelectorAll('div')[0].className = "text-xs font-bold text-white";
-      btnElement.querySelectorAll('div')[1].className = "text-[9px] text-blue-100";
-    }
+      const data = await res.json();
+      const resultDiv = document.getElementById('result');
 
-    // Navigation Switches
-    function goToPage2() {
-      calculateAndRender();
-      
-      const p1 = document.getElementById('page-1');
-      const p2 = document.getElementById('page-2');
-
-      p1.classList.add('hidden');
-      p1.classList.remove('flex');
-
-      p2.classList.remove('hidden');
-      p2.classList.add('flex');
-    }
-
-    function goToPage1() {
-      const p1 = document.getElementById('page-1');
-      const p2 = document.getElementById('page-2');
-
-      p2.classList.add('hidden');
-      p2.classList.remove('flex');
-
-      p1.classList.remove('hidden');
-      p1.classList.add('flex');
-    }
-
-    function calculateAndRender() {
-      const car = selectedCar || carsData[0] || { tankCapacity: 50, fuelEfficiency: 12.5, model: "Civic FE" };
-      const safetyBuffer = 40;
-      
-      const efficiency = car.fuelEfficiency || 12.5;
-      const totalRange = Math.round(car.tankCapacity * efficiency * selectedFuelRatio);
-      const targetDist = Math.max(20, totalRange - safetyBuffer);
-
-      let recStation = null;
-      let backupList = [];
-
-      if (stationsData.length > 0) {
-        const eligible = stationsData.filter(s => s.kmMarker <= targetDist);
-        recStation = eligible.length > 0 ? eligible[eligible.length - 1] : stationsData[0];
-        backupList = eligible.length >= 3 ? eligible.slice(-3, -1).reverse() : stationsData.slice(1, 3);
-      } else {
-        recStation = { name: "PTT Station สาขาพะเยา", kmMarker: 95, googleMapUrl: "https://maps.google.com/?q=PTT+Station+Phayao" };
-        backupList = [
-          { name: "Bangchak พะเยา", kmMarker: 108, googleMapUrl: "https://maps.google.com/?q=Bangchak+Phayao" },
-          { name: "PT Station พะเยา", kmMarker: 121, googleMapUrl: "https://maps.google.com/?q=PT+Station+Phayao" }
-        ];
+      if (!data.recommendedStation) {
+        resultDiv.innerHTML = `
+          <div class="bg-red-50 border border-red-200 text-red-600 p-4 rounded-2xl text-xs font-bold flex items-center gap-3">
+            <i class="fa-solid fa-triangle-exclamation text-lg"></i>
+            <span>No safe station found within range! Please stop at the nearest station immediately.</span>
+          </div>`;
+        return;
       }
 
-      // Calculations Display
-      document.getElementById('res-efficiency').innerText = efficiency;
-      document.getElementById('res-range').innerText = totalRange;
-      
-      const nameParts = recStation.name.split(' ');
-      document.getElementById('res-stop-title').innerText = nameParts.slice(0, 2).join(' ');
-      document.getElementById('res-stop-sub').innerText = nameParts.slice(2).join(' ') || "จังหวัดพะเยา";
-      document.getElementById('res-distance').innerText = recStation.kmMarker;
-
-      // Recommended Station Display
-      document.getElementById('rec-full-name').innerText = recStation.name;
-      document.getElementById('rec-dist-text').innerText = `${recStation.kmMarker} km`;
-      document.getElementById('rec-time-text').innerText = `${Math.floor(recStation.kmMarker/70)} ชม. ${Math.round((recStation.kmMarker%70)*60/70)} นาที`;
-      
-      const mapUrl = recStation.googleMapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(recStation.name)}`;
-      document.getElementById('rec-card').dataset.url = mapUrl;
-      document.getElementById('btn-primary-map').dataset.url = mapUrl;
-
-      // Backup List Display
-      const backupContainer = document.getElementById('backup-list-container');
-      backupContainer.innerHTML = backupList.map(st => {
-        const bUrl = st.googleMapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(st.name)}`;
-        return `
-          <div onclick="openMapUrl('${bUrl}')" class="p-2.5 flex items-center justify-between hover:bg-slate-50 transition cursor-pointer">
-            <div class="flex items-center gap-2">
-              <div class="w-6 h-6 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-[10px]">
-                <i class="fa-solid fa-gas-pump"></i>
-              </div>
-              <span class="font-semibold text-slate-700 text-xs">${st.name}</span>
-            </div>
-            <div class="flex items-center gap-2 text-xs text-slate-500">
-              <span class="font-medium text-[11px]">${st.kmMarker} km</span>
-              <i class="fa-solid fa-chevron-right text-slate-300 text-[9px]"></i>
-            </div>
+      const rec = data.recommendedStation;
+      resultDiv.innerHTML = `
+        <div class="bg-emerald-500 text-white p-4 rounded-2xl shadow-lg space-y-2 relative overflow-hidden">
+          <div class="flex justify-between items-start">
+            <span class="bg-emerald-700/60 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">Recommended Fuel Stop</span>
+            <span class="text-xs opacity-90 font-mono">KM ${rec.kmMarker}</span>
           </div>
-        `;
-      }).join('');
+          <div>
+            <h3 class="text-lg font-extrabold leading-tight">${rec.name}</h3>
+            <p class="text-xs text-emerald-100 mt-0.5">Brand: ${rec.brand}</p>
+          </div>
+          <div class="pt-2 border-t border-emerald-400/40 flex justify-between items-center">
+            <div>
+              <span class="text-[10px] text-emerald-100 block">Distance to Station</span>
+              <span class="text-xl font-black">${rec.distanceFromUser} <span class="text-xs font-normal">km</span></span>
+            </div>
+            <a href="${rec.googleMapUrl}" target="_blank" class="bg-white text-emerald-700 hover:bg-emerald-50 font-bold px-3.5 py-2 rounded-xl text-xs shadow-sm flex items-center gap-1.5 transition">
+              <i class="fa-solid fa-location-arrow"></i> Navigate
+            </a>
+          </div>
+        </div>
+      `;
     }
 
-    function openMapUrl(url) {
-      if (url) window.open(url, '_blank');
-    }
-
-    window.addEventListener('DOMContentLoaded', initApp);
+    initApp();
   </script>
 </body>
 </html>
