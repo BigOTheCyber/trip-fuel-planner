@@ -65,29 +65,35 @@
   { "id": "mg-zs", "brand": "MG", "model": "MG ZS (1.5)", "tankCapacity": 48, "fuelEfficiency": 13 },
   { "id": "mg-vs-hev", "brand": "MG", "model": "MG VS (HEV 1.5)", "tankCapacity": 48, "fuelEfficiency": 18 },
   { "id": "mg-5", "brand": "MG", "model": "MG 5 (1.5 เบนซิน)", "tankCapacity": 45, "fuelEfficiency": 14 },
-  { "id": "mg-4-electric", "brand": "MG", "model": "MG 4 Electric", "tankCapacity": 51, "fuelEfficiency": 7.5 },
-  { "id": "mg-zs-ev", "brand": "MG", "model": "ZS EV", "tankCapacity": 50.3, "fuelEfficiency": 6.5 },
+  { "id": "mg-extender", "brand": "MG", "model": "Extender (2.0 Diesel)", "tankCapacity": 68, "fuelEfficiency": 12 },
 
-  { "id": "byd-dolphin-std", "brand": "BYD", "model": "Dolphin (Standard Range)", "tankCapacity": 44.9, "fuelEfficiency": 7.8 },
-  { "id": "byd-dolphin-ext", "brand": "BYD", "model": "Dolphin (Extended Range)", "tankCapacity": 60.48, "fuelEfficiency": 7.2 },
-  { "id": "byd-atto-3", "brand": "BYD", "model": "Atto 3", "tankCapacity": 60.48, "fuelEfficiency": 7 },
-  { "id": "byd-seal-dynamic", "brand": "BYD", "model": "Seal (Dynamic)", "tankCapacity": 61.4, "fuelEfficiency": 7 },
-  { "id": "byd-seal-premium", "brand": "BYD", "model": "Seal (Premium / Performance)", "tankCapacity": 82.5, "fuelEfficiency": 6.5 },
   { "id": "byd-sealion-6", "brand": "BYD", "model": "Sealion 6 (DM-i PHEV)", "tankCapacity": 60, "fuelEfficiency": 20 },
-
-  { "id": "neta-v", "brand": "NETA", "model": "V / V-II", "tankCapacity": 36.1, "fuelEfficiency": 8 },
-  { "id": "ora-good-cat", "brand": "ORA", "model": "Good Cat", "tankCapacity": 57.7, "fuelEfficiency": 7.3 },
-  { "id": "deepal-s07", "brand": "Deepal", "model": "S07", "tankCapacity": 79.97, "fuelEfficiency": 6.5 },
-  { "id": "deepal-l07", "brand": "Deepal", "model": "L07", "tankCapacity": 66.8, "fuelEfficiency": 6.8 },
-  { "id": "changan-lumin", "brand": "Changan", "model": "Lumin", "tankCapacity": 27.98, "fuelEfficiency": 8.5 },
-  { "id": "aion-y-plus", "brand": "AION", "model": "Y Plus", "tankCapacity": 63.2, "fuelEfficiency": 7 },
-
-  { "id": "tesla-model-3-rwd", "brand": "Tesla", "model": "Model 3 (Rear-Wheel Drive)", "tankCapacity": 60, "fuelEfficiency": 7.5 },
-  { "id": "tesla-model-y-lr", "brand": "Tesla", "model": "Model Y (Long Range)", "tankCapacity": 78.1, "fuelEfficiency": 6.8 },
+  { "id": "byd-shark-6", "brand": "BYD", "model": "Shark 6 (DM-i PHEV)", "tankCapacity": 60, "fuelEfficiency": 14 },
+  { "id": "byd-song-plus", "brand": "BYD", "model": "Song Plus (DM-i PHEV)", "tankCapacity": 60, "fuelEfficiency": 19 },
+  { "id": "byd-qin-plus", "brand": "BYD", "model": "Qin Plus (DM-i PHEV)", "tankCapacity": 48, "fuelEfficiency": 22 },
 
   { "id": "hyundai-staria", "brand": "Hyundai", "model": "Staria (2.2 Diesel)", "tankCapacity": 75, "fuelEfficiency": 12 },
+  { "id": "hyundai-creta", "brand": "Hyundai", "model": "Creta (1.5 เบนซิน)", "tankCapacity": 40, "fuelEfficiency": 16 },
+  { "id": "hyundai-santa-fe", "brand": "Hyundai", "model": "Santa Fe (1.6 Hybrid)", "tankCapacity": 67, "fuelEfficiency": 15 },
+  { "id": "hyundai-h1", "brand": "Hyundai", "model": "H-1 (2.5 Diesel)", "tankCapacity": 75, "fuelEfficiency": 11 },
+
   { "id": "kia-carnival", "brand": "Kia", "model": "Carnival (2.2 Diesel)", "tankCapacity": 72, "fuelEfficiency": 14 },
+  { "id": "kia-sorento-hev", "brand": "Kia", "model": "Sorento (1.6 HEV)", "tankCapacity": 67, "fuelEfficiency": 16 },
+  { "id": "kia-seltos", "brand": "Kia", "model": "Seltos (1.5 เบนซิน)", "tankCapacity": 50, "fuelEfficiency": 15 },
+  { "id": "kia-k5", "brand": "Kia", "model": "K5 (2.0 เบนซิน)", "tankCapacity": 60, "fuelEfficiency": 14 },
+
   { "id": "hino-dutro", "brand": "Hino", "model": "Dutro (4.0 ดีเซล)", "tankCapacity": 100, "fuelEfficiency": 9.5 },
+  { "id": "hino-300", "brand": "Hino", "model": "300 Series (4.0 ดีเซล)", "tankCapacity": 100, "fuelEfficiency": 9.0 },
+  { "id": "hino-500-dominator", "brand": "Hino", "model": "500 Dominator (5.1 ดีเซล)", "tankCapacity": 200, "fuelEfficiency": 6.5 },
+  { "id": "hino-500-victor", "brand": "Hino", "model": "500 Victor (7.7 ดีเซล)", "tankCapacity": 300, "fuelEfficiency": 4.5 },
+
   { "id": "bmw-3-series", "brand": "BMW", "model": "3 Series (320d / 330e)", "tankCapacity": 59, "fuelEfficiency": 20.5 },
-  { "id": "mercedes-c-class", "brand": "Mercedes-Benz", "model": "C-Class (C 220 d)", "tankCapacity": 66, "fuelEfficiency": 21.5 }
+  { "id": "bmw-5-series", "brand": "BMW", "model": "5 Series (520d / 530e)", "tankCapacity": 60, "fuelEfficiency": 19 },
+  { "id": "bmw-x1", "brand": "BMW", "model": "X1 (sDrive20i)", "tankCapacity": 45, "fuelEfficiency": 15 },
+  { "id": "bmw-x3", "brand": "BMW", "model": "X3 (xDrive20d)", "tankCapacity": 50, "fuelEfficiency": 16 },
+
+  { "id": "mercedes-c-class", "brand": "Mercedes-Benz", "model": "C-Class (C 220 d)", "tankCapacity": 66, "fuelEfficiency": 21.5 },
+  { "id": "mercedes-e-class", "brand": "Mercedes-Benz", "model": "E-Class (E 220 d)", "tankCapacity": 66, "fuelEfficiency": 20 },
+  { "id": "mercedes-s-class", "brand": "Mercedes-Benz", "model": "S-Class (S 350 d)", "tankCapacity": 65, "fuelEfficiency": 17 },
+  { "id": "mercedes-glc", "brand": "Mercedes-Benz", "model": "GLC (GLC 220 d)", "tankCapacity": 62, "fuelEfficiency": 18 }
 ]
