@@ -484,7 +484,6 @@
         return;
       }
 
-      // Config สไตล์สำหรับปั๊ม 3 ระดับสี
       const styleConfig = {
         RED: {
           cardBg: 'bg-rose-50 border-rose-200 text-rose-900',
@@ -519,11 +518,11 @@
               <p class="text-[11px] ${cfg.descText} font-medium">${item.description}</p>
               <div>
                 <h3 class="text-base font-extrabold leading-tight">${st.name}</h3>
-                <p class="text-xs opacity-80 mt-0.5">แบรนด์: ${st.brand}</p>
+                <p class="text-xs opacity-80 mt-0.5">Brand: ${st.brand}</p>
               </div>
               <div class="pt-2 border-t border-slate-200/60 flex justify-between items-center">
                 <div>
-                  <span class="text-[10px] opacity-75 block">ระยะห่างจากตำแหน่งปัจจุบัน</span>
+                  <span class="text-[10px] opacity-75 block">Distance from current location</span>
                   <span class="text-lg font-black">${st.distanceFromUser} <span class="text-xs font-normal">km</span></span>
                 </div>
                 <a href="${st.googleMapUrl}" target="_blank" class="${cfg.btnBg} font-bold px-3.5 py-2 rounded-xl text-xs shadow-sm flex items-center gap-1.5 transition">

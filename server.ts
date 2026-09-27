@@ -44,11 +44,9 @@ async function getStationsFromCSV() {
 }
 
 const app = new Elysia()
-  // เสิร์ฟหน้า Web App หลัก (index.html)
   .get('/', () => Bun.file('index.html'))
   .get('/index.html', () => Bun.file('index.html'))
 
-  // API ดึงข้อมูลรถยนต์
   .get('/api/cars', async () => {
     try {
       return await Bun.file('data/cars.json').json();
@@ -57,12 +55,10 @@ const app = new Elysia()
     }
   })
 
-  // API ดึงข้อมูลปั๊มน้ำมัน
   .get('/api/stations', async () => {
     return await getStationsFromCSV();
   })
 
-  // API คำนวณและแนะนำจุดแวะเติมน้ำมัน (3 ปั๊ม 3 สี)
   .post('/api/plan-trip', async ({ body }: { body: any }) => {
     const { carId, fuelLevel = 3, currentKm = 0 } = body || {};
 
@@ -78,12 +74,10 @@ const app = new Elysia()
     const tankCapacity = Number(selectedCar.tankCapacity) || 45;
     const fuelEfficiency = Number(selectedCar.fuelEfficiency) || 15;
 
-    // คำนวณระยะทางสูงสุด theoretical และหัก Safety Buffer (15% Reserve)
     const fullRange = tankCapacity * fuelEfficiency;
     const currentFuelRatio = Number(fuelLevel) / 5;
     const remainingKmCapacity = fullRange * currentFuelRatio;
 
-    // Safety Reserve 15% (คิด Buffer 85% สำหรับปกติ และปรับลดถ้าขีดน้ำมันต่ำ)
     let bufferRatio = 0.85;
     if (Number(fuelLevel) === 1) {
       bufferRatio = 0.50;
@@ -94,11 +88,9 @@ const app = new Elysia()
     const safeMaxKm = Number(currentKm) + (remainingKmCapacity * bufferRatio);
     const stations = await getStationsFromCSV();
 
-    // คัดเลือกปั๊มทั้งหมดที่อยู่ในระยะทางปลอดภัยข้างหน้า
     const validStations = stations.filter(s => s.kmMarker > Number(currentKm) && s.kmMarker <= safeMaxKm);
 
     if (validStations.length === 0) {
-      // กรณีไม่พบปั๊มในระยะปลอดภัย ให้ดึงปั๊มแรกสุดที่อยู่ข้างหน้าแทน
       const nearestFallback = stations.find(s => s.kmMarker > Number(currentKm));
       return {
         recommendedStation: nearestFallback ? {
@@ -112,14 +104,9 @@ const app = new Elysia()
       };
     }
 
-    // 🔴 Red Station: ปั๊มแรกสุดข้างหน้า (Panic Mode / เติมด่วน)
     const redStation = validStations[0];
-
-    // 🟡 Yellow Station: ปั๊มช่วงกลางๆ ของระยะปลอดภัย
     const midIndex = Math.floor((validStations.length - 1) / 2);
     const yellowStation = validStations[midIndex];
-
-    // 🟢 Green Station: ปั๊มไกลที่สุดในระยะปลอดภัย (ชิลๆ ลากยาวได้)
     const greenStation = validStations[validStations.length - 1];
 
     const formatStation = (st: any) => ({
@@ -131,26 +118,24 @@ const app = new Elysia()
     });
 
     return {
-      // ส่งแบบเดิมเผื่อ Frontend โครงสร้างเก่าเรียกใช้
       recommendedStation: formatStation(greenStation),
-      // ส่งแบบใหม่ 3 ปั๊ม 3 สี
       recommendations: [
         {
           level: 'RED',
-          title: '🔴 รีบที่สุด (Panic Mode)',
-          description: 'แวะเติมทันทีตั้งแต่เนิ่นๆ ในปั๊มแรกที่เจอข้างหน้า',
+          title: '🔴 Urgent (Panic Mode)',
+          description: 'Refuel immediately at the first station ahead.',
           station: formatStation(redStation)
         },
         {
           level: 'YELLOW',
-          title: '🟡 รีบกลาง (ระยะกำลังดี)',
-          description: 'จุดแวะมาตรฐาน ระยะทางกำลังเหมาะสม',
+          title: '🟡 Moderate (Balanced Distance)',
+          description: 'Standard recommended stop at a comfortable distance.',
           station: formatStation(yellowStation)
         },
         {
           level: 'GREEN',
-          title: '🟢 รีบน้อย (ชิลๆ ลากยาวได้)',
-          description: 'วิ่งต่อได้ไกลที่สุดก่อนเข้าเขตน้ำมันสำรอง',
+          title: '🟢 Relaxed (Maximum Safe Range)',
+          description: 'Drive as far as safely possible before reaching fuel reserve.',
           station: formatStation(greenStation)
         }
       ]
