@@ -104,10 +104,21 @@ const app = new Elysia()
       };
     }
 
-    const redStation = validStations[0];
-    const midIndex = Math.floor((validStations.length - 1) / 2);
-    const yellowStation = validStations[midIndex];
-    const greenStation = validStations[validStations.length - 1];
+    // คำนวณตำแหน่งปั๊มสีแดงตามระดับน้ำมัน
+    let redIndex = 0;
+    if (Number(fuelLevel) > 1 && validStations.length > 2) {
+      redIndex = Math.min(Math.floor((validStations.length - 1) * 0.25), validStations.length - 1);
+      if (redIndex === 0 && validStations.length > 1) {
+        redIndex = 1;
+      }
+    }
+
+    const greenIndex = validStations.length - 1;
+    const yellowIndex = Math.floor((redIndex + greenIndex) / 2);
+
+    const redStation = validStations[redIndex];
+    const yellowStation = validStations[yellowIndex];
+    const greenStation = validStations[greenIndex];
 
     const formatStation = (st: any) => ({
       name: st.name,
@@ -123,7 +134,7 @@ const app = new Elysia()
         {
           level: 'RED',
           title: '🔴 Urgent (Panic Mode)',
-          description: 'Refuel immediately at the first station ahead.',
+          description: 'Refuel soon at an early station along your route.',
           station: formatStation(redStation)
         },
         {
