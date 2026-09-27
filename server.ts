@@ -1,177 +1,165 @@
-import carsData from "./data/cars.json";
+import { Elysia } from 'elysia';
 
-interface Car {
-  id: string;
-  brand: string;
-  model: string;
-  tankSize: number;
-  kmPerLiter: number;
-}
+const PORT = Number(process.env.PORT) || 3000;
 
-interface Station {
-  id: string;
-  name: string;
-  brand: string;
-  lat: number;
-  lng: number;
-  googleMapsUrl: string;
-  distanceKm: number;
-}
-
-// ฟังก์ชันอ่านและ Parse ไฟล์ CSV แบบ Async สำหรับ Bun
-async function loadStations(): Promise<Station[]> {
+async function getStationsFromCSV() {
   try {
-    const file = Bun.file("./data/stations.csv");
-    const text = await file.text();
-    const lines = text.trim().split("\n");
+    const fileText = await Bun.file('data/stations.csv').text();
+    const lines = fileText.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
     if (lines.length <= 1) return [];
 
-    const headers = lines[0].split(",").map((h) => h.trim());
+    const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+    let accumulatedKm = 0;
 
-    return lines.slice(1).map((line) => {
-      const values = line.split(",").map((v) => v.trim());
-      const stationObj: Record<string, string> = {};
-      headers.forEach((header, index) => {
-        stationObj[header] = values[index] || "";
+    return lines.slice(1).map((line, index) => {
+      const values = line.split(',').map(v => v.trim().replace(/^"|"$/g, ''));
+      const row: any = {};
+      headers.forEach((header, i) => {
+        row[header] = values[i];
       });
 
+      const name = row['ชื่อปั๊มน้ำมัน'] || row['name'] || 'Gas Station';
+      const brand = row['แบรนด์'] || row['brand'] || 'Station';
+      const mapUrl = row['Google Maps Link'] || row['googleMapUrl'] || '';
+      const lat = parseFloat(row['Latitude'] || '0') || 0;
+      const lng = parseFloat(row['Longitude'] || '0') || 0;
+      
+      const distFromPrev = parseFloat(row['ห่างจากปั๊มก่อนหน้า (KM)'] || '0') || 0;
+      accumulatedKm += distFromPrev;
+
       return {
-        id: stationObj.id || "",
-        name: stationObj.name || "",
-        brand: stationObj.brand || "",
-        lat: parseFloat(stationObj.lat) || 0,
-        lng: parseFloat(stationObj.lng) || 0,
-        googleMapsUrl: stationObj.googleMapsUrl || "",
-        distanceKm: parseFloat(stationObj.distanceKm) || 0,
+        id: `station-${index}`,
+        name,
+        brand,
+        lat,
+        lng,
+        googleMapUrl: mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name)}`,
+        kmMarker: accumulatedKm
       };
     });
   } catch (error) {
-    console.error("Error reading stations.csv:", error);
+    console.error('Error reading stations.csv:', error);
     return [];
   }
 }
 
-const cars: Car[] = carsData as Car[];
+const app = new Elysia()
+  // เสิร์ฟหน้า Web App หลัก (index.html)
+  .get('/', () => Bun.file('index.html'))
+  .get('/index.html', () => Bun.file('index.html'))
 
-// เปิด Web Server ด้วย Bun.serve เพื่อรันค้างบน Render
-const server = Bun.serve({
-  port: process.env.PORT || 3000,
-  async fetch(req) {
-    const url = new URL(req.url);
-    const corsHeaders = {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type",
-      "Content-Type": "application/json; charset=utf-8",
-    };
+  // API ดึงข้อมูลรถยนต์
+  .get('/api/cars', async () => {
+    try {
+      return await Bun.file('data/cars.json').json();
+    } catch (error) {
+      return { status: 'error', message: 'Cars data not found' };
+    }
+  })
 
-    if (req.method === "OPTIONS") {
-      return new Response(null, { headers: corsHeaders });
+  // API ดึงข้อมูลปั๊มน้ำมัน
+  .get('/api/stations', async () => {
+    return await getStationsFromCSV();
+  })
+
+  // API คำนวณและแนะนำจุดแวะเติมน้ำมัน (3 ปั๊ม 3 สี)
+  .post('/api/plan-trip', async ({ body }: { body: any }) => {
+    const { carId, fuelLevel = 3, currentKm = 0 } = body || {};
+
+    let cars: any[] = [];
+    try {
+      const carsData = await Bun.file('data/cars.json').json();
+      cars = Array.isArray(carsData) ? carsData : (carsData.data || []);
+    } catch (e) {
+      cars = [];
     }
 
-    // Endpoint: ดึงรายชื่อรถทั้งหมด
-    if (url.pathname === "/api/cars") {
-      return new Response(JSON.stringify(cars), { headers: corsHeaders });
+    const selectedCar = cars.find(c => String(c.id) === String(carId)) || { tankCapacity: 45, fuelEfficiency: 15 };
+    const tankCapacity = Number(selectedCar.tankCapacity) || 45;
+    const fuelEfficiency = Number(selectedCar.fuelEfficiency) || 15;
+
+    // คำนวณระยะทางสูงสุด theoretical และหัก Safety Buffer (15% Reserve)
+    const fullRange = tankCapacity * fuelEfficiency;
+    const currentFuelRatio = Number(fuelLevel) / 5;
+    const remainingKmCapacity = fullRange * currentFuelRatio;
+
+    // Safety Reserve 15% (คิด Buffer 85% สำหรับปกติ และปรับลดถ้าขีดน้ำมันต่ำ)
+    let bufferRatio = 0.85;
+    if (Number(fuelLevel) === 1) {
+      bufferRatio = 0.50;
+    } else if (Number(fuelLevel) === 2) {
+      bufferRatio = 0.70;
     }
 
-    // Endpoint: ดึงรายชื่อปั๊มทั้งหมด
-    if (url.pathname === "/api/stations") {
-      const stations = await loadStations();
-      return new Response(JSON.stringify(stations), { headers: corsHeaders });
-    }
+    const safeMaxKm = Number(currentKm) + (remainingKmCapacity * bufferRatio);
+    const stations = await getStationsFromCSV();
 
-    // Endpoint: คำนวณและแนะนำจุดแวะเติมน้ำมัน
-    if (url.pathname === "/api/plan-trip") {
-      const carId = url.searchParams.get("carId");
-      const currentDistanceKm = parseFloat(url.searchParams.get("currentDistanceKm") || "0");
+    // คัดเลือกปั๊มทั้งหมดที่อยู่ในระยะทางปลอดภัยข้างหน้า
+    const validStations = stations.filter(s => s.kmMarker > Number(currentKm) && s.kmMarker <= safeMaxKm);
 
-      if (!carId) {
-        return new Response(JSON.stringify({ error: "Missing carId parameter" }), {
-          status: 400,
-          headers: corsHeaders,
-        });
-      }
-
-      const car = cars.find((c) => c.id === carId);
-      if (!car) {
-        return new Response(JSON.stringify({ error: "Car not found" }), {
-          status: 404,
-          headers: corsHeaders,
-        });
-      }
-
-      const stations = await loadStations();
-
-      // คำนวณระยะทางและ Safe Range (เผื่อความปลอดภัย 15%)
-      const maxRangeTheoretical = car.tankSize * car.kmPerLiter;
-      const safeRange = maxRangeTheoretical * 0.85;
-
-      // คัดเฉพาะปั๊มที่อยู่ข้างหน้าและยังไม่เกิน Safe Range
-      const reachableStations = stations
-        .filter((station) => {
-          const distanceAhead = station.distanceKm - currentDistanceKm;
-          return distanceAhead > 0 && distanceAhead <= safeRange;
-        })
-        .sort((a, b) => a.distanceKm - b.distanceKm);
-
-      if (reachableStations.length === 0) {
-        return new Response(
-          JSON.stringify({
-            message: "ไม่พบปั๊มน้ำมันในระยะปลอดภัย กรุณาเตรียมตัวเติมน้ำมันล่วงหน้า",
-            safeRange: Math.round(safeRange),
-            maxRangeTheoretical: Math.round(maxRangeTheoretical),
-          }),
-          { headers: corsHeaders }
-        );
-      }
-
-      // เลือก 3 ปั๊มตามระดับความรีบด่วน
-      const count = reachableStations.length;
-      const redStation = reachableStations[0]; // ปั๊มแรกสุด (Panic mode)
-      const yellowStation = reachableStations[Math.floor(count / 2)]; // ปั๊มระยะกลาง
-      const greenStation = reachableStations[count - 1]; // ปั๊มไกลสุดในระยะ Safe Range
-
-      const result = {
-        carInfo: car,
-        maxRangeTheoretical: Math.round(maxRangeTheoretical),
-        safeRange: Math.round(safeRange),
-        currentDistanceKm,
-        recommendations: [
-          {
-            level: "RED",
-            colorCode: "#FF4D4F",
-            title: "🔴 รีบที่สุด (Panic Mode)",
-            description: "สำหรับคนกังวล แวะเติมทันทีตั้งแต่เนิ่นๆ ในระยะแรกที่เจอ",
-            station: redStation,
-            distanceFromCurrentKm: Math.round(redStation.distanceKm - currentDistanceKm),
-          },
-          {
-            level: "YELLOW",
-            colorCode: "#FAAD14",
-            title: "🟡 รีบกลาง (ระยะกำลังดี)",
-            description: "จุดแวะมาตรฐาน ระยะทางพอดีๆ ไม่เร็วและไม่ช้าเกินไป",
-            station: yellowStation,
-            distanceFromCurrentKm: Math.round(yellowStation.distanceKm - currentDistanceKm),
-          },
-          {
-            level: "GREEN",
-            colorCode: "#52C41A",
-            title: "🟢 รีบน้อย (ชิลๆ ลากยาวได้)",
-            description: "วิ่งต่อได้ไกลที่สุดก่อนเข้าเขตน้ำมันสำรอง เน้นขับยาวๆ",
-            station: greenStation,
-            distanceFromCurrentKm: Math.round(greenStation.distanceKm - currentDistanceKm),
-          },
-        ],
+    if (validStations.length === 0) {
+      // กรณีไม่พบปั๊มในระยะปลอดภัย ให้ดึงปั๊มแรกสุดที่อยู่ข้างหน้าแทน
+      const nearestFallback = stations.find(s => s.kmMarker > Number(currentKm));
+      return {
+        recommendedStation: nearestFallback ? {
+          name: nearestFallback.name,
+          brand: nearestFallback.brand,
+          kmMarker: Math.round(nearestFallback.kmMarker * 10) / 10,
+          distanceFromUser: Math.max(0, Math.round((nearestFallback.kmMarker - Number(currentKm)) * 10) / 10),
+          googleMapUrl: nearestFallback.googleMapUrl
+        } : null,
+        recommendations: []
       };
-
-      return new Response(JSON.stringify(result), { headers: corsHeaders });
     }
 
-    return new Response(JSON.stringify({ error: "Endpoint not found" }), {
-      status: 404,
-      headers: corsHeaders,
-    });
-  },
-});
+    // 🔴 Red Station: ปั๊มแรกสุดข้างหน้า (Panic Mode / เติมด่วน)
+    const redStation = validStations[0];
 
-console.log(`Server is running on port ${server.port}`);
+    // 🟡 Yellow Station: ปั๊มช่วงกลางๆ ของระยะปลอดภัย
+    const midIndex = Math.floor((validStations.length - 1) / 2);
+    const yellowStation = validStations[midIndex];
+
+    // 🟢 Green Station: ปั๊มไกลที่สุดในระยะปลอดภัย (ชิลๆ ลากยาวได้)
+    const greenStation = validStations[validStations.length - 1];
+
+    const formatStation = (st: any) => ({
+      name: st.name,
+      brand: st.brand,
+      kmMarker: Math.round(st.kmMarker * 10) / 10,
+      distanceFromUser: Math.max(0, Math.round((st.kmMarker - Number(currentKm)) * 10) / 10),
+      googleMapUrl: st.googleMapUrl
+    });
+
+    return {
+      // ส่งแบบเดิมเผื่อ Frontend โครงสร้างเก่าเรียกใช้
+      recommendedStation: formatStation(greenStation),
+      // ส่งแบบใหม่ 3 ปั๊ม 3 สี
+      recommendations: [
+        {
+          level: 'RED',
+          title: '🔴 รีบที่สุด (Panic Mode)',
+          description: 'แวะเติมทันทีตั้งแต่เนิ่นๆ ในปั๊มแรกที่เจอข้างหน้า',
+          station: formatStation(redStation)
+        },
+        {
+          level: 'YELLOW',
+          title: '🟡 รีบกลาง (ระยะกำลังดี)',
+          description: 'จุดแวะมาตรฐาน ระยะทางกำลังเหมาะสม',
+          station: formatStation(yellowStation)
+        },
+        {
+          level: 'GREEN',
+          title: '🟢 รีบน้อย (ชิลๆ ลากยาวได้)',
+          description: 'วิ่งต่อได้ไกลที่สุดก่อนเข้าเขตน้ำมันสำรอง',
+          station: formatStation(greenStation)
+        }
+      ]
+    };
+  })
+
+  .listen({
+    port: PORT,
+    hostname: '0.0.0.0'
+  }, (server) => {
+    console.log(`🚀 Trip Fuel Planner is running at http://${server.hostname}:${server.port}`);
+  });
