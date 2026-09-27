@@ -67,18 +67,18 @@
       <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
         <div class="flex justify-between items-center">
           <label class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
-            <i class="fa-solid fa-location-dot text-red-500"></i> Current Location Verification
+            <i class="fa-solid fa-location-dot text-red-500"></i> Nearest Station Detection
           </label>
           <span id="gpsBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">Detecting...</span>
         </div>
 
         <!-- Location Display & Change Button -->
         <div class="bg-slate-50 border border-slate-200/80 p-3 rounded-xl flex items-center justify-between">
-          <div class="space-y-0.5">
-            <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Detected Station / Point</span>
-            <span id="currentStationName" class="text-xs font-bold text-slate-800 block">Locating via GPS...</span>
+          <div class="space-y-0.5 pr-2">
+            <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Starting Station</span>
+            <span id="currentStationName" class="text-xs font-bold text-slate-800 block leading-tight">Locating via GPS...</span>
           </div>
-          <button type="button" onclick="openStationModal()" class="text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg border border-blue-200/60 transition flex items-center gap-1">
+          <button type="button" onclick="openStationModal()" class="text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg border border-blue-200/60 transition flex items-center gap-1 shrink-0">
             <i class="fa-solid fa-pen-to-square"></i> Change
           </button>
         </div>
@@ -88,7 +88,7 @@
           <iframe id="mapIframe" class="w-full h-full border-0 hidden" loading="lazy" allowfullscreen src=""></iframe>
           <div id="mapPlaceholder" class="text-center p-4 text-slate-400 text-xs flex flex-col items-center gap-2">
             <i class="fa-solid fa-circle-notch fa-spin text-2xl text-blue-500"></i>
-            <span>Fetching live GPS position...</span>
+            <span>Matching nearest station via GPS...</span>
           </div>
         </div>
       </div>
@@ -141,7 +141,7 @@
     <div class="bg-white w-full max-w-md rounded-t-[32px] sm:rounded-3xl p-5 shadow-2xl space-y-4 max-h-[80vh] flex flex-col animate-in slide-in-from-bottom duration-300">
       <div class="flex justify-between items-center border-b border-slate-100 pb-3">
         <div>
-          <h3 class="font-extrabold text-slate-800 text-base">Select Nearby Station</h3>
+          <h3 class="font-extrabold text-slate-800 text-base">Select Starting Station</h3>
           <p class="text-xs text-slate-400">Pick your actual current starting station</p>
         </div>
         <button onclick="closeStationModal()" class="text-slate-400 hover:text-slate-600 p-2">
@@ -197,6 +197,7 @@
       }
     }
 
+    // Haversine formula to compute exact distance between two lat/lng points
     function getDistanceInKm(lat1, lon1, lat2, lon2) {
       const R = 6371;
       const dLat = (lat2 - lat1) * Math.PI / 180;
@@ -209,10 +210,10 @@
       return R * c;
     }
 
-    // Auto GPS Tracking
+    // Auto GPS Tracking with Station Matching
     function autoTrackLocation() {
       if (!navigator.geolocation) {
-        fallbackStationSelection("GPS not supported by browser");
+        fallbackStationSelection("GPS not supported");
         return;
       }
 
@@ -220,7 +221,7 @@
         (position) => {
           userLat = position.coords.latitude;
           userLng = position.coords.longitude;
-          updateLocationAndMap(userLat, userLng);
+          matchAndSetNearestStation(userLat, userLng);
         },
         (err) => {
           console.warn('GPS location error or denied:', err);
@@ -230,19 +231,17 @@
       );
     }
 
-    function updateLocationAndMap(lat, lng, forcedStation = null) {
+    // Find closest station in dataset relative to user's real GPS
+    function matchAndSetNearestStation(lat, lng, forcedStation = null) {
       const mapIframe = document.getElementById('mapIframe');
       const mapPlaceholder = document.getElementById('mapPlaceholder');
       const gpsBadge = document.getElementById('gpsBadge');
       const stationText = document.getElementById('currentStationName');
 
-      mapIframe.src = `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
-      mapIframe.classList.remove('hidden');
-      mapPlaceholder.classList.add('hidden');
-
       let station = forcedStation;
+      let minDist = Infinity;
+
       if (!station && allStations.length > 0) {
-        let minDist = Infinity;
         allStations.forEach(st => {
           if (st.lat && st.lng) {
             const dist = getDistanceInKm(lat, lng, st.lat, st.lng);
@@ -256,20 +255,30 @@
 
       if (station) {
         currentKm = station.kmMarker;
-        stationText.innerText = `${station.name} (${station.brand})`;
+        const distLabel = (minDist !== Infinity && !forcedStation) ? ` • ${minDist.toFixed(1)} km away` : '';
+        stationText.innerText = `${station.name} (${station.brand})${distLabel}`;
+
+        const mapLat = station.lat || lat;
+        const mapLng = station.lng || lng;
+        mapIframe.src = `https://maps.google.com/maps?q=${mapLat},${mapLng}&z=15&output=embed`;
+        mapIframe.classList.remove('hidden');
+        mapPlaceholder.classList.add('hidden');
+
         gpsBadge.className = "text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700";
-        gpsBadge.innerText = "🟢 GPS Live";
+        gpsBadge.innerText = forcedStation ? "📌 Manual Selected" : "🟢 GPS Matched";
+      } else {
+        fallbackStationSelection();
       }
     }
 
-    function fallbackStationSelection(msg = "GPS Disabled / Not Found") {
+    function fallbackStationSelection() {
       const gpsBadge = document.getElementById('gpsBadge');
       gpsBadge.className = "text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-700";
       gpsBadge.innerText = "⚠️ Manual Mode";
 
       if (allStations.length > 0) {
         const defaultStation = allStations[0];
-        updateLocationAndMap(defaultStation.lat || 19.907, defaultStation.lng || 99.832, defaultStation);
+        matchAndSetNearestStation(defaultStation.lat || 19.907, defaultStation.lng || 99.832, defaultStation);
       }
     }
 
@@ -331,7 +340,7 @@
       if (!station) return;
 
       currentKm = station.kmMarker;
-      updateLocationAndMap(station.lat, station.lng, station);
+      matchAndSetNearestStation(station.lat, station.lng, station);
       closeStationModal();
     }
 
