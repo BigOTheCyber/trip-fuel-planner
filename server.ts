@@ -1,161 +1,198 @@
-import { Elysia } from 'elysia';
+import express from 'express';
+import fs from 'fs';
+import path from 'path';
 
-const PORT = Number(process.env.PORT) || 3000;
+const app = express();
+app.use(express.json());
+app.use(express.static('public'));
 
-async function getStationsFromCSV() {
-  try {
-    const fileText = await Bun.file('data/stations.csv').text();
-    const lines = fileText.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
-    if (lines.length <= 1) return [];
-
-    const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
-    let accumulatedKm = 0;
-
-    return lines.slice(1).map((line, index) => {
-      const values = line.split(',').map(v => v.trim().replace(/^"|"$/g, ''));
-      const row: any = {};
-      headers.forEach((header, i) => {
-        row[header] = values[i];
-      });
-
-      const name = row['ชื่อปั๊มน้ำมัน'] || row['name'] || 'Gas Station';
-      const brand = row['แบรนด์'] || row['brand'] || 'Station';
-      const mapUrl = row['Google Maps Link'] || row['googleMapUrl'] || '';
-      const lat = parseFloat(row['Latitude'] || '0') || 0;
-      const lng = parseFloat(row['Longitude'] || '0') || 0;
-      
-      const distFromPrev = parseFloat(row['ห่างจากปั๊มก่อนหน้า (KM)'] || '0') || 0;
-      accumulatedKm += distFromPrev;
-
-      return {
-        id: `station-${index}`,
-        name,
-        brand,
-        lat,
-        lng,
-        googleMapUrl: mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name)}`,
-        kmMarker: accumulatedKm
-      };
-    });
-  } catch (error) {
-    console.error('Error reading stations.csv:', error);
-    return [];
-  }
+interface Car {
+  id: string;
+  brand: string;
+  model: string;
+  tankCapacity: number;
+  consumptionKmL: number;
 }
 
-const app = new Elysia()
-  .get('/', () => Bun.file('index.html'))
-  .get('/index.html', () => Bun.file('index.html'))
+interface Station {
+  id: string;
+  name: string;
+  brand: string;
+  kmMarker: number;
+  lat: number;
+  lng: number;
+  googleMapUrl?: string;
+}
 
-  .get('/api/cars', async () => {
-    try {
-      return await Bun.file('data/cars.json').json();
-    } catch (error) {
-      return { status: 'error', message: 'Cars data not found' };
+// โหลดข้อมูล Cars & Stations
+let cars: Car[] = [];
+let stations: Station[] = [];
+
+try {
+  const carsData = fs.readFileSync(path.join(__dirname, 'cars.json'), 'utf-8');
+  cars = JSON.parse(carsData);
+} catch (e) {
+  console.error('Failed to load cars.json', e);
+}
+
+try {
+  const stationsData = fs.readFileSync(path.join(__dirname, 'stations.json'), 'utf-8');
+  stations = JSON.parse(stationsData);
+  
+  // Sanitize & Fix Known KM Marker Anomalies (แก้ไขค่า KM ที่เพี้ยนของปั๊มแถว มฟล.)
+  stations = stations.map(s => {
+    let km = Number(s.kmMarker);
+    const name = s.name || '';
+    
+    // แก้ไขค่า KM ของปั๊มแถว มฟล. ให้ต่อเนื่องถูกต้องกับปั๊มแม่กรณ์ (KM ~307)
+    if (name.includes('ฟ้าไทย') || name.includes('มฟล')) {
+      if (km < 200) km = 285.5; // ปรับให้อยู่ก่อนถึงเมืองเชียงราย
     }
-  })
-
-  .get('/api/stations', async () => {
-    return await getStationsFromCSV();
-  })
-
-  .post('/api/plan-trip', async ({ body }: { body: any }) => {
-    const { carId, fuelLevel = 3, currentKm = 0 } = body || {};
-
-    let cars: any[] = [];
-    try {
-      const carsData = await Bun.file('data/cars.json').json();
-      cars = Array.isArray(carsData) ? carsData : (carsData.data || []);
-    } catch (e) {
-      cars = [];
+    if (name.includes('ศูนย์การแพทย์')) {
+      if (km < 200) km = 287.0;
     }
-
-    const selectedCar = cars.find(c => String(c.id) === String(carId)) || { tankCapacity: 45, fuelEfficiency: 15 };
-    const tankCapacity = Number(selectedCar.tankCapacity) || 45;
-    const fuelEfficiency = Number(selectedCar.fuelEfficiency) || 15;
-
-    const fullRange = tankCapacity * fuelEfficiency;
-    const currentFuelRatio = Number(fuelLevel) / 5;
-    const remainingKmCapacity = fullRange * currentFuelRatio;
-
-    let bufferRatio = 0.85;
-    if (Number(fuelLevel) === 1) {
-      bufferRatio = 0.50;
-    } else if (Number(fuelLevel) === 2) {
-      bufferRatio = 0.70;
-    }
-
-    const safeMaxKm = Number(currentKm) + (remainingKmCapacity * bufferRatio);
-    const stations = await getStationsFromCSV();
-
-    const validStations = stations.filter(s => s.kmMarker > Number(currentKm) && s.kmMarker <= safeMaxKm);
-
-    if (validStations.length === 0) {
-      const nearestFallback = stations.find(s => s.kmMarker > Number(currentKm));
-      return {
-        recommendedStation: nearestFallback ? {
-          name: nearestFallback.name,
-          brand: nearestFallback.brand,
-          kmMarker: Math.round(nearestFallback.kmMarker * 10) / 10,
-          distanceFromUser: Math.max(0, Math.round((nearestFallback.kmMarker - Number(currentKm)) * 10) / 10),
-          googleMapUrl: nearestFallback.googleMapUrl
-        } : null,
-        recommendations: []
-      };
-    }
-
-    // คำนวณตำแหน่งปั๊มสีแดงตามระดับน้ำมัน
-    let redIndex = 0;
-    if (Number(fuelLevel) > 1 && validStations.length > 2) {
-      redIndex = Math.min(Math.floor((validStations.length - 1) * 0.25), validStations.length - 1);
-      if (redIndex === 0 && validStations.length > 1) {
-        redIndex = 1;
-      }
-    }
-
-    const greenIndex = validStations.length - 1;
-    const yellowIndex = Math.floor((redIndex + greenIndex) / 2);
-
-    const redStation = validStations[redIndex];
-    const yellowStation = validStations[yellowIndex];
-    const greenStation = validStations[greenIndex];
-
-    const formatStation = (st: any) => ({
-      name: st.name,
-      brand: st.brand,
-      kmMarker: Math.round(st.kmMarker * 10) / 10,
-      distanceFromUser: Math.max(0, Math.round((st.kmMarker - Number(currentKm)) * 10) / 10),
-      googleMapUrl: st.googleMapUrl
-    });
-
-    return {
-      recommendedStation: formatStation(greenStation),
-      recommendations: [
-        {
-          level: 'RED',
-          title: '🔴 Urgent (Panic Mode)',
-          description: 'Refuel soon at an early station along your route.',
-          station: formatStation(redStation)
-        },
-        {
-          level: 'YELLOW',
-          title: '🟡 Moderate (Balanced Distance)',
-          description: 'Standard recommended stop at a comfortable distance.',
-          station: formatStation(yellowStation)
-        },
-        {
-          level: 'GREEN',
-          title: '🟢 Relaxed (Maximum Safe Range)',
-          description: 'Drive as far as safely possible before reaching fuel reserve.',
-          station: formatStation(greenStation)
-        }
-      ]
-    };
-  })
-
-  .listen({
-    port: PORT,
-    hostname: '0.0.0.0'
-  }, (server) => {
-    console.log(`🚀 Trip Fuel Planner is running at http://${server.hostname}:${server.port}`);
+    
+    return { ...s, kmMarker: km };
   });
+} catch (e) {
+  console.error('Failed to load stations.json', e);
+}
+
+// สูตรคำนวณระยะห่างพิกัดจริง (Haversine Formula)
+function getHaversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
+  const R = 6371; // km
+  const dLat = (lat2 - lat1) * Math.PI / 180;
+  const dLon = (lon2 - lon1) * Math.PI / 180;
+  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
+            Math.sin(dLon / 2) * Math.sin(dLon / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return R * c;
+}
+
+app.get('/api/cars', (req, res) => res.json(cars));
+app.get('/api/stations', (req, res) => res.json(stations));
+
+app.post('/api/plan-trip', (req, res) => {
+  const { carId, fuelLevel, currentKm = 0 } = req.body;
+
+  const car = cars.find(c => c.id === carId);
+  if (!car) {
+    return res.status(400).json({ error: 'Car model not found' });
+  }
+
+  // 1. คำนวณระยะทางที่วิ่งได้จริงจากระดับน้ำมัน (fuelLevel 1..5)
+  const fuelRatio = fuelLevel / 5;
+  const currentFuelLiters = car.tankCapacity * fuelRatio;
+  const maxRangeKm = currentFuelLiters * (car.consumptionKmL || 15);
+
+  // จุดเริ่มต้นปัจจุบันของผู้ใช้
+  const currentStation = stations.find(s => Math.abs(s.kmMarker - currentKm) < 0.1) || { kmMarker: currentKm, lat: 0, lng: 0 };
+
+  // 2. กรองเฉพาะสถานีที่อยู่ข้างหน้า (kmMarker > currentKm)
+  const stationsAhead = stations
+    .filter(s => s.kmMarker > currentKm + 0.1) // ต้องอยู่ข้างหน้าจริงอย่างน้อย 100 เมตร
+    .map(s => {
+      // ใช้ระยะตาม KM Marker ถนนเป็นหลัก
+      let dist = Number((s.kmMarker - currentStation.kmMarker).toFixed(1));
+      
+      // ถ้ามีพิกัด GPS ทั้งคู่ และระยะทาง KM ดูผิดปกติ ให้ใช้ระยะทางจริงจาก GPS
+      if (currentStation.lat && currentStation.lng && s.lat && s.lng) {
+        const gpsDist = getHaversineDistance(currentStation.lat, currentStation.lng, s.lat, s.lng);
+        if (dist <= 0 || Math.abs(dist - gpsDist) > 50) {
+          dist = Number(gpsDist.toFixed(1));
+        }
+      }
+
+      return {
+        ...s,
+        distanceFromUser: dist,
+        googleMapUrl: s.googleMapUrl || `https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}`
+      };
+    })
+    .sort((a, b) => a.distanceFromUser - b.distanceFromUser);
+
+  if (stationsAhead.length === 0) {
+    return res.json({ recommendations: [], message: 'No stations found ahead' });
+  }
+
+  // สถานีที่สามารถไปถึงได้ก่อนน้ำมันหมด
+  const reachable = stationsAhead.filter(s => s.distanceFromUser <= maxRangeKm);
+
+  if (reachable.length === 0) {
+    // ถ้าน้ำมันไม่พอถึงสักปั๊ม ให้เตือนปั๊มแรกสุดที่อยู่ใกล้ที่สุดทันที
+    const nearest = stationsAhead[0];
+    return res.json({
+      recommendations: [{
+        level: 'RED',
+        title: 'URGENT (PANIC MODE)',
+        description: 'Warning: Fuel range exceeded! Stop at nearest station immediately.',
+        station: nearest
+      }]
+    });
+  }
+
+  // 3. STRICT DEDUPLICATION LOGIC (ห้ามมีปั๊มซ้ำเด็ดขาด)
+  const recommendations = [];
+  const usedStationIds = new Set<string>();
+
+  // 🔴 1. RED (Urgent): ปั๊มแรกสุดที่เจอข้างหน้า
+  const urgentStation = reachable[0];
+  recommendations.push({
+    level: 'RED',
+    title: 'URGENT (PANIC MODE)',
+    description: 'Refuel soon at an early station along your route.',
+    station: urgentStation
+  });
+  usedStationIds.add(urgentStation.id);
+
+  // 🟡 2. YELLOW (Moderate): ปั๊มช่วงกลาง (ประมาณ 40-60% ของระยะถัง) ต้องไม่ซ้ำกับ RED
+  const targetModDist = maxRangeKm * 0.5;
+  const modCandidates = reachable.filter(s => !usedStationIds.has(s.id));
+
+  if (modCandidates.length > 0) {
+    const moderateStation = modCandidates.reduce((prev, curr) =>
+      Math.abs(curr.distanceFromUser - targetModDist) < Math.abs(prev.distanceFromUser - targetModDist) ? curr : prev
+    );
+    recommendations.push({
+      level: 'YELLOW',
+      title: 'MODERATE (BALANCED DISTANCE)',
+      description: 'Standard recommended stop at a comfortable distance.',
+      station: moderateStation
+    });
+    usedStationIds.add(moderateStation.id);
+  }
+
+  // 🟢 3. GREEN (Relaxed): ปั๊มไกลสุดในระยะปลอดภัย (ไม่เกิน 85% ของถัง) ต้องไม่ซ้ำกับ RED และ YELLOW
+  const safeMaxRange = maxRangeKm * 0.85;
+  const relaxedCandidates = reachable.filter(s => !usedStationIds.has(s.id) && s.distanceFromUser <= safeMaxRange);
+
+  if (relaxedCandidates.length > 0) {
+    const relaxedStation = relaxedCandidates[relaxedCandidates.length - 1];
+    recommendations.push({
+      level: 'GREEN',
+      title: 'RELAXED (MAXIMUM SAFE RANGE)',
+      description: 'Drive as far as safely possible before reaching fuel reserve.',
+      station: relaxedStation
+    });
+    usedStationIds.add(relaxedStation.id);
+  } else {
+    // ถ้าปั๊มในกลุ่ม safeMaxRange ถูกใช้ไปหมดแล้ว ให้เอาปั๊มที่เหลืออยู่ไกลที่สุดในกลุ่ม reachable
+    const remainingCandidates = reachable.filter(s => !usedStationIds.has(s.id));
+    if (remainingCandidates.length > 0) {
+      const relaxedStation = remainingCandidates[remainingCandidates.length - 1];
+      recommendations.push({
+        level: 'GREEN',
+        title: 'RELAXED (MAXIMUM SAFE RANGE)',
+        description: 'Drive as far as safely possible before reaching fuel reserve.',
+        station: relaxedStation
+      });
+      usedStationIds.add(relaxedStation.id);
+    }
+  }
+
+  res.json({ recommendations });
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
