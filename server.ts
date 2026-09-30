@@ -1,209 +1,116 @@
-import { Elysia, t } from 'elysia';
-import { cors } from '@elysiajs/cors';
-import { staticPlugin } from '@elysiajs/static';
-import fs from 'fs';
-import path from 'path';
+import { Elysia } from 'elysia';
 
-interface Car {
-  id: string;
-  brand: string;
-  model: string;
-  tankCapacity: number;
-  consumptionKmL: number;
-}
+const PORT = Number(process.env.PORT) || 3000;
 
-interface Station {
-  id: string;
-  name: string;
-  brand: string;
-  kmMarker: number;
-  lat: number;
-  lng: number;
-  googleMapUrl?: string;
-}
+async function getStationsFromCSV() {
+  try {
+    const fileText = await Bun.file('data/stations.csv').text();
+    const lines = fileText.split(/\r?\n/).map(l => l.trim()).filter(l => l.length > 0);
+    if (lines.length <= 1) return [];
 
-// โหลดข้อมูล Cars
-let cars: Car[] = [];
-try {
-  const carsData = fs.readFileSync(path.join(__dirname, 'cars.json'), 'utf-8');
-  cars = JSON.parse(carsData);
-} catch (e) {
-  console.error('Failed to load cars.json', e);
-}
+    const headers = lines[0].split(',').map(h => h.trim().replace(/^"|"$/g, ''));
+    let accumulatedKm = 0;
 
-// โหลดข้อมูล Stations
-let stations: Station[] = [];
-try {
-  const stationsData = fs.readFileSync(path.join(__dirname, 'stations.json'), 'utf-8');
-  stations = JSON.parse(stationsData);
-  
-  stations = stations.map(s => {
-    let km = Number(s.kmMarker);
-    const name = s.name || '';
-    if (name.includes('ฟ้าไทย') || name.includes('มฟล')) {
-      if (km < 200) km = 285.5;
-    }
-    if (name.includes('ศูนย์การแพทย์')) {
-      if (km < 200) km = 287.0;
-    }
-    return { ...s, kmMarker: km };
-  });
-} catch (e) {
-  console.error('Failed to load stations.json', e);
-}
+    return lines.slice(1).map((line, index) => {
+      const values = line.split(',').map(v => v.trim().replace(/^"|"$/g, ''));
+      const row: any = {};
+      headers.forEach((header, i) => {
+        row[header] = values[i];
+      });
 
-function getHaversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
-  const R = 6371;
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) *
-            Math.sin(dLon / 2) * Math.sin(dLon / 2);
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  return R * c;
+      const name = row['ชื่อปั๊มน้ำมัน'] || row['name'] || 'Gas Station';
+      const brand = row['แบรนด์'] || row['brand'] || 'Station';
+      const mapUrl = row['Google Maps Link'] || row['googleMapUrl'] || '';
+      const lat = parseFloat(row['Latitude'] || '0') || 0;
+      const lng = parseFloat(row['Longitude'] || '0') || 0;
+      
+      const distFromPrev = parseFloat(row['ห่างจากปั๊มก่อนหน้า (KM)'] || '0') || 0;
+      accumulatedKm += distFromPrev;
+
+      return {
+        id: `station-${index}`,
+        name,
+        brand,
+        lat,
+        lng,
+        googleMapUrl: mapUrl || `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name)}`,
+        kmMarker: accumulatedKm
+      };
+    });
+  } catch (error) {
+    console.error('Error reading stations.csv:', error);
+    return [];
+  }
 }
 
 const app = new Elysia()
-  .use(cors())
-  // เสิร์ฟไฟล์ static ทั้งหมดจากโฟลเดอร์ public (หรือ root folder)
-  .use(staticPlugin({
-    assets: fs.existsSync(path.join(__dirname, 'public')) ? 'public' : '.',
-    prefix: ''
-  }))
-  // 1. Route เสิร์ฟ index.html
-  .get('/', ({ set }) => {
-    const rootIndex = path.join(__dirname, 'index.html');
-    const publicIndex = path.join(__dirname, 'public', 'index.html');
+  .get('/', () => Bun.file('index.html'))
+  .get('/index.html', () => Bun.file('index.html'))
 
-    if (fs.existsSync(publicIndex)) {
-      return Bun.file(publicIndex);
-    } else if (fs.existsSync(rootIndex)) {
-      return Bun.file(rootIndex);
-    } else {
-      set.status = 404;
-      return 'index.html not found on server';
+  .get('/api/cars', async () => {
+    try {
+      return await Bun.file('data/cars.json').json();
+    } catch (error) {
+      return { status: 'error', message: 'Cars data not found' };
     }
   })
-  // 2. API Routes
-  .get('/api/cars', () => cars)
-  .get('/api/stations', () => stations)
-  .post('/api/plan-trip', ({ body, set }) => {
-    const { carId, fuelLevel, currentKm = 0 } = body;
 
-    const car = cars.find(c => c.id === carId);
-    if (!car) {
-      set.status = 400;
-      return { error: 'Car model not found' };
+  .get('/api/stations', async () => {
+    return await getStationsFromCSV();
+  })
+
+  .post('/api/plan-trip', async ({ body }: { body: any }) => {
+    const { carId, fuelLevel = 3, currentKm = 0 } = body || {};
+
+    let cars: any[] = [];
+    try {
+      const carsData = await Bun.file('data/cars.json').json();
+      cars = Array.isArray(carsData) ? carsData : (carsData.data || []);
+    } catch (e) {
+      cars = [];
     }
 
-    const fuelRatio = fuelLevel / 5;
-    const currentFuelLiters = car.tankCapacity * fuelRatio;
-    const maxRangeKm = currentFuelLiters * (car.consumptionKmL || 15);
+    const selectedCar = cars.find(c => String(c.id) === String(carId)) || { tankCapacity: 45, fuelEfficiency: 15 };
+    const tankCapacity = Number(selectedCar.tankCapacity) || 45;
+    const fuelEfficiency = Number(selectedCar.fuelEfficiency) || 15;
 
-    const currentStation = stations.find(s => Math.abs(s.kmMarker - currentKm) < 0.1) || { kmMarker: currentKm, lat: 0, lng: 0 };
+    const fullRange = tankCapacity * fuelEfficiency;
+    const currentFuelRatio = Number(fuelLevel) / 5;
+    const remainingKmCapacity = fullRange * currentFuelRatio;
 
-    const stationsAhead = stations
-      .filter(s => s.kmMarker > currentKm + 0.1)
-      .map(s => {
-        let dist = Number((s.kmMarker - currentStation.kmMarker).toFixed(1));
-        if (currentStation.lat && currentStation.lng && s.lat && s.lng) {
-          const gpsDist = getHaversineDistance(currentStation.lat, currentStation.lng, s.lat, s.lng);
-          if (dist <= 0 || Math.abs(dist - gpsDist) > 50) {
-            dist = Number(gpsDist.toFixed(1));
-          }
-        }
-
-        return {
-          ...s,
-          distanceFromUser: dist,
-          googleMapUrl: s.googleMapUrl || `https://www.google.com/maps/search/?api=1&query=${s.lat},${s.lng}`
-        };
-      })
-      .sort((a, b) => a.distanceFromUser - b.distanceFromUser);
-
-    if (stationsAhead.length === 0) {
-      return { recommendations: [], message: 'No stations found ahead' };
+    let bufferRatio = 0.85;
+    if (Number(fuelLevel) === 1) {
+      bufferRatio = 0.50;
+    } else if (Number(fuelLevel) === 2) {
+      bufferRatio = 0.70;
     }
 
-    const reachable = stationsAhead.filter(s => s.distanceFromUser <= maxRangeKm);
+    const safeMaxKm = Number(currentKm) + (remainingKmCapacity * bufferRatio);
+    const stations = await getStationsFromCSV();
 
-    if (reachable.length === 0) {
-      const nearest = stationsAhead[0];
-      return {
-        recommendations: [{
-          level: 'RED',
-          title: 'URGENT (PANIC MODE)',
-          description: 'Warning: Fuel range exceeded! Stop at nearest station immediately.',
-          station: nearest
-        }]
-      };
+    const validStations = stations.filter(s => s.kmMarker > Number(currentKm) && s.kmMarker <= safeMaxKm);
+    const recommended = validStations.length > 0 
+      ? validStations[validStations.length - 1] 
+      : stations.find(s => s.kmMarker > Number(currentKm));
+
+    if (!recommended) {
+      return { recommendedStation: null };
     }
 
-    const recommendations = [];
-    const usedStationIds = new Set<string>();
-
-    // 🔴 RED
-    const urgentStation = reachable[0];
-    recommendations.push({
-      level: 'RED',
-      title: 'URGENT (PANIC MODE)',
-      description: 'Refuel soon at an early station along your route.',
-      station: urgentStation
-    });
-    usedStationIds.add(urgentStation.id);
-
-    // 🟡 YELLOW
-    const targetModDist = maxRangeKm * 0.5;
-    const modCandidates = reachable.filter(s => !usedStationIds.has(s.id));
-
-    if (modCandidates.length > 0) {
-      const moderateStation = modCandidates.reduce((prev, curr) =>
-        Math.abs(curr.distanceFromUser - targetModDist) < Math.abs(prev.distanceFromUser - targetModDist) ? curr : prev
-      );
-      recommendations.push({
-        level: 'YELLOW',
-        title: 'MODERATE (BALANCED DISTANCE)',
-        description: 'Standard recommended stop at a comfortable distance.',
-        station: moderateStation
-      });
-      usedStationIds.add(moderateStation.id);
-    }
-
-    // 🟢 GREEN
-    const safeMaxRange = maxRangeKm * 0.85;
-    const relaxedCandidates = reachable.filter(s => !usedStationIds.has(s.id) && s.distanceFromUser <= safeMaxRange);
-
-    if (relaxedCandidates.length > 0) {
-      const relaxedStation = relaxedCandidates[relaxedCandidates.length - 1];
-      recommendations.push({
-        level: 'GREEN',
-        title: 'RELAXED (MAXIMUM SAFE RANGE)',
-        description: 'Drive as far as safely possible before reaching fuel reserve.',
-        station: relaxedStation
-      });
-      usedStationIds.add(relaxedStation.id);
-    } else {
-      const remainingCandidates = reachable.filter(s => !usedStationIds.has(s.id));
-      if (remainingCandidates.length > 0) {
-        const relaxedStation = remainingCandidates[remainingCandidates.length - 1];
-        recommendations.push({
-          level: 'GREEN',
-          title: 'RELAXED (MAXIMUM SAFE RANGE)',
-          description: 'Drive as far as safely possible before reaching fuel reserve.',
-          station: relaxedStation
-        });
-        usedStationIds.add(relaxedStation.id);
+    return {
+      recommendedStation: {
+        name: recommended.name,
+        brand: recommended.brand,
+        kmMarker: Math.round(recommended.kmMarker * 10) / 10,
+        distanceFromUser: Math.max(0, Math.round((recommended.kmMarker - Number(currentKm)) * 10) / 10),
+        googleMapUrl: recommended.googleMapUrl
       }
-    }
-
-    return { recommendations };
-  }, {
-    body: t.Object({
-      carId: t.String(),
-      fuelLevel: t.Number(),
-      currentKm: t.Optional(t.Number())
-    })
+    };
   })
-  .listen(process.env.PORT || 3000);
 
-console.log(`Server running on port ${app.server?.port}`);
+  .listen({
+    port: PORT,
+    hostname: '0.0.0.0'
+  }, (server) => {
+    console.log(`🚀 Trip Fuel Planner is running at http://${server.hostname}:${server.port}`);
+  });

@@ -1,9 +1,6 @@
-ชื่อปั๊มน้ำมัน,แบรนด์,Latitude,Longitude,Google Maps Link,ห่างจากปั๊มก่อนหน้า (KM),
-PTT Station ตลาดฟ้าไทย (มฟล.)","PTT (ปตท)",20.05619,99.87476,"https://maps.google.com/?q=20.05619,99.87476",0
-PT Station หน้ารพ.ศูนย์การแพทย์ มฟล.","PT (พีที)",20.03079,99.87369,"https://maps.google.com/?q=20.03079,99.87369",2.8
-Cosmo Station บ้านดู่","Cosmo (คอสโม)",19.96111,99.85391,"https://maps.google.com/?q=19.96111,99.85391",8.0
-Caltex,Caltex (คาลเท็กซ์),19.91466,99.84561,https://maps.google.com/?cid=7819198058654415296&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA,5,✅,,,,
-PT Station - wiang,PT (พีที),19.9143,99.84382,https://maps.google.com/?cid=17091877269411911825&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA,0.19,✅,,,,
+ชื่อปั๊มน้ำมัน,แบรนด์,Latitude,Longitude,Google Maps Link,ห่างจากปั๊มก่อนหน้า (KM),น้องกิ๊ฟท์น้องมิ้นท์,เสี่ยโอ๊ค เห้ยโห,,,ฟังชั่นที่เเอบคิดได้สำหรับ ตัว App,Future improvement 
+Caltex,Caltex (คาลเท็กซ์),19.91466,99.84561,https://maps.google.com/?cid=7819198058654415296&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA,0,✅,,,,สำหรับคนมีบัตรปั้ม หรือ อยากเข้าเเค่ปัั้มบางเเบรนด์ ก็จะให้เลือกเเค่เเบรนด์นั้นได้ ดูได้สะดวก,ในอนาคตสามารถเพิ่มเส้นทางอื่นได้ เผื่อมีใครอยากทำต่อ
+PT Station - wiang,PT (พีที),19.9143,99.84382,https://maps.google.com/?cid=17091877269411911825&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA,0.19,✅,,,,กรอกปริมาณน้ำมันได้ ให้ App ช่วยคำนวณ ว่าน้ำมันประมาณนี้ จะไปหมดที่กิโลเมตรเท่าไหร่ + ปั้มเเนะนำ + ระบบเเจ้งเตือน,
 PTT Station (Petrol+NGV+EV),PTT (ปตท),19.90324,99.84087,https://maps.google.com/?cid=763582454633483617&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA,1.04,✅,,,,,
 PT Station Chiang Rai 4,PT (พีที),19.89638,99.83892,https://maps.google.com/?cid=1744369372674798028&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA,0.52,✅,,,,,
 Bangchak Station (Petrol+EV),Bangchak (บางจาก),19.88249,99.83384,https://maps.google.com/?cid=7508331087064879376&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA,0.59,✅,,,,,
