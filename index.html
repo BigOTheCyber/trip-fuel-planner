@@ -2,37 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Trip Fuel Planner</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-
   <link
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
     rel="stylesheet"
   >
 </head>
 
-
-<body
-  class="
-    bg-slate-900
-    min-h-screen
-    flex
-    justify-center
-    items-start
-    sm:py-6
-    font-sans
-    antialiased
-    selection:bg-blue-500
-    selection:text-white
-  "
->
-
+<body class="bg-slate-900 min-h-screen flex justify-center items-start sm:py-6 font-sans antialiased selection:bg-blue-500 selection:text-white">
 
   <!-- ===================================================== -->
   <!-- PLANNER VIEW -->
@@ -40,157 +20,40 @@
 
   <div
     id="plannerView"
-    class="
-      w-full
-      max-w-md
-      bg-slate-50
-      min-h-screen
-      sm:min-h-[844px]
-      sm:rounded-[40px]
-      shadow-2xl
-      flex
-      flex-col
-      justify-between
-      overflow-hidden
-      relative
-      border-4
-      border-slate-800
-      transition-all
-      duration-500
-    "
+    class="w-full max-w-md bg-slate-50 min-h-screen sm:min-h-[844px] sm:rounded-[40px] shadow-2xl flex flex-col justify-between overflow-hidden relative border-4 border-slate-800 transition-all duration-500"
   >
 
-
-    <!-- Top App Bar -->
-
-    <header
-      class="
-        bg-gradient-to-r
-        from-blue-700
-        to-indigo-800
-        text-white
-        px-5
-        pt-8
-        pb-6
-        rounded-b-[28px]
-        shadow-lg
-      "
-    >
+    <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white px-5 pt-8 pb-6 rounded-b-[28px] shadow-lg">
 
       <div class="flex justify-between items-center mb-2">
-
-        <span
-          class="
-            text-xs
-            bg-blue-500/30
-            border
-            border-blue-300/30
-            px-3
-            py-1
-            rounded-full
-            text-blue-100
-            font-medium
-          "
-        >
+        <span class="text-xs bg-blue-500/30 border border-blue-300/30 px-3 py-1 rounded-full text-blue-100 font-medium">
           Chiang Rai ➔ Bangkok
         </span>
 
-
-        <i
-          class="
-            fa-solid
-            fa-gas-pump
-            text-xl
-            text-blue-300
-          "
-        ></i>
-
+        <i class="fa-solid fa-gas-pump text-xl text-blue-300"></i>
       </div>
 
-
-      <h1
-        class="
-          text-xl
-          font-extrabold
-          tracking-tight
-        "
-      >
+      <h1 class="text-xl font-extrabold tracking-tight">
         Trip Fuel Planner
       </h1>
 
-
-      <p
-        class="
-          text-xs
-          text-blue-200
-          mt-1
-        "
-      >
+      <p class="text-xs text-blue-200 mt-1">
         Smart Refuel Stop Finder with Safety Buffer
       </p>
 
     </header>
 
 
+    <main class="flex-1 p-5 space-y-5 overflow-y-auto">
 
-    <!-- Main Content -->
+      <!-- Vehicle -->
 
-    <main
-      class="
-        flex-1
-        p-5
-        space-y-5
-        overflow-y-auto
-      "
-    >
+      <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 relative">
 
-
-      <!-- ================================================= -->
-      <!-- CAR SELECTION -->
-      <!-- ================================================= -->
-
-      <div
-        class="
-          bg-white
-          p-4
-          rounded-2xl
-          shadow-sm
-          border
-          border-slate-100
-          space-y-3
-          relative
-        "
-      >
-
-
-        <label
-          class="
-            text-xs
-            font-bold
-            text-slate-500
-            uppercase
-            tracking-wider
-            flex
-            items-center
-            gap-2
-          "
-        >
-
-          <i
-            class="
-              fa-solid
-              fa-car-side
-              text-blue-600
-            "
-          ></i>
-
+        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+          <i class="fa-solid fa-car-side text-blue-600"></i>
           Select Vehicle
-
         </label>
-
-
-
-        <!-- Car Search -->
 
         <div class="relative">
 
@@ -201,259 +64,83 @@
               id="carSearchInput"
               oninput="onSearchCar()"
               placeholder="🔍 Search model or brand (e.g. Civic, Revo)..."
-              class="
-                w-full
-                bg-slate-50
-                border
-                border-slate-200
-                text-slate-800
-                text-sm
-                font-semibold
-                rounded-xl
-                p-3
-                pr-8
-                focus:outline-none
-                focus:ring-2
-                focus:ring-blue-500
-                placeholder:font-normal
-                placeholder:text-slate-400
-              "
+              class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:font-normal placeholder:text-slate-400"
             >
-
 
             <button
               id="clearSearchBtn"
               onclick="clearCarSearch()"
-              class="
-                hidden
-                absolute
-                right-3
-                top-3
-                text-slate-400
-                hover:text-slate-600
-              "
+              class="hidden absolute right-3 top-3 text-slate-400 hover:text-slate-600"
             >
-
-              <i
-                class="
-                  fa-solid
-                  fa-xmark
-                "
-              ></i>
-
+              <i class="fa-solid fa-xmark"></i>
             </button>
 
           </div>
 
-
-
-          <!-- Autocomplete -->
-
           <div
             id="searchResults"
-            class="
-              hidden
-              absolute
-              z-30
-              left-0
-              right-0
-              top-full
-              mt-1
-              bg-white
-              border
-              border-slate-200
-              rounded-xl
-              shadow-xl
-              max-h-56
-              overflow-y-auto
-              divide-y
-              divide-slate-100
-            "
+            class="hidden absolute z-30 left-0 right-0 top-full mt-1 bg-white border border-slate-200 rounded-xl shadow-xl max-h-56 overflow-y-auto divide-y divide-slate-100"
           ></div>
 
         </div>
 
 
+        <div class="flex items-center gap-2 my-1">
+          <div class="h-px bg-slate-100 flex-1"></div>
 
-        <div
-          class="
-            flex
-            items-center
-            gap-2
-            my-1
-          "
-        >
-
-          <div
-            class="
-              h-px
-              bg-slate-100
-              flex-1
-            "
-          ></div>
-
-
-          <span
-            class="
-              text-[10px]
-              font-bold
-              text-slate-300
-              uppercase
-            "
-          >
+          <span class="text-[10px] font-bold text-slate-300 uppercase">
             OR SELECT FROM LIST
           </span>
 
-
-          <div
-            class="
-              h-px
-              bg-slate-100
-              flex-1
-            "
-          ></div>
-
+          <div class="h-px bg-slate-100 flex-1"></div>
         </div>
 
-
-
-        <!-- Brand + Model -->
 
         <div class="space-y-2">
 
           <select
             id="brandSelect"
             onchange="onBrandChange()"
-            class="
-              w-full
-              bg-slate-50
-              border
-              border-slate-200
-              text-slate-800
-              text-sm
-              font-semibold
-              rounded-xl
-              p-3
-              focus:outline-none
-              focus:ring-2
-              focus:ring-blue-500
-            "
+            class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-
             <option value="">
               -- 1. Select Brand --
             </option>
-
           </select>
-
 
 
           <select
             id="modelSelect"
             onchange="onModelChange()"
             disabled
-            class="
-              w-full
-              bg-slate-50
-              border
-              border-slate-200
-              text-slate-800
-              text-sm
-              font-semibold
-              rounded-xl
-              p-3
-              focus:outline-none
-              focus:ring-2
-              focus:ring-blue-500
-              disabled:opacity-50
-              disabled:cursor-not-allowed
-            "
+            class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-
             <option value="">
               -- 2. Select Model --
             </option>
-
           </select>
 
         </div>
 
-
-        <input
-          type="hidden"
-          id="selectedCarId"
-          value=""
-        >
+        <input type="hidden" id="selectedCarId" value="">
 
       </div>
 
 
+      <!-- Location -->
 
+      <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
 
-      <!-- ================================================= -->
-      <!-- LOCATION -->
-      <!-- ================================================= -->
+        <div class="flex justify-between items-center">
 
-      <div
-        class="
-          bg-white
-          p-4
-          rounded-2xl
-          shadow-sm
-          border
-          border-slate-100
-          space-y-3
-        "
-      >
-
-
-        <div
-          class="
-            flex
-            justify-between
-            items-center
-          "
-        >
-
-
-          <label
-            class="
-              text-xs
-              font-bold
-              text-slate-500
-              uppercase
-              tracking-wider
-              flex
-              items-center
-              gap-2
-            "
-          >
-
-            <i
-              class="
-                fa-solid
-                fa-location-dot
-                text-red-500
-              "
-            ></i>
-
+          <label class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+            <i class="fa-solid fa-location-dot text-red-500"></i>
             Current Location Verification
-
           </label>
-
-
 
           <span
             id="gpsBadge"
-            class="
-              text-[10px]
-              font-bold
-              px-2
-              py-0.5
-              rounded-full
-              bg-slate-100
-              text-slate-500
-            "
+            class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500"
           >
             Detecting...
           </span>
@@ -461,47 +148,17 @@
         </div>
 
 
-
-        <!-- Current Location -->
-
-        <div
-          class="
-            bg-slate-50
-            border
-            border-slate-200/80
-            p-3
-            rounded-xl
-            flex
-            items-center
-            justify-between
-          "
-        >
-
+        <div class="bg-slate-50 border border-slate-200/80 p-3 rounded-xl flex items-center justify-between">
 
           <div class="space-y-0.5">
 
-            <span
-              class="
-                text-[10px]
-                uppercase
-                font-bold
-                text-slate-400
-                block
-                tracking-wider
-              "
-            >
+            <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">
               Detected Station / Point
             </span>
 
-
             <span
               id="currentStationName"
-              class="
-                text-xs
-                font-bold
-                text-slate-800
-                block
-              "
+              class="text-xs font-bold text-slate-800 block"
             >
               Locating via GPS...
             </span>
@@ -509,107 +166,35 @@
           </div>
 
 
-
           <button
             type="button"
             onclick="openStationModal()"
-            class="
-              text-xs
-              font-bold
-              text-blue-600
-              hover:text-blue-700
-              bg-blue-50
-              hover:bg-blue-100
-              px-3
-              py-1.5
-              rounded-lg
-              border
-              border-blue-200/60
-              transition
-              flex
-              items-center
-              gap-1
-            "
+            class="text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg border border-blue-200/60 transition flex items-center gap-1"
           >
-
-            <i
-              class="
-                fa-solid
-                fa-pen-to-square
-              "
-            ></i>
-
+            <i class="fa-solid fa-pen-to-square"></i>
             Change
-
           </button>
 
         </div>
 
 
-
-        <!-- Map -->
-
-        <div
-          class="
-            w-full
-            h-44
-            rounded-xl
-            overflow-hidden
-            border
-            border-slate-200
-            relative
-            bg-slate-100
-            flex
-            items-center
-            justify-center
-          "
-        >
-
+        <div class="w-full h-44 rounded-xl overflow-hidden border border-slate-200 relative bg-slate-100 flex items-center justify-center">
 
           <iframe
             id="mapIframe"
-            class="
-              w-full
-              h-full
-              border-0
-              hidden
-            "
+            class="w-full h-full border-0 hidden"
             loading="lazy"
             allowfullscreen
             src=""
           ></iframe>
 
 
-
           <div
             id="mapPlaceholder"
-            class="
-              text-center
-              p-4
-              text-slate-400
-              text-xs
-              flex
-              flex-col
-              items-center
-              gap-2
-            "
+            class="text-center p-4 text-slate-400 text-xs flex flex-col items-center gap-2"
           >
-
-            <i
-              class="
-                fa-solid
-                fa-circle-notch
-                fa-spin
-                text-2xl
-                text-blue-500
-              "
-            ></i>
-
-
-            <span>
-              Fetching live GPS position...
-            </span>
-
+            <i class="fa-solid fa-circle-notch fa-spin text-2xl text-blue-500"></i>
+            <span>Fetching live GPS position...</span>
           </div>
 
         </div>
@@ -617,243 +202,61 @@
       </div>
 
 
+      <!-- Fuel Level -->
 
+      <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
 
-      <!-- ================================================= -->
-      <!-- FUEL LEVEL -->
-      <!-- ================================================= -->
-
-      <div
-        class="
-          bg-white
-          p-4
-          rounded-2xl
-          shadow-sm
-          border
-          border-slate-100
-          space-y-3
-        "
-      >
-
-
-        <label
-          class="
-            text-xs
-            font-bold
-            text-slate-500
-            uppercase
-            tracking-wider
-            flex
-            items-center
-            gap-2
-          "
-        >
-
-          <i
-            class="
-              fa-solid
-              fa-gauge-high
-              text-amber-500
-            "
-          ></i>
-
+        <label class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
+          <i class="fa-solid fa-gauge-high text-amber-500"></i>
           Fuel Gauge Level
-
         </label>
 
 
-
-        <div
-          class="
-            grid
-            grid-cols-5
-            gap-1.5
-          "
-          id="fuelGauge"
-        >
-
+        <div class="grid grid-cols-5 gap-1.5" id="fuelGauge">
 
           <button
             type="button"
             onclick="setFuel(1)"
-            class="
-              fuel-btn
-              flex
-              flex-col
-              items-center
-              justify-center
-              py-2.5
-              rounded-xl
-              border
-              border-slate-200
-              text-slate-600
-              font-bold
-              transition
-            "
+            class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition"
           >
-
-            <span class="text-sm">
-              1/5
-            </span>
-
-            <span
-              class="
-                text-[9px]
-                font-normal
-                text-red-500
-              "
-            >
-              Empty
-            </span>
-
+            <span class="text-sm">1/5</span>
+            <span class="text-[9px] font-normal text-red-500">Empty</span>
           </button>
-
-
 
           <button
             type="button"
             onclick="setFuel(2)"
-            class="
-              fuel-btn
-              flex
-              flex-col
-              items-center
-              justify-center
-              py-2.5
-              rounded-xl
-              border
-              border-slate-200
-              text-slate-600
-              font-bold
-              transition
-            "
+            class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition"
           >
-
-            <span class="text-sm">
-              2/5
-            </span>
-
-            <span
-              class="
-                text-[9px]
-                font-normal
-                text-amber-500
-              "
-            >
-              Low
-            </span>
-
+            <span class="text-sm">2/5</span>
+            <span class="text-[9px] font-normal text-amber-500">Low</span>
           </button>
-
-
 
           <button
             type="button"
             onclick="setFuel(3)"
-            class="
-              fuel-btn
-              flex
-              flex-col
-              items-center
-              justify-center
-              py-2.5
-              rounded-xl
-              bg-blue-600
-              text-white
-              font-bold
-              shadow-md
-              transition
-            "
+            class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl bg-blue-600 text-white font-bold shadow-md transition"
           >
-
-            <span class="text-sm">
-              3/5
-            </span>
-
-            <span
-              class="
-                text-[9px]
-                font-normal
-                opacity-80
-              "
-            >
-              Half
-            </span>
-
+            <span class="text-sm">3/5</span>
+            <span class="text-[9px] font-normal opacity-80">Half</span>
           </button>
-
-
 
           <button
             type="button"
             onclick="setFuel(4)"
-            class="
-              fuel-btn
-              flex
-              flex-col
-              items-center
-              justify-center
-              py-2.5
-              rounded-xl
-              border
-              border-slate-200
-              text-slate-600
-              font-bold
-              transition
-            "
+            class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition"
           >
-
-            <span class="text-sm">
-              4/5
-            </span>
-
-            <span
-              class="
-                text-[9px]
-                font-normal
-                text-slate-400
-              "
-            >
-              Good
-            </span>
-
+            <span class="text-sm">4/5</span>
+            <span class="text-[9px] font-normal text-slate-400">Good</span>
           </button>
-
-
 
           <button
             type="button"
             onclick="setFuel(5)"
-            class="
-              fuel-btn
-              flex
-              flex-col
-              items-center
-              justify-center
-              py-2.5
-              rounded-xl
-              border
-              border-slate-200
-              text-slate-600
-              font-bold
-              transition
-            "
+            class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition"
           >
-
-            <span class="text-sm">
-              5/5
-            </span>
-
-            <span
-              class="
-                text-[9px]
-                font-normal
-                text-emerald-500
-              "
-            >
-              Full
-            </span>
-
+            <span class="text-sm">5/5</span>
+            <span class="text-[9px] font-normal text-emerald-500">Full</span>
           </button>
 
         </div>
@@ -863,62 +266,19 @@
     </main>
 
 
-
-
-    <!-- ================================================= -->
-    <!-- CALCULATE BUTTON -->
-    <!-- ================================================= -->
-
-    <div
-      class="
-        p-4
-        bg-white
-        border-t
-        border-slate-100
-        sm:rounded-b-[36px]
-      "
-    >
-
+    <div class="p-4 bg-white border-t border-slate-100 sm:rounded-b-[36px]">
 
       <button
         onclick="calculateTrip()"
-        class="
-          w-full
-          bg-gradient-to-r
-          from-blue-600
-          to-indigo-600
-          active:scale-[0.98]
-          text-white
-          font-bold
-          py-3.5
-          rounded-2xl
-          shadow-lg
-          shadow-blue-500/30
-          flex
-          items-center
-          justify-center
-          gap-2
-          text-base
-          transition
-        "
+        class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 active:scale-[0.98] text-white font-bold py-3.5 rounded-2xl shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 text-base transition"
       >
-
-        <i
-          class="
-            fa-solid
-            fa-route
-          "
-        ></i>
-
+        <i class="fa-solid fa-route"></i>
         Calculate Fuel Stop
-
       </button>
 
     </div>
 
   </div>
-
-
 
 
 
@@ -928,151 +288,39 @@
 
   <div
     id="resultsView"
-    class="
-      hidden
-      w-full
-      max-w-md
-      bg-slate-50
-      min-h-screen
-      sm:min-h-[844px]
-      sm:rounded-[40px]
-      shadow-2xl
-      overflow-hidden
-      relative
-      border-4
-      border-slate-800
-      transition-all
-      duration-500
-    "
+    class="hidden w-full max-w-md bg-slate-50 min-h-screen sm:min-h-[844px] sm:rounded-[40px] shadow-2xl overflow-hidden relative border-4 border-slate-800 transition-all duration-500"
   >
 
+    <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white px-5 pt-8 pb-7 rounded-b-[30px] shadow-lg relative overflow-hidden">
 
-    <!-- Result Header -->
-
-    <header
-      class="
-        bg-gradient-to-r
-        from-blue-700
-        to-indigo-800
-        text-white
-        px-5
-        pt-8
-        pb-7
-        rounded-b-[30px]
-        shadow-lg
-        relative
-        overflow-hidden
-      "
-    >
-
-
-      <div
-        class="
-          absolute
-          -right-10
-          -top-10
-          w-36
-          h-36
-          rounded-full
-          bg-white/10
-        "
-      ></div>
-
-
-      <div
-        class="
-          absolute
-          -left-12
-          bottom-0
-          w-28
-          h-28
-          rounded-full
-          bg-indigo-400/10
-        "
-      ></div>
-
+      <div class="absolute -right-10 -top-10 w-36 h-36 rounded-full bg-white/10"></div>
+      <div class="absolute -left-12 bottom-0 w-28 h-28 rounded-full bg-indigo-400/10"></div>
 
 
       <div class="relative">
 
-        <div
-          class="
-            flex
-            justify-between
-            items-center
-            mb-4
-          "
-        >
+        <div class="flex justify-between items-center mb-4">
 
+          <div class="flex items-center gap-2 text-blue-100">
+            <i class="fa-solid fa-route"></i>
 
-          <div
-            class="
-              flex
-              items-center
-              gap-2
-              text-blue-100
-            "
-          >
-
-            <i
-              class="
-                fa-solid
-                fa-route
-              "
-            ></i>
-
-
-            <span
-              class="
-                text-xs
-                font-semibold
-                tracking-wide
-              "
-            >
+            <span class="text-xs font-semibold tracking-wide">
               TRIP RESULTS
             </span>
-
           </div>
 
-
-
-          <span
-            class="
-              text-[10px]
-              bg-white/10
-              border
-              border-white/15
-              px-2.5
-              py-1
-              rounded-full
-              text-blue-100
-            "
-          >
+          <span class="text-[10px] bg-white/10 border border-white/15 px-2.5 py-1 rounded-full text-blue-100">
             Chiang Rai → Bangkok
           </span>
 
         </div>
 
 
-
-        <h2
-          class="
-            text-2xl
-            font-black
-            tracking-tight
-          "
-        >
+        <h2 class="text-2xl font-black tracking-tight">
           Your Trip Summary
         </h2>
 
-
-        <p
-          class="
-            text-xs
-            text-blue-200
-            mt-1
-          "
-        >
+        <p class="text-xs text-blue-200 mt-1">
           Vehicle range and fuel stops based on your current setup.
         </p>
 
@@ -1081,73 +329,26 @@
     </header>
 
 
-
-
-    <!-- Result Content -->
-
     <main
       id="resultsScroll"
-      class="
-        p-5
-        space-y-5
-        overflow-y-auto
-      "
+      class="p-5 space-y-5 overflow-y-auto"
     >
 
+      <!-- Vehicle Summary -->
 
-      <!-- ================================================= -->
-      <!-- VEHICLE SUMMARY -->
-      <!-- ================================================= -->
+      <section class="bg-white rounded-3xl shadow-sm border border-slate-100 overflow-hidden">
 
-      <section
-        class="
-          bg-white
-          rounded-3xl
-          shadow-sm
-          border
-          border-slate-100
-          overflow-hidden
-        "
-      >
-
-
-        <div
-          class="
-            p-4
-            border-b
-            border-slate-100
-            flex
-            items-start
-            justify-between
-            gap-3
-          "
-        >
-
+        <div class="p-4 border-b border-slate-100 flex items-start justify-between gap-3">
 
           <div class="min-w-0">
 
-            <span
-              class="
-                text-[10px]
-                font-bold
-                text-blue-600
-                uppercase
-                tracking-widest
-              "
-            >
+            <span class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">
               Selected Vehicle
             </span>
 
-
             <h3
               id="resultCarName"
-              class="
-                text-lg
-                font-black
-                text-slate-900
-                mt-1
-                leading-tight
-              "
+              class="text-lg font-black text-slate-900 mt-1 leading-tight"
             >
               Vehicle
             </h3>
@@ -1155,121 +356,35 @@
           </div>
 
 
-
-          <div
-            class="
-              w-11
-              h-11
-              shrink-0
-              rounded-2xl
-              bg-blue-50
-              text-blue-600
-              flex
-              items-center
-              justify-center
-            "
-          >
-
-            <i
-              class="
-                fa-solid
-                fa-car-side
-                text-lg
-              "
-            ></i>
-
+          <div class="w-11 h-11 shrink-0 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center">
+            <i class="fa-solid fa-car-side text-lg"></i>
           </div>
 
         </div>
 
 
+        <div class="p-4 grid grid-cols-2 gap-3">
 
+          <div class="bg-slate-50 rounded-2xl p-3 border border-slate-100">
 
-        <div
-          class="
-            p-4
-            grid
-            grid-cols-2
-            gap-3
-          "
-        >
+            <div class="flex items-center gap-2 text-slate-400 mb-1">
+              <i class="fa-solid fa-gauge-high text-blue-500"></i>
 
-
-          <!-- Efficiency -->
-
-          <div
-            class="
-              bg-slate-50
-              rounded-2xl
-              p-3
-              border
-              border-slate-100
-            "
-          >
-
-
-            <div
-              class="
-                flex
-                items-center
-                gap-2
-                text-slate-400
-                mb-1
-              "
-            >
-
-              <i
-                class="
-                  fa-solid
-                  fa-gauge-high
-                  text-blue-500
-                "
-              ></i>
-
-
-              <span
-                class="
-                  text-[10px]
-                  font-bold
-                  uppercase
-                  tracking-wide
-                "
-              >
+              <span class="text-[10px] font-bold uppercase tracking-wide">
                 Fuel Efficiency
               </span>
-
             </div>
 
-
-
-            <div
-              class="
-                flex
-                items-end
-                gap-1
-              "
-            >
+            <div class="flex items-end gap-1">
 
               <span
                 id="resultEfficiency"
-                class="
-                  text-2xl
-                  font-black
-                  text-slate-900
-                "
+                class="text-2xl font-black text-slate-900"
               >
                 --
               </span>
 
-
-              <span
-                class="
-                  text-xs
-                  font-semibold
-                  text-slate-400
-                  mb-1
-                "
-              >
+              <span class="text-xs font-semibold text-slate-400 mb-1">
                 km/L
               </span>
 
@@ -1278,83 +393,26 @@
           </div>
 
 
+          <div class="bg-slate-50 rounded-2xl p-3 border border-slate-100">
 
+            <div class="flex items-center gap-2 text-slate-400 mb-1">
+              <i class="fa-solid fa-gas-pump text-indigo-500"></i>
 
-          <!-- Tank -->
-
-          <div
-            class="
-              bg-slate-50
-              rounded-2xl
-              p-3
-              border
-              border-slate-100
-            "
-          >
-
-
-            <div
-              class="
-                flex
-                items-center
-                gap-2
-                text-slate-400
-                mb-1
-              "
-            >
-
-              <i
-                class="
-                  fa-solid
-                  fa-gas-pump
-                  text-indigo-500
-                "
-              ></i>
-
-
-              <span
-                class="
-                  text-[10px]
-                  font-bold
-                  uppercase
-                  tracking-wide
-                "
-              >
+              <span class="text-[10px] font-bold uppercase tracking-wide">
                 Tank Capacity
               </span>
-
             </div>
 
-
-
-            <div
-              class="
-                flex
-                items-end
-                gap-1
-              "
-            >
+            <div class="flex items-end gap-1">
 
               <span
                 id="resultTankCapacity"
-                class="
-                  text-2xl
-                  font-black
-                  text-slate-900
-                "
+                class="text-2xl font-black text-slate-900"
               >
                 --
               </span>
 
-
-              <span
-                class="
-                  text-xs
-                  font-semibold
-                  text-slate-400
-                  mb-1
-                "
-              >
+              <span class="text-xs font-semibold text-slate-400 mb-1">
                 L
               </span>
 
@@ -1365,81 +423,30 @@
         </div>
 
 
+        <div class="px-4 pb-4">
 
+          <div class="rounded-2xl bg-gradient-to-r from-slate-900 to-slate-800 text-white p-4">
 
-        <!-- Range Summary -->
-
-        <div
-          class="
-            px-4
-            pb-4
-          "
-        >
-
-
-          <div
-            class="
-              rounded-2xl
-              bg-gradient-to-r
-              from-slate-900
-              to-slate-800
-              text-white
-              p-4
-            "
-          >
-
-
-            <div
-              class="
-                flex
-                justify-between
-                items-start
-                gap-4
-              "
-            >
-
+            <div class="flex justify-between items-start gap-4">
 
               <div>
 
-                <span
-                  class="
-                    text-[10px]
-                    uppercase
-                    tracking-widest
-                    text-slate-400
-                    font-bold
-                  "
-                >
+                <span class="text-[10px] uppercase tracking-widest text-slate-400 font-bold">
                   Current Fuel Level
                 </span>
 
-
-                <div
-                  class="
-                    flex
-                    items-center
-                    gap-2
-                    mt-1
-                  "
-                >
+                <div class="flex items-center gap-2 mt-1">
 
                   <span
                     id="resultFuelLevel"
-                    class="
-                      text-2xl
-                      font-black
-                    "
+                    class="text-2xl font-black"
                   >
                     3/5
                   </span>
 
-
                   <span
                     id="resultFuelPercent"
-                    class="
-                      text-xs
-                      text-slate-400
-                    "
+                    class="text-xs text-slate-400"
                   >
                     60%
                   </span>
@@ -1449,52 +456,22 @@
               </div>
 
 
-
-
               <div class="text-right">
 
-                <span
-                  class="
-                    text-[10px]
-                    uppercase
-                    tracking-widest
-                    text-slate-400
-                    font-bold
-                  "
-                >
+                <span class="text-[10px] uppercase tracking-widest text-slate-400 font-bold">
                   Estimated Range
                 </span>
 
-
-                <div
-                  class="
-                    flex
-                    items-end
-                    justify-end
-                    gap-1
-                    mt-1
-                  "
-                >
+                <div class="flex items-end justify-end gap-1 mt-1">
 
                   <span
                     id="resultRange"
-                    class="
-                      text-2xl
-                      font-black
-                      text-blue-300
-                    "
+                    class="text-2xl font-black text-blue-300"
                   >
                     --
                   </span>
 
-
-                  <span
-                    class="
-                      text-xs
-                      text-slate-400
-                      mb-1
-                    "
-                  >
+                  <span class="text-xs text-slate-400 mb-1">
                     km
                   </span>
 
@@ -1505,31 +482,11 @@
             </div>
 
 
-
-
-            <!-- Fuel Bar -->
-
-            <div
-              class="
-                mt-4
-                h-2
-                rounded-full
-                bg-white/10
-                overflow-hidden
-              "
-            >
+            <div class="mt-4 h-2 rounded-full bg-white/10 overflow-hidden">
 
               <div
                 id="resultFuelBar"
-                class="
-                  h-full
-                  rounded-full
-                  bg-gradient-to-r
-                  from-blue-400
-                  to-indigo-400
-                  transition-all
-                  duration-700
-                "
+                class="h-full rounded-full bg-gradient-to-r from-blue-400 to-indigo-400 transition-all duration-700"
                 style="width:60%"
               ></div>
 
@@ -1542,63 +499,25 @@
       </section>
 
 
-
-
-      <!-- ================================================= -->
-      <!-- STATION RESULTS -->
-      <!-- ================================================= -->
+      <!-- Recommended Stops -->
 
       <section>
 
-
-        <div
-          class="
-            flex
-            justify-between
-            items-end
-            mb-3
-            px-1
-          "
-        >
-
+        <div class="flex justify-between items-end mb-3 px-1">
 
           <div>
 
-            <span
-              class="
-                text-[10px]
-                font-bold
-                text-blue-600
-                uppercase
-                tracking-widest
-              "
-            >
+            <span class="text-[10px] font-bold text-blue-600 uppercase tracking-widest">
               Route Suggestions
             </span>
 
-
-            <h3
-              class="
-                text-lg
-                font-black
-                text-slate-900
-                mt-0.5
-              "
-            >
+            <h3 class="text-lg font-black text-slate-900 mt-0.5">
               Recommended Fuel Stops
             </h3>
 
           </div>
 
-
-
-          <span
-            class="
-              text-[10px]
-              text-slate-400
-              text-right
-            "
-          >
+          <span class="text-[10px] text-slate-400 text-right">
             3 choices
             <br>
             by urgency
@@ -1607,73 +526,30 @@
         </div>
 
 
-
         <div
           id="resultsStationList"
-          class="
-            space-y-3
-          "
+          class="space-y-3"
         ></div>
 
       </section>
 
 
-
-
-      <!-- Finish -->
-
       <button
         onclick="finishTrip()"
-        class="
-          w-full
-          bg-gradient-to-r
-          from-slate-900
-          to-slate-800
-          active:scale-[0.98]
-          text-white
-          font-bold
-          py-4
-          rounded-2xl
-          shadow-lg
-          flex
-          items-center
-          justify-center
-          gap-2
-          transition
-        "
+        class="w-full bg-gradient-to-r from-slate-900 to-slate-800 active:scale-[0.98] text-white font-bold py-4 rounded-2xl shadow-lg flex items-center justify-center gap-2 transition"
       >
-
-        <i
-          class="
-            fa-solid
-            fa-check
-          "
-        ></i>
-
-        <span>
-          Finish
-        </span>
-
+        <i class="fa-solid fa-check"></i>
+        Finish
       </button>
 
 
-      <p
-        class="
-          text-center
-          text-[10px]
-          text-slate-400
-          pb-2
-        "
-      >
+      <p class="text-center text-[10px] text-slate-400 pb-2">
         Return to the trip planner and start again.
       </p>
-
 
     </main>
 
   </div>
-
-
 
 
 
@@ -1683,212 +559,61 @@
 
   <div
     id="loadingView"
-    class="
-      hidden
-      fixed
-      inset-0
-      z-[70]
-      bg-slate-950/95
-      backdrop-blur-md
-      flex
-      items-center
-      justify-center
-      p-6
-    "
+    class="hidden fixed inset-0 z-[70] bg-slate-950/95 backdrop-blur-md flex items-center justify-center p-6"
   >
 
+    <div class="w-full max-w-sm text-center text-white">
 
-    <div
-      class="
-        w-full
-        max-w-sm
-        text-center
-        text-white
-      "
-    >
-
-
-      <div
-        class="
-          w-16
-          h-16
-          mx-auto
-          rounded-3xl
-          bg-gradient-to-br
-          from-blue-500
-          to-indigo-600
-          shadow-2xl
-          shadow-blue-500/30
-          flex
-          items-center
-          justify-center
-          mb-6
-          animate-pulse
-        "
-      >
-
-        <i
-          class="
-            fa-solid
-            fa-gas-pump
-            text-2xl
-          "
-        ></i>
-
+      <div class="w-16 h-16 mx-auto rounded-3xl bg-gradient-to-br from-blue-500 to-indigo-600 shadow-2xl shadow-blue-500/30 flex items-center justify-center mb-6 animate-pulse">
+        <i class="fa-solid fa-gas-pump text-2xl"></i>
       </div>
 
 
-
-      <h2
-        class="
-          text-2xl
-          font-black
-          tracking-tight
-        "
-      >
+      <h2 class="text-2xl font-black tracking-tight">
         Planning your fuel stops...
       </h2>
 
-
-      <p
-        class="
-          text-sm
-          text-slate-400
-          mt-2
-        "
-      >
+      <p class="text-sm text-slate-400 mt-2">
         Building safer options for your journey.
       </p>
 
 
-
-
-      <div
-        class="
-          mt-8
-          bg-white/5
-          border
-          border-white/10
-          rounded-2xl
-          p-4
-          text-left
-          space-y-3
-        "
-      >
-
+      <div class="mt-8 bg-white/5 border border-white/10 rounded-2xl p-4 text-left space-y-3">
 
         <div
           id="loadingStep1"
-          class="
-            flex
-            items-center
-            gap-3
-            text-sm
-            text-slate-200
-          "
+          class="flex items-center gap-3 text-sm text-slate-200"
         >
-
-          <i
-            class="
-              fa-solid
-              fa-circle-notch
-              fa-spin
-              text-blue-400
-              w-4
-              text-center
-            "
-          ></i>
-
-          <span>
-            Calculating remaining range
-          </span>
-
+          <i class="fa-solid fa-circle-notch fa-spin text-blue-400 w-4 text-center"></i>
+          <span>Calculating remaining range</span>
         </div>
-
 
 
         <div
           id="loadingStep2"
-          class="
-            flex
-            items-center
-            gap-3
-            text-sm
-            text-slate-500
-          "
+          class="flex items-center gap-3 text-sm text-slate-500"
         >
-
-          <i
-            class="
-              fa-regular
-              fa-circle
-              w-4
-              text-center
-            "
-          ></i>
-
-          <span>
-            Scanning stations ahead
-          </span>
-
+          <i class="fa-regular fa-circle w-4 text-center"></i>
+          <span>Scanning stations ahead</span>
         </div>
-
 
 
         <div
           id="loadingStep3"
-          class="
-            flex
-            items-center
-            gap-3
-            text-sm
-            text-slate-500
-          "
+          class="flex items-center gap-3 text-sm text-slate-500"
         >
-
-          <i
-            class="
-              fa-regular
-              fa-circle
-              w-4
-              text-center
-            "
-          ></i>
-
-          <span>
-            Building your recommendations
-          </span>
-
+          <i class="fa-regular fa-circle w-4 text-center"></i>
+          <span>Building your recommendations</span>
         </div>
 
       </div>
 
 
-
-
-      <!-- Loading Bar -->
-
-      <div
-        class="
-          mt-5
-          h-1.5
-          bg-white/10
-          rounded-full
-          overflow-hidden
-        "
-      >
+      <div class="mt-5 h-1.5 bg-white/10 rounded-full overflow-hidden">
 
         <div
           id="loadingProgress"
-          class="
-            h-full
-            bg-gradient-to-r
-            from-blue-400
-            to-indigo-400
-            rounded-full
-            transition-all
-            duration-500
-          "
+          class="h-full bg-gradient-to-r from-blue-400 to-indigo-400 rounded-full transition-all duration-500"
           style="width:12%"
         ></div>
 
@@ -1900,156 +625,59 @@
 
 
 
-
-
   <!-- ===================================================== -->
   <!-- STATION MODAL -->
   <!-- ===================================================== -->
 
   <div
     id="stationModal"
-    class="
-      hidden
-      fixed
-      inset-0
-      z-50
-      bg-slate-900/60
-      backdrop-blur-sm
-      flex
-      items-end
-      sm:items-center
-      justify-center
-      p-0
-      sm:p-4
-      transition-all
-      duration-300
-    "
+    class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all duration-300"
   >
 
+    <div class="bg-white w-full max-w-md rounded-t-[32px] sm:rounded-3xl p-5 shadow-2xl space-y-4 max-h-[80vh] flex flex-col">
 
-    <div
-      class="
-        bg-white
-        w-full
-        max-w-md
-        rounded-t-[32px]
-        sm:rounded-3xl
-        p-5
-        shadow-2xl
-        space-y-4
-        max-h-[80vh]
-        flex
-        flex-col
-      "
-    >
-
-
-      <div
-        class="
-          flex
-          justify-between
-          items-center
-          border-b
-          border-slate-100
-          pb-3
-        "
-      >
-
+      <div class="flex justify-between items-center border-b border-slate-100 pb-3">
 
         <div>
 
-          <h3
-            class="
-              font-extrabold
-              text-slate-800
-              text-base
-            "
-          >
+          <h3 class="font-extrabold text-slate-800 text-base">
             Select Nearby Station
           </h3>
 
-
-          <p
-            class="
-              text-xs
-              text-slate-400
-            "
-          >
+          <p class="text-xs text-slate-400">
             Pick your actual current starting station
           </p>
 
         </div>
 
 
-
         <button
           onclick="closeStationModal()"
-          class="
-            text-slate-400
-            hover:text-slate-600
-            p-2
-          "
+          class="text-slate-400 hover:text-slate-600 p-2"
         >
-
-          <i
-            class="
-              fa-solid
-              fa-xmark
-              text-lg
-            "
-          ></i>
-
+          <i class="fa-solid fa-xmark text-lg"></i>
         </button>
 
       </div>
 
-
-
-
-      <!-- Station Search -->
 
       <input
         type="text"
         id="modalSearchInput"
         oninput="filterModalStations()"
         placeholder="🔍 Filter stations..."
-        class="
-          w-full
-          bg-slate-50
-          border
-          border-slate-200
-          text-xs
-          font-medium
-          rounded-xl
-          p-2.5
-          focus:outline-none
-          focus:ring-2
-          focus:ring-blue-500
-        "
+        class="w-full bg-slate-50 border border-slate-200 text-xs font-medium rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
       >
 
 
-
-
-      <!-- Station List -->
-
       <div
         id="modalStationList"
-        class="
-          overflow-y-auto
-          flex-1
-          space-y-2
-          pr-1
-          divide-y
-          divide-slate-100
-        "
+        class="overflow-y-auto flex-1 space-y-2 pr-1 divide-y divide-slate-100"
       ></div>
 
     </div>
 
   </div>
-
-
 
 
 
@@ -2060,28 +688,19 @@
   <script>
 
     let selectedFuel = 3;
-
     let allCars = [];
-
     let allStations = [];
 
     let userLat = null;
-
     let userLng = null;
 
     let currentKm = 0;
 
 
 
-
-    // =====================================================
-    // INITIALIZE
-    // =====================================================
-
     async function initApp() {
 
       await loadCars();
-
       await loadStations();
 
       autoTrackLocation();
@@ -2090,28 +709,17 @@
 
 
 
-
-    // =====================================================
-    // LOAD CARS
-    // =====================================================
-
     async function loadCars() {
 
       try {
 
-        const res =
-          await fetch('/api/cars');
-
-
-        const json =
-          await res.json();
-
+        const res = await fetch('/api/cars');
+        const json = await res.json();
 
         allCars =
           Array.isArray(json)
             ? json
             : (json.data || []);
-
 
 
         const brands = [
@@ -2123,26 +731,17 @@
         ].sort();
 
 
-
         const brandSelect =
-          document.getElementById(
-            'brandSelect'
-          );
-
+          document.getElementById('brandSelect');
 
 
         brandSelect.innerHTML =
-
           '<option value="">-- 1. Select Brand --</option>'
-
           +
-
           brands.map(
             brand =>
               `<option value="${brand}">${brand}</option>`
           ).join('');
-
-
 
       } catch (err) {
 
@@ -2157,11 +756,6 @@
 
 
 
-
-    // =====================================================
-    // LOAD STATIONS
-    // =====================================================
-
     async function loadStations() {
 
       try {
@@ -2169,10 +763,8 @@
         const res =
           await fetch('/api/stations');
 
-
         allStations =
           await res.json();
-
 
       } catch (err) {
 
@@ -2187,11 +779,6 @@
 
 
 
-
-    // =====================================================
-    // DISTANCE CALCULATION
-    // =====================================================
-
     function getDistanceInKm(
       lat1,
       lon1,
@@ -2201,48 +788,34 @@
 
       const R = 6371;
 
-
       const dLat =
-        (lat2 - lat1) *
+        (lat2 - lat1)
+        *
         Math.PI / 180;
-
 
       const dLon =
-        (lon2 - lon1) *
+        (lon2 - lon1)
+        *
         Math.PI / 180;
-
 
 
       const a =
-
-        Math.sin(dLat / 2) *
         Math.sin(dLat / 2)
-
+        *
+        Math.sin(dLat / 2)
         +
-
-        Math.cos(
-          lat1 *
-          Math.PI / 180
-        )
-
+        Math.cos(lat1 * Math.PI / 180)
         *
-
-        Math.cos(
-          lat2 *
-          Math.PI / 180
-        )
-
+        Math.cos(lat2 * Math.PI / 180)
         *
-
-        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2)
+        *
         Math.sin(dLon / 2);
 
 
-
       const c =
-
-        2 *
-
+        2
+        *
         Math.atan2(
           Math.sqrt(a),
           Math.sqrt(1 - a)
@@ -2254,11 +827,6 @@
     }
 
 
-
-
-    // =====================================================
-    // GPS
-    // =====================================================
 
     function autoTrackLocation() {
 
@@ -2273,7 +841,6 @@
       }
 
 
-
       navigator.geolocation.getCurrentPosition(
 
         position => {
@@ -2281,10 +848,8 @@
           userLat =
             position.coords.latitude;
 
-
           userLng =
             position.coords.longitude;
-
 
 
           updateLocationAndMap(
@@ -2301,7 +866,6 @@
             'GPS location error or denied:',
             err
           );
-
 
           fallbackStationSelection();
 
@@ -2320,35 +884,26 @@
 
 
 
-
-    // =====================================================
-    // LOCATION + MAP
-    // =====================================================
-
     function updateLocationAndMap(
       lat,
       lng,
       forcedStation = null
     ) {
 
-
       const mapIframe =
         document.getElementById(
           'mapIframe'
         );
-
 
       const mapPlaceholder =
         document.getElementById(
           'mapPlaceholder'
         );
 
-
       const gpsBadge =
         document.getElementById(
           'gpsBadge'
         );
-
 
       const stationText =
         document.getElementById(
@@ -2356,26 +911,21 @@
         );
 
 
-
       mapIframe.src =
         `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
-
 
 
       mapIframe.classList.remove(
         'hidden'
       );
 
-
       mapPlaceholder.classList.add(
         'hidden'
       );
 
 
-
       let station =
         forcedStation;
-
 
 
       if (
@@ -2387,7 +937,6 @@
           Infinity;
 
 
-
         allStations.forEach(
           st => {
 
@@ -2395,7 +944,6 @@
               st.lat &&
               st.lng
             ) {
-
 
               const dist =
                 getDistanceInKm(
@@ -2413,7 +961,6 @@
                 minDist =
                   dist;
 
-
                 station =
                   st;
 
@@ -2427,22 +974,18 @@
       }
 
 
-
       if (station) {
 
         currentKm =
           station.kmMarker;
 
 
-
         stationText.innerText =
           `${station.name} (${station.brand})`;
 
 
-
         gpsBadge.className =
           'text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700';
-
 
 
         gpsBadge.innerText =
@@ -2454,15 +997,9 @@
 
 
 
-
-    // =====================================================
-    // GPS FALLBACK
-    // =====================================================
-
     function fallbackStationSelection(
       msg = 'GPS Disabled / Not Found'
     ) {
-
 
       const gpsBadge =
         document.getElementById(
@@ -2470,25 +1007,20 @@
         );
 
 
-
       gpsBadge.className =
         'text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-700';
-
 
 
       gpsBadge.innerText =
         '⚠️ Manual Mode';
 
 
-
       if (
         allStations.length > 0
       ) {
 
-
         const defaultStation =
           allStations[0];
-
 
 
         updateLocationAndMap(
@@ -2507,13 +1039,7 @@
 
 
 
-
-    // =====================================================
-    // STATION MODAL
-    // =====================================================
-
     function openStationModal() {
-
 
       const modal =
         document.getElementById(
@@ -2532,9 +1058,7 @@
 
 
 
-
     function closeStationModal() {
-
 
       document
         .getElementById(
@@ -2548,11 +1072,9 @@
 
 
 
-
     function renderModalStations(
       filterText = ''
     ) {
-
 
       const listDiv =
         document.getElementById(
@@ -2560,22 +1082,16 @@
         );
 
 
-
       const query =
-        filterText
-          .toLowerCase();
-
+        filterText.toLowerCase();
 
 
       let stationsWithDist =
-
         allStations.map(
           station => {
 
-
             let dist =
               null;
-
 
 
             if (
@@ -2585,22 +1101,15 @@
               station.lng
             ) {
 
-
               dist =
                 getDistanceInKm(
-
                   userLat,
-
                   userLng,
-
                   station.lat,
-
                   station.lng
-
                 );
 
             }
-
 
 
             return {
@@ -2612,21 +1121,16 @@
         );
 
 
-
       if (
         userLat &&
         userLng
       ) {
 
-
         stationsWithDist.sort(
 
           (a, b) =>
-
             (a.dist || 9999)
-
             -
-
             (b.dist || 9999)
 
         );
@@ -2634,9 +1138,7 @@
       }
 
 
-
       const filtered =
-
         stationsWithDist.filter(
           station =>
 
@@ -2653,109 +1155,53 @@
         );
 
 
-
       if (
         filtered.length === 0
       ) {
 
-
         listDiv.innerHTML = `
-
-          <div
-            class="
-              p-4
-              text-center
-              text-xs
-              text-slate-400
-            "
-          >
+          <div class="p-4 text-center text-xs text-slate-400">
             No stations found
           </div>
-
         `;
-
 
         return;
 
       }
 
 
-
       listDiv.innerHTML =
-
         filtered.map(
           station => `
 
-
             <div
               onclick="selectStationFromModal('${station.id}')"
-              class="
-                p-3
-                hover:bg-blue-50
-                cursor-pointer
-                flex
-                justify-between
-                items-center
-                transition
-                rounded-xl
-              "
+              class="p-3 hover:bg-blue-50 cursor-pointer flex justify-between items-center transition rounded-xl"
             >
-
 
               <div>
 
-
-                <span
-                  class="
-                    text-xs
-                    font-bold
-                    text-slate-800
-                    block
-                  "
-                >
+                <span class="text-xs font-bold text-slate-800 block">
                   ${station.name}
                 </span>
 
-
-                <span
-                  class="
-                    text-[11px]
-                    text-slate-400
-                    block
-                  "
-                >
+                <span class="text-[11px] text-slate-400 block">
                   ${station.brand}
                   •
                   KM ${Math.round(station.kmMarker)}
                 </span>
 
-
               </div>
-
-
 
               ${
                 station.dist !== null
                   ? `
-
-                    <span
-                      class="
-                        text-[10px]
-                        font-bold
-                        bg-blue-100
-                        text-blue-700
-                        px-2
-                        py-0.5
-                        rounded-md
-                      "
-                    >
+                    <span class="text-[10px] font-bold bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md">
                       ${station.dist.toFixed(1)} km away
                     </span>
-
                   `
                   : ''
               }
-
 
             </div>
 
@@ -2766,15 +1212,12 @@
 
 
 
-
     function filterModalStations() {
-
 
       const query =
         document.getElementById(
           'modalSearchInput'
         ).value;
-
 
 
       renderModalStations(
@@ -2785,11 +1228,9 @@
 
 
 
-
     function selectStationFromModal(
       stationId
     ) {
-
 
       const station =
         allStations.find(
@@ -2798,30 +1239,20 @@
         );
 
 
-
       if (!station) {
-
         return;
-
       }
-
 
 
       currentKm =
         station.kmMarker;
 
 
-
       updateLocationAndMap(
-
         station.lat,
-
         station.lng,
-
         station
-
       );
-
 
 
       closeStationModal();
@@ -2830,16 +1261,9 @@
 
 
 
-
-    // =====================================================
-    // CAR SEARCH
-    // =====================================================
-
     function onSearchCar() {
 
-
       const query =
-
         document
           .getElementById(
             'carSearchInput'
@@ -2849,12 +1273,10 @@
           .toLowerCase();
 
 
-
       const resultsDiv =
         document.getElementById(
           'searchResults'
         );
-
 
 
       const clearBtn =
@@ -2863,24 +1285,19 @@
         );
 
 
-
       if (!query) {
-
 
         resultsDiv.classList.add(
           'hidden'
         );
 
-
         clearBtn.classList.add(
           'hidden'
         );
 
-
         return;
 
       }
-
 
 
       clearBtn.classList.remove(
@@ -2888,9 +1305,7 @@
       );
 
 
-
       const matches =
-
         allCars.filter(
           car =>
 
@@ -2907,95 +1322,42 @@
         );
 
 
-
       if (
         matches.length === 0
       ) {
 
-
         resultsDiv.innerHTML = `
-
-          <div
-            class="
-              p-3
-              text-xs
-              text-slate-400
-              text-center
-            "
-          >
+          <div class="p-3 text-xs text-slate-400 text-center">
             No vehicle found
           </div>
-
         `;
-
 
       } else {
 
-
         resultsDiv.innerHTML =
-
           matches.map(
             car => `
 
-
               <div
                 onclick="selectCarFromSearch('${car.id}')"
-                class="
-                  p-3
-                  hover:bg-blue-50
-                  cursor-pointer
-                  flex
-                  justify-between
-                  items-center
-                  transition
-                "
+                class="p-3 hover:bg-blue-50 cursor-pointer flex justify-between items-center transition"
               >
-
 
                 <div>
 
-
-                  <span
-                    class="
-                      text-xs
-                      font-bold
-                      text-blue-600
-                      block
-                    "
-                  >
+                  <span class="text-xs font-bold text-blue-600 block">
                     ${car.brand}
                   </span>
 
-
-                  <span
-                    class="
-                      text-sm
-                      font-semibold
-                      text-slate-800
-                    "
-                  >
+                  <span class="text-sm font-semibold text-slate-800">
                     ${car.model}
                   </span>
 
-
                 </div>
 
-
-
-                <span
-                  class="
-                    text-[10px]
-                    font-mono
-                    bg-slate-100
-                    text-slate-600
-                    px-2
-                    py-0.5
-                    rounded-md
-                  "
-                >
+                <span class="text-[10px] font-mono bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md">
                   ${car.tankCapacity}L
                 </span>
-
 
               </div>
 
@@ -3003,7 +1365,6 @@
           ).join('');
 
       }
-
 
 
       resultsDiv.classList.remove(
@@ -3014,11 +1375,9 @@
 
 
 
-
     function selectCarFromSearch(
       carId
     ) {
-
 
       const car =
         allCars.find(
@@ -3027,13 +1386,9 @@
         );
 
 
-
       if (!car) {
-
         return;
-
       }
-
 
 
       const brandSelect =
@@ -3042,19 +1397,15 @@
         );
 
 
-
       brandSelect.value =
         car.brand;
 
 
-
       const filteredCars =
-
         allCars.filter(
           vehicle =>
             vehicle.brand === car.brand
         );
-
 
 
       const modelSelect =
@@ -3063,28 +1414,21 @@
         );
 
 
-
       modelSelect.innerHTML =
-
         '<option value="">-- 2. Select Model --</option>'
-
         +
-
         filteredCars.map(
           vehicle =>
             `<option value="${vehicle.id}">${vehicle.model} (${vehicle.tankCapacity}L)</option>`
         ).join('');
 
 
-
       modelSelect.disabled =
         false;
 
 
-
       modelSelect.value =
         car.id;
-
 
 
       document.getElementById(
@@ -3093,12 +1437,10 @@
         car.id;
 
 
-
       document.getElementById(
         'carSearchInput'
       ).value =
         `${car.brand} - ${car.model}`;
-
 
 
       document.getElementById(
@@ -3106,7 +1448,6 @@
       ).classList.add(
         'hidden'
       );
-
 
 
       document.getElementById(
@@ -3119,9 +1460,7 @@
 
 
 
-
     function clearCarSearch() {
-
 
       document.getElementById(
         'carSearchInput'
@@ -3129,12 +1468,10 @@
         '';
 
 
-
       document.getElementById(
         'selectedCarId'
       ).value =
         '';
-
 
 
       document.getElementById(
@@ -3144,13 +1481,11 @@
       );
 
 
-
       document.getElementById(
         'clearSearchBtn'
       ).classList.add(
         'hidden'
       );
-
 
 
       document.getElementById(
@@ -3159,17 +1494,14 @@
         '';
 
 
-
       const modelSelect =
         document.getElementById(
           'modelSelect'
         );
 
 
-
       modelSelect.innerHTML =
         '<option value="">-- 2. Select Model --</option>';
-
 
 
       modelSelect.disabled =
@@ -3179,15 +1511,12 @@
 
 
 
-
     function onBrandChange() {
-
 
       const selectedBrand =
         document.getElementById(
           'brandSelect'
         ).value;
-
 
 
       const modelSelect =
@@ -3196,18 +1525,14 @@
         );
 
 
-
       if (!selectedBrand) {
-
 
         modelSelect.innerHTML =
           '<option value="">-- 2. Select Model --</option>';
 
 
-
         modelSelect.disabled =
           true;
-
 
 
         document.getElementById(
@@ -3216,12 +1541,10 @@
           '';
 
 
-
         document.getElementById(
           'carSearchInput'
         ).value =
           '';
-
 
 
         document.getElementById(
@@ -3231,38 +1554,29 @@
         );
 
 
-
         return;
 
       }
 
 
-
       const filteredCars =
-
         allCars.filter(
           car =>
             car.brand === selectedBrand
         );
 
 
-
       modelSelect.innerHTML =
-
         '<option value="">-- 2. Select Model --</option>'
-
         +
-
         filteredCars.map(
           car =>
             `<option value="${car.id}">${car.model} (${car.tankCapacity}L)</option>`
         ).join('');
 
 
-
       modelSelect.disabled =
         false;
-
 
 
       document.getElementById(
@@ -3271,12 +1585,10 @@
         '';
 
 
-
       document.getElementById(
         'carSearchInput'
       ).value =
         '';
-
 
 
       document.getElementById(
@@ -3289,9 +1601,7 @@
 
 
 
-
     function onModelChange() {
-
 
       const carId =
         document.getElementById(
@@ -3299,12 +1609,10 @@
         ).value;
 
 
-
       document.getElementById(
         'selectedCarId'
       ).value =
         carId;
-
 
 
       const car =
@@ -3314,15 +1622,12 @@
         );
 
 
-
       if (car) {
-
 
         document.getElementById(
           'carSearchInput'
         ).value =
           `${car.brand} - ${car.model}`;
-
 
 
         document.getElementById(
@@ -3337,19 +1642,14 @@
 
 
 
-
     document.addEventListener(
-
       'click',
-
       event => {
-
 
         const searchBox =
           document.getElementById(
             'carSearchInput'
           );
-
 
 
         if (
@@ -3358,7 +1658,6 @@
             .closest('.relative')
             .contains(event.target)
         ) {
-
 
           document.getElementById(
             'searchResults'
@@ -3369,24 +1668,16 @@
         }
 
       }
-
     );
 
 
-
-
-    // =====================================================
-    // FUEL SELECTOR
-    // =====================================================
 
     function setFuel(
       level
     ) {
 
-
       selectedFuel =
         level;
-
 
 
       const buttons =
@@ -3395,22 +1686,17 @@
         );
 
 
-
       buttons.forEach(
         (button, index) => {
-
 
           if (
             index + 1 === level
           ) {
 
-
             button.className =
               'fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl bg-blue-600 text-white font-bold shadow-md transition';
 
-
           } else {
-
 
             button.className =
               'fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold hover:bg-slate-50 transition';
@@ -3423,11 +1709,6 @@
     }
 
 
-
-
-    // =====================================================
-    // LOADING HELPERS
-    // =====================================================
 
     function sleep(ms) {
 
@@ -3443,11 +1724,9 @@
 
 
 
-
     function setLoadingStep(
       step
     ) {
-
 
       const steps = [
 
@@ -3466,34 +1745,26 @@
       ];
 
 
-
       const progress =
         document.getElementById(
           'loadingProgress'
         );
 
 
-
       steps.forEach(
         (element, index) => {
 
-
           if (!element) {
-
             return;
-
           }
-
 
 
           if (
             index < step
           ) {
 
-
             element.className =
               'flex items-center gap-3 text-sm text-emerald-300';
-
 
 
             element
@@ -3501,15 +1772,12 @@
               .className =
                 'fa-solid fa-circle-check text-emerald-400 w-4 text-center';
 
-
           } else if (
             index === step
           ) {
 
-
             element.className =
               'flex items-center gap-3 text-sm text-slate-200';
-
 
 
             element
@@ -3517,13 +1785,10 @@
               .className =
                 'fa-solid fa-circle-notch fa-spin text-blue-400 w-4 text-center';
 
-
           } else {
-
 
             element.className =
               'flex items-center gap-3 text-sm text-slate-500';
-
 
 
             element
@@ -3537,22 +1802,14 @@
       );
 
 
-
       if (progress) {
 
-
         const widths = [
-
           '18%',
-
           '52%',
-
           '82%',
-
           '100%'
-
         ];
-
 
 
         progress.style.width =
@@ -3569,19 +1826,15 @@
 
 
 
-
     function showLoadingView() {
 
-
-      const loadingView =
-        document.getElementById(
+      document
+        .getElementById(
           'loadingView'
+        )
+        .classList.remove(
+          'hidden'
         );
-
-
-      loadingView.classList.remove(
-        'hidden'
-      );
 
 
       setLoadingStep(0);
@@ -3590,9 +1843,7 @@
 
 
 
-
     function hideLoadingView() {
-
 
       document
         .getElementById(
@@ -3606,100 +1857,64 @@
 
 
 
-
     // =====================================================
-    // RESULT STYLES
+    // NEW FULL-COLOR MINIMAL RESULT STYLES
     // =====================================================
 
     function getResultStyle(
       type
     ) {
 
-
       const styles = {
 
-
         soon: {
-
-          accent:
-            'border-rose-200',
-
-          strip:
-            'bg-rose-500',
-
+          card:
+            'bg-gradient-to-br from-rose-500 to-red-600',
+          soft:
+            'bg-white/15',
           badge:
-            'bg-rose-50 text-rose-600 border-rose-100',
-
-          iconBg:
-            'bg-rose-100 text-rose-600',
-
+            'bg-white/15 text-white border-white/20',
           button:
-            'bg-rose-50 text-rose-600 border-rose-100 hover:bg-rose-100',
-
+            'bg-white text-rose-600 hover:bg-rose-50',
           icon:
             'fa-bolt',
-
           number:
             '1'
-
         },
-
 
 
         recommended: {
-
-          accent:
-            'border-blue-200',
-
-          strip:
-            'bg-blue-500',
-
+          card:
+            'bg-gradient-to-br from-blue-600 to-indigo-700',
+          soft:
+            'bg-white/15',
           badge:
-            'bg-blue-50 text-blue-600 border-blue-100',
-
-          iconBg:
-            'bg-blue-100 text-blue-600',
-
+            'bg-white/15 text-white border-white/20',
           button:
-            'bg-blue-50 text-blue-600 border-blue-100 hover:bg-blue-100',
-
+            'bg-white text-blue-700 hover:bg-blue-50',
           icon:
             'fa-shield-halved',
-
           number:
             '2'
-
         },
 
 
-
         relaxed: {
-
-          accent:
-            'border-emerald-200',
-
-          strip:
-            'bg-emerald-500',
-
+          card:
+            'bg-gradient-to-br from-emerald-500 to-teal-600',
+          soft:
+            'bg-white/15',
           badge:
-            'bg-emerald-50 text-emerald-600 border-emerald-100',
-
-          iconBg:
-            'bg-emerald-100 text-emerald-600',
-
+            'bg-white/15 text-white border-white/20',
           button:
-            'bg-emerald-50 text-emerald-600 border-emerald-100 hover:bg-emerald-100',
-
+            'bg-white text-emerald-700 hover:bg-emerald-50',
           icon:
             'fa-road',
-
           number:
             '3'
-
         }
 
       };
-
 
 
       return (
@@ -3712,9 +1927,8 @@
 
 
 
-
     // =====================================================
-    // RENDER RESULT PAGE
+    // RESULTS PAGE
     // =====================================================
 
     function renderResultsPage(
@@ -3722,12 +1936,10 @@
       selectedCar
     ) {
 
-
       document.getElementById(
         'resultCarName'
       ).innerText =
         `${selectedCar.brand} ${selectedCar.model}`;
-
 
 
       document.getElementById(
@@ -3736,12 +1948,10 @@
         selectedCar.fuelEfficiency;
 
 
-
       document.getElementById(
         'resultTankCapacity'
       ).innerText =
         selectedCar.tankCapacity;
-
 
 
       document.getElementById(
@@ -3750,12 +1960,10 @@
         `${selectedFuel}/5`;
 
 
-
       document.getElementById(
         'resultFuelPercent'
       ).innerText =
         `${selectedFuel * 20}%`;
-
 
 
       document.getElementById(
@@ -3764,12 +1972,10 @@
         data.estimatedRemainingRange;
 
 
-
       document.getElementById(
         'resultFuelBar'
       ).style.width =
         `${selectedFuel * 20}%`;
-
 
 
       const stationList =
@@ -3778,12 +1984,9 @@
         );
 
 
-
       stationList.innerHTML =
-
         data.options.map(
           option => {
-
 
             const style =
               getResultStyle(
@@ -3791,84 +1994,89 @@
               );
 
 
-
             return `
-
 
               <article
                 class="
-                  bg-white
-                  rounded-3xl
-                  border
-                  ${style.accent}
-                  shadow-sm
+                  ${style.card}
+                  text-white
+                  rounded-[26px]
+                  shadow-lg
+                  shadow-slate-900/10
                   overflow-hidden
                   relative
                 "
               >
 
-
                 <div
                   class="
                     absolute
-                    left-0
-                    top-0
-                    bottom-0
-                    w-1.5
-                    ${style.strip}
+                    -right-10
+                    -top-10
+                    w-32
+                    h-32
+                    rounded-full
+                    bg-white/10
                   "
                 ></div>
 
 
-
                 <div
                   class="
-                    p-4
-                    pl-5
+                    absolute
+                    -left-12
+                    -bottom-16
+                    w-40
+                    h-40
+                    rounded-full
+                    bg-black/5
                   "
-                >
+                ></div>
 
+
+                <div class="relative p-5">
+
+                  <!-- Top -->
 
                   <div
                     class="
                       flex
-                      items-start
                       justify-between
-                      gap-3
+                      items-start
+                      gap-4
                     "
                   >
-
 
                     <div
                       class="
                         flex
-                        items-start
+                        items-center
                         gap-3
                         min-w-0
                       "
                     >
 
-
                       <div
                         class="
-                          w-10
-                          h-10
+                          w-11
+                          h-11
                           rounded-2xl
-                          ${style.iconBg}
+                          bg-white
+                          text-slate-900
                           flex
                           items-center
                           justify-center
-                          shrink-0
                           font-black
+                          text-base
+                          shadow-sm
+                          shrink-0
                         "
                       >
                         ${style.number}
                       </div>
 
 
-
                       <div class="min-w-0">
-
 
                         <div
                           class="
@@ -3879,16 +2087,15 @@
                           "
                         >
 
-
                           <span
                             class="
                               inline-flex
                               items-center
                               gap-1.5
-                              text-[10px]
+                              text-[9px]
                               font-black
                               uppercase
-                              tracking-wider
+                              tracking-widest
                               px-2.5
                               py-1
                               rounded-full
@@ -3909,19 +2116,17 @@
                           </span>
 
 
-
                           ${
                             option.type === 'recommended'
                               ? `
-
                                 <span
                                   class="
                                     text-[9px]
                                     font-black
                                     uppercase
                                     tracking-wider
-                                    bg-slate-900
-                                    text-white
+                                    bg-white
+                                    text-blue-700
                                     px-2
                                     py-1
                                     rounded-full
@@ -3929,57 +2134,66 @@
                                 >
                                   Best Balance
                                 </span>
-
                               `
                               : ''
                           }
 
-
                         </div>
-
-
-
-
-                        <h4
-                          class="
-                            text-base
-                            font-black
-                            text-slate-900
-                            mt-2
-                            leading-tight
-                          "
-                        >
-                          ${option.name}
-                        </h4>
-
-
-
-                        <p
-                          class="
-                            text-[11px]
-                            text-slate-400
-                            mt-0.5
-                          "
-                        >
-                          ${option.brand}
-                          •
-                          Route KM ${option.kmMarker}
-                        </p>
-
 
                       </div>
 
                     </div>
 
+
+                    <span
+                      class="
+                        text-[10px]
+                        font-semibold
+                        text-white/60
+                        whitespace-nowrap
+                      "
+                    >
+                      KM ${option.kmMarker}
+                    </span>
+
                   </div>
 
 
+                  <!-- Station -->
 
+                  <div class="mt-5">
+
+                    <h4
+                      class="
+                        text-xl
+                        font-black
+                        leading-tight
+                        tracking-tight
+                      "
+                    >
+                      ${option.name}
+                    </h4>
+
+
+                    <p
+                      class="
+                        text-[11px]
+                        text-white/65
+                        mt-1
+                      "
+                    >
+                      ${option.brand}
+                    </p>
+
+                  </div>
+
+
+                  <!-- Description -->
 
                   <p
                     class="
                       text-xs
-                      text-slate-500
+                      text-white/80
                       leading-relaxed
                       mt-3
                     "
@@ -3988,124 +2202,104 @@
                   </p>
 
 
-
+                  <!-- Distance -->
 
                   <div
                     class="
-                      mt-4
-                      grid
-                      grid-cols-[1fr_auto]
-                      gap-3
-                      items-center
+                      ${style.soft}
+                      rounded-2xl
+                      px-4
+                      py-3
+                      mt-5
+                      backdrop-blur-sm
                     "
                   >
+
+                    <span
+                      class="
+                        text-[9px]
+                        uppercase
+                        tracking-widest
+                        font-bold
+                        text-white/60
+                        block
+                      "
+                    >
+                      Distance From You
+                    </span>
 
 
                     <div
                       class="
-                        bg-slate-50
-                        rounded-2xl
-                        px-3
-                        py-2.5
-                        border
-                        border-slate-100
+                        flex
+                        items-end
+                        gap-1
+                        mt-1
                       "
                     >
+
+                      <span
+                        class="
+                          text-3xl
+                          font-black
+                          tracking-tight
+                        "
+                      >
+                        ${option.distanceFromUser}
+                      </span>
 
 
                       <span
                         class="
-                          text-[9px]
-                          text-slate-400
-                          font-bold
-                          uppercase
-                          tracking-wider
-                          block
+                          text-xs
+                          font-semibold
+                          text-white/65
+                          mb-1
                         "
                       >
-                        Distance From You
+                        km
                       </span>
-
-
-
-                      <div
-                        class="
-                          flex
-                          items-end
-                          gap-1
-                          mt-0.5
-                        "
-                      >
-
-
-                        <span
-                          class="
-                            text-xl
-                            font-black
-                            text-slate-900
-                          "
-                        >
-                          ${option.distanceFromUser}
-                        </span>
-
-
-                        <span
-                          class="
-                            text-xs
-                            font-semibold
-                            text-slate-400
-                            mb-0.5
-                          "
-                        >
-                          km
-                        </span>
-
-
-                      </div>
 
                     </div>
 
-
-
-
-                    <a
-                      href="${option.googleMapUrl}"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="
-                        h-full
-                        min-h-[58px]
-                        px-4
-                        rounded-2xl
-                        border
-                        font-bold
-                        text-xs
-                        flex
-                        flex-col
-                        items-center
-                        justify-center
-                        gap-1
-                        transition
-                        ${style.button}
-                      "
-                    >
-
-                      <i
-                        class="
-                          fa-solid
-                          fa-location-arrow
-                        "
-                      ></i>
-
-
-                      <span>
-                        Navigate
-                      </span>
-
-                    </a>
-
-
                   </div>
+
+
+                  <!-- Navigate -->
+
+                  <a
+                    href="${option.googleMapUrl}"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="
+                      ${style.button}
+                      mt-3
+                      w-full
+                      rounded-2xl
+                      py-3
+                      px-4
+                      font-black
+                      text-xs
+                      flex
+                      items-center
+                      justify-center
+                      gap-2
+                      transition
+                      active:scale-[0.98]
+                      shadow-sm
+                    "
+                  >
+
+                    <i
+                      class="
+                        fa-solid
+                        fa-location-arrow
+                      "
+                    ></i>
+
+                    Navigate
+
+                  </a>
 
                 </div>
 
@@ -4120,13 +2314,7 @@
 
 
 
-
-    // =====================================================
-    // PAGE TRANSITIONS
-    // =====================================================
-
     function switchToResultsPage() {
-
 
       const plannerView =
         document.getElementById(
@@ -4140,17 +2328,14 @@
         );
 
 
-
       plannerView.classList.add(
         'opacity-0',
         'scale-[0.98]'
       );
 
 
-
       setTimeout(
         () => {
-
 
           plannerView.classList.add(
             'hidden'
@@ -4161,7 +2346,6 @@
             'opacity-0',
             'scale-[0.98]'
           );
-
 
 
           resultsView.classList.remove(
@@ -4175,10 +2359,8 @@
           );
 
 
-
           requestAnimationFrame(
             () => {
-
 
               resultsView.classList.remove(
                 'opacity-0',
@@ -4189,14 +2371,10 @@
           );
 
 
-
-          window.scrollTo(
-            {
-              top: 0,
-              behavior: 'smooth'
-            }
-          );
-
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
 
         },
         180
@@ -4206,9 +2384,7 @@
 
 
 
-
     function finishTrip() {
-
 
       const plannerView =
         document.getElementById(
@@ -4222,17 +2398,14 @@
         );
 
 
-
       resultsView.classList.add(
         'opacity-0',
         'translate-y-3'
       );
 
 
-
       setTimeout(
         () => {
-
 
           resultsView.classList.add(
             'hidden'
@@ -4243,7 +2416,6 @@
             'opacity-0',
             'translate-y-3'
           );
-
 
 
           plannerView.classList.remove(
@@ -4257,10 +2429,8 @@
           );
 
 
-
           requestAnimationFrame(
             () => {
-
 
               plannerView.classList.remove(
                 'opacity-0',
@@ -4271,14 +2441,10 @@
           );
 
 
-
-          window.scrollTo(
-            {
-              top: 0,
-              behavior: 'smooth'
-            }
-          );
-
+          window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+          });
 
         },
         180
@@ -4288,13 +2454,7 @@
 
 
 
-
-    // =====================================================
-    // CALCULATE TRIP
-    // =====================================================
-
     async function calculateTrip() {
-
 
       const carId =
         document.getElementById(
@@ -4302,19 +2462,15 @@
         ).value;
 
 
-
       if (!carId) {
-
 
         alert(
           'Please select or search your vehicle model first!'
         );
 
-
         return;
 
       }
-
 
 
       const selectedCar =
@@ -4324,31 +2480,24 @@
         );
 
 
-
       if (!selectedCar) {
-
 
         alert(
           'Vehicle data could not be found. Please select your vehicle again.'
         );
-
 
         return;
 
       }
 
 
-
       showLoadingView();
-
 
 
       try {
 
-
         const requestStartedAt =
           Date.now();
-
 
 
         const res =
@@ -4356,17 +2505,13 @@
             '/api/plan-trip',
             {
 
-
               method:
                 'POST',
 
-
-              headers:
-                {
-                  'Content-Type':
-                    'application/json'
-                },
-
+              headers: {
+                'Content-Type':
+                  'application/json'
+              },
 
               body:
                 JSON.stringify(
@@ -4385,14 +2530,11 @@
                   }
                 )
 
-
             }
           );
 
 
-
         if (!res.ok) {
-
 
           throw new Error(
             `Server returned ${res.status}`
@@ -4401,31 +2543,23 @@
         }
 
 
-
         setLoadingStep(1);
-
 
 
         const data =
           await res.json();
 
 
-
-        await sleep(
-          350
-        );
-
+        await sleep(350);
 
 
         setLoadingStep(2);
-
 
 
         if (
           !data.options ||
           data.options.length === 0
         ) {
-
 
           throw new Error(
             'No reachable fuel stations were found within the estimated range.'
@@ -4434,12 +2568,10 @@
         }
 
 
-
         renderResultsPage(
           data,
           selectedCar
         );
-
 
 
         const elapsed =
@@ -4448,11 +2580,9 @@
           requestStartedAt;
 
 
-
         if (
           elapsed < 1100
         ) {
-
 
           await sleep(
             1100 - elapsed
@@ -4461,27 +2591,19 @@
         }
 
 
-
         setLoadingStep(3);
 
 
-
-        await sleep(
-          250
-        );
-
+        await sleep(250);
 
 
         hideLoadingView();
 
 
-
         switchToResultsPage();
 
 
-
       } catch (error) {
-
 
         console.error(
           'Trip calculation error:',
@@ -4489,9 +2611,7 @@
         );
 
 
-
         hideLoadingView();
-
 
 
         alert(
@@ -4506,15 +2626,9 @@
 
 
 
-
-    // =====================================================
-    // START APP
-    // =====================================================
-
     initApp();
 
   </script>
-
 
 </body>
 </html>
