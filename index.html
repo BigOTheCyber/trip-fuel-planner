@@ -4,509 +4,1782 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Trip Fuel Planner</title>
+
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    rel="stylesheet"
+  >
 </head>
+
 <body class="bg-slate-900 min-h-screen flex justify-center items-start sm:py-6 font-sans antialiased selection:bg-blue-500 selection:text-white">
 
   <!-- Mobile Frame Container -->
   <div class="w-full max-w-md bg-slate-50 min-h-screen sm:min-h-[844px] sm:rounded-[40px] shadow-2xl flex flex-col justify-between overflow-hidden relative border-4 border-slate-800">
-    
+
     <!-- Top App Bar -->
     <header class="bg-gradient-to-r from-blue-700 to-indigo-800 text-white px-5 pt-8 pb-6 rounded-b-[28px] shadow-lg">
       <div class="flex justify-between items-center mb-2">
-        <span class="text-xs bg-blue-500/30 border border-blue-300/30 px-3 py-1 rounded-full text-blue-100 font-medium">Chiang Rai ➔ Bangkok</span>
+        <span class="text-xs bg-blue-500/30 border border-blue-300/30 px-3 py-1 rounded-full text-blue-100 font-medium">
+          Chiang Rai ➔ Bangkok
+        </span>
+
         <i class="fa-solid fa-gas-pump text-xl text-blue-300"></i>
       </div>
-      <h1 class="text-xl font-extrabold tracking-tight">Trip Fuel Planner</h1>
-      <p class="text-xs text-blue-200 mt-1">Smart Refuel Stop Finder with Safety Buffer</p>
+
+      <h1 class="text-xl font-extrabold tracking-tight">
+        Trip Fuel Planner
+      </h1>
+
+      <p class="text-xs text-blue-200 mt-1">
+        Smart Refuel Stop Finder with Safety Buffer
+      </p>
     </header>
+
 
     <!-- Main Content Area -->
     <main class="flex-1 p-5 space-y-5 overflow-y-auto">
 
-      <!-- Car Selection Card -->
+      <!-- Vehicle Selection -->
       <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3 relative">
+
         <label class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
-          <i class="fa-solid fa-car-side text-blue-600"></i> Select Vehicle
+          <i class="fa-solid fa-car-side text-blue-600"></i>
+          Select Vehicle
         </label>
-        
+
+
         <!-- Search Bar -->
         <div class="relative">
+
           <div class="relative">
-            <input type="text" id="carSearchInput" oninput="onSearchCar()" placeholder="🔍 Search model or brand (e.g. Civic, Revo)..." class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:font-normal placeholder:text-slate-400">
-            <button id="clearSearchBtn" onclick="clearCarSearch()" class="hidden absolute right-3 top-3 text-slate-400 hover:text-slate-600">
+            <input
+              type="text"
+              id="carSearchInput"
+              oninput="onSearchCar()"
+              placeholder="🔍 Search model or brand (e.g. Civic, Revo)..."
+              class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-500 placeholder:font-normal placeholder:text-slate-400"
+            >
+
+            <button
+              id="clearSearchBtn"
+              onclick="clearCarSearch()"
+              class="hidden absolute right-3 top-3 text-slate-400 hover:text-slate-600"
+            >
               <i class="fa-solid fa-xmark"></i>
             </button>
           </div>
 
-          <!-- Autocomplete Results Dropdown -->
-          <div id="searchResults" class="hidden absolute z-30 left-0 right-0 top-full mt-1 bg-white border border-slate-200 rounded-xl shadow-xl max-h-56 overflow-y-auto divide-y divide-slate-100"></div>
+
+          <!-- Autocomplete Results -->
+          <div
+            id="searchResults"
+            class="hidden absolute z-30 left-0 right-0 top-full mt-1 bg-white border border-slate-200 rounded-xl shadow-xl max-h-56 overflow-y-auto divide-y divide-slate-100"
+          ></div>
         </div>
+
 
         <div class="flex items-center gap-2 my-1">
           <div class="h-px bg-slate-100 flex-1"></div>
-          <span class="text-[10px] font-bold text-slate-300 uppercase">OR SELECT FROM LIST</span>
+
+          <span class="text-[10px] font-bold text-slate-300 uppercase">
+            OR SELECT FROM LIST
+          </span>
+
           <div class="h-px bg-slate-100 flex-1"></div>
         </div>
 
+
         <div class="space-y-2">
-          <select id="brandSelect" onchange="onBrandChange()" class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500">
-            <option value="">-- 1. Select Brand --</option>
+
+          <select
+            id="brandSelect"
+            onchange="onBrandChange()"
+            class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          >
+            <option value="">
+              -- 1. Select Brand --
+            </option>
           </select>
 
-          <select id="modelSelect" onchange="onModelChange()" disabled class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed">
-            <option value="">-- 2. Select Model --</option>
+
+          <select
+            id="modelSelect"
+            onchange="onModelChange()"
+            disabled
+            class="w-full bg-slate-50 border border-slate-200 text-slate-800 text-sm font-semibold rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            <option value="">
+              -- 2. Select Model --
+            </option>
           </select>
+
         </div>
 
-        <input type="hidden" id="selectedCarId" value="">
+        <input
+          type="hidden"
+          id="selectedCarId"
+          value=""
+        >
+
       </div>
 
-      <!-- Verified Location & Map Card -->
+
+      <!-- Location Card -->
       <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
+
         <div class="flex justify-between items-center">
+
           <label class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
-            <i class="fa-solid fa-location-dot text-red-500"></i> Current Location Verification
+            <i class="fa-solid fa-location-dot text-red-500"></i>
+            Current Location Verification
           </label>
-          <span id="gpsBadge" class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500">Detecting...</span>
+
+          <span
+            id="gpsBadge"
+            class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-500"
+          >
+            Detecting...
+          </span>
+
         </div>
 
-        <!-- Location Display & Change Button -->
+
+        <!-- Current Location -->
         <div class="bg-slate-50 border border-slate-200/80 p-3 rounded-xl flex items-center justify-between">
+
           <div class="space-y-0.5">
-            <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">Detected Station / Point</span>
-            <span id="currentStationName" class="text-xs font-bold text-slate-800 block">Locating via GPS...</span>
+
+            <span class="text-[10px] uppercase font-bold text-slate-400 block tracking-wider">
+              Detected Station / Point
+            </span>
+
+            <span
+              id="currentStationName"
+              class="text-xs font-bold text-slate-800 block"
+            >
+              Locating via GPS...
+            </span>
+
           </div>
-          <button type="button" onclick="openStationModal()" class="text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg border border-blue-200/60 transition flex items-center gap-1">
-            <i class="fa-solid fa-pen-to-square"></i> Change
+
+
+          <button
+            type="button"
+            onclick="openStationModal()"
+            class="text-xs font-bold text-blue-600 hover:text-blue-700 bg-blue-50 hover:bg-blue-100 px-3 py-1.5 rounded-lg border border-blue-200/60 transition flex items-center gap-1"
+          >
+            <i class="fa-solid fa-pen-to-square"></i>
+            Change
           </button>
+
         </div>
 
-        <!-- Embedded Interactive Google Map -->
+
+        <!-- Map -->
         <div class="w-full h-44 rounded-xl overflow-hidden border border-slate-200 relative bg-slate-100 flex items-center justify-center">
-          <iframe id="mapIframe" class="w-full h-full border-0 hidden" loading="lazy" allowfullscreen src=""></iframe>
-          <div id="mapPlaceholder" class="text-center p-4 text-slate-400 text-xs flex flex-col items-center gap-2">
+
+          <iframe
+            id="mapIframe"
+            class="w-full h-full border-0 hidden"
+            loading="lazy"
+            allowfullscreen
+            src=""
+          ></iframe>
+
+
+          <div
+            id="mapPlaceholder"
+            class="text-center p-4 text-slate-400 text-xs flex flex-col items-center gap-2"
+          >
             <i class="fa-solid fa-circle-notch fa-spin text-2xl text-blue-500"></i>
-            <span>Fetching live GPS position...</span>
+
+            <span>
+              Fetching live GPS position...
+            </span>
           </div>
+
         </div>
+
       </div>
 
-      <!-- Fuel Level Selector (5-Level Gauge) -->
+
+      <!-- Fuel Level -->
       <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-100 space-y-3">
+
         <label class="text-xs font-bold text-slate-500 uppercase tracking-wider flex items-center gap-2">
-          <i class="fa-solid fa-gauge-high text-amber-500"></i> Fuel Gauge Level
+          <i class="fa-solid fa-gauge-high text-amber-500"></i>
+          Fuel Gauge Level
         </label>
-        <div class="grid grid-cols-5 gap-1.5" id="fuelGauge">
-          <button type="button" onclick="setFuel(1)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition">
-            <span class="text-sm">1/5</span>
-            <span class="text-[9px] font-normal text-red-500">Empty</span>
+
+
+        <div
+          class="grid grid-cols-5 gap-1.5"
+          id="fuelGauge"
+        >
+
+          <button
+            type="button"
+            onclick="setFuel(1)"
+            class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition"
+          >
+            <span class="text-sm">
+              1/5
+            </span>
+
+            <span class="text-[9px] font-normal text-red-500">
+              Empty
+            </span>
           </button>
-          <button type="button" onclick="setFuel(2)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition">
-            <span class="text-sm">2/5</span>
-            <span class="text-[9px] font-normal text-amber-500">Low</span>
+
+
+          <button
+            type="button"
+            onclick="setFuel(2)"
+            class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition"
+          >
+            <span class="text-sm">
+              2/5
+            </span>
+
+            <span class="text-[9px] font-normal text-amber-500">
+              Low
+            </span>
           </button>
-          <button type="button" onclick="setFuel(3)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl bg-blue-600 text-white font-bold shadow-md transition">
-            <span class="text-sm">3/5</span>
-            <span class="text-[9px] font-normal opacity-80">Half</span>
+
+
+          <button
+            type="button"
+            onclick="setFuel(3)"
+            class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl bg-blue-600 text-white font-bold shadow-md transition"
+          >
+            <span class="text-sm">
+              3/5
+            </span>
+
+            <span class="text-[9px] font-normal opacity-80">
+              Half
+            </span>
           </button>
-          <button type="button" onclick="setFuel(4)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition">
-            <span class="text-sm">4/5</span>
-            <span class="text-[9px] font-normal text-slate-400">Good</span>
+
+
+          <button
+            type="button"
+            onclick="setFuel(4)"
+            class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition"
+          >
+            <span class="text-sm">
+              4/5
+            </span>
+
+            <span class="text-[9px] font-normal text-slate-400">
+              Good
+            </span>
           </button>
-          <button type="button" onclick="setFuel(5)" class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition">
-            <span class="text-sm">5/5</span>
-            <span class="text-[9px] font-normal text-emerald-500">Full</span>
+
+
+          <button
+            type="button"
+            onclick="setFuel(5)"
+            class="fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold transition"
+          >
+            <span class="text-sm">
+              5/5
+            </span>
+
+            <span class="text-[9px] font-normal text-emerald-500">
+              Full
+            </span>
           </button>
+
         </div>
+
       </div>
 
-      <!-- Result Card Area -->
-      <div id="result" class="space-y-3"></div>
+
+      <!-- Result -->
+      <div
+        id="result"
+        class="space-y-3"
+      ></div>
 
     </main>
 
+
     <!-- Bottom Action Bar -->
     <div class="p-4 bg-white border-t border-slate-100 sm:rounded-b-[36px]">
-      <button onclick="calculateTrip()" class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 active:scale-[0.98] text-white font-bold py-3.5 rounded-2xl shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 text-base transition">
-        <i class="fa-solid fa-route"></i> Calculate Fuel Stop
+
+      <button
+        onclick="calculateTrip()"
+        class="w-full bg-gradient-to-r from-blue-600 to-indigo-600 active:scale-[0.98] text-white font-bold py-3.5 rounded-2xl shadow-lg shadow-blue-500/30 flex items-center justify-center gap-2 text-base transition"
+      >
+        <i class="fa-solid fa-route"></i>
+        Calculate Fuel Stop
       </button>
+
     </div>
 
   </div>
 
-  <!-- Nearby Station Selection Modal -->
-  <div id="stationModal" class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all duration-300">
-    <div class="bg-white w-full max-w-md rounded-t-[32px] sm:rounded-3xl p-5 shadow-2xl space-y-4 max-h-[80vh] flex flex-col animate-in slide-in-from-bottom duration-300">
+
+  <!-- Station Selection Modal -->
+  <div
+    id="stationModal"
+    class="hidden fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-sm flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all duration-300"
+  >
+
+    <div class="bg-white w-full max-w-md rounded-t-[32px] sm:rounded-3xl p-5 shadow-2xl space-y-4 max-h-[80vh] flex flex-col">
+
       <div class="flex justify-between items-center border-b border-slate-100 pb-3">
+
         <div>
-          <h3 class="font-extrabold text-slate-800 text-base">Select Nearby Station</h3>
-          <p class="text-xs text-slate-400">Pick your actual current starting station</p>
+
+          <h3 class="font-extrabold text-slate-800 text-base">
+            Select Nearby Station
+          </h3>
+
+          <p class="text-xs text-slate-400">
+            Pick your actual current starting station
+          </p>
+
         </div>
-        <button onclick="closeStationModal()" class="text-slate-400 hover:text-slate-600 p-2">
+
+
+        <button
+          onclick="closeStationModal()"
+          class="text-slate-400 hover:text-slate-600 p-2"
+        >
           <i class="fa-solid fa-xmark text-lg"></i>
         </button>
+
       </div>
 
-      <!-- Search Station inside Modal -->
-      <input type="text" id="modalSearchInput" oninput="filterModalStations()" placeholder="🔍 Filter stations..." class="w-full bg-slate-50 border border-slate-200 text-xs font-medium rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+      <!-- Search Station -->
+      <input
+        type="text"
+        id="modalSearchInput"
+        oninput="filterModalStations()"
+        placeholder="🔍 Filter stations..."
+        class="w-full bg-slate-50 border border-slate-200 text-xs font-medium rounded-xl p-2.5 focus:outline-none focus:ring-2 focus:ring-blue-500"
+      >
+
 
       <!-- Station List -->
-      <div id="modalStationList" class="overflow-y-auto flex-1 space-y-2 pr-1 divide-y divide-slate-100">
-        <!-- Station items will be rendered here -->
-      </div>
+      <div
+        id="modalStationList"
+        class="overflow-y-auto flex-1 space-y-2 pr-1 divide-y divide-slate-100"
+      ></div>
+
     </div>
+
   </div>
 
+
+
   <script>
+
     let selectedFuel = 3;
+
     let allCars = [];
     let allStations = [];
+
     let userLat = null;
     let userLng = null;
+
     let currentKm = 0;
 
+
     async function initApp() {
+
       await loadCars();
       await loadStations();
+
       autoTrackLocation();
+
     }
+
 
     async function loadCars() {
+
       try {
+
         const res = await fetch('/api/cars');
         const json = await res.json();
-        allCars = Array.isArray(json) ? json : (json.data || []);
-        
-        const brands = [...new Set(allCars.map(c => c.brand))].sort();
-        const brandSelect = document.getElementById('brandSelect');
-        brandSelect.innerHTML = '<option value="">-- 1. Select Brand --</option>' + 
-          brands.map(b => `<option value="${b}">${b}</option>`).join('');
+
+        allCars =
+          Array.isArray(json)
+            ? json
+            : (json.data || []);
+
+
+        const brands = [
+          ...new Set(
+            allCars.map(c => c.brand)
+          )
+        ].sort();
+
+
+        const brandSelect =
+          document.getElementById('brandSelect');
+
+
+        brandSelect.innerHTML =
+          '<option value="">-- 1. Select Brand --</option>' +
+
+          brands.map(
+            b =>
+              `<option value="${b}">${b}</option>`
+          ).join('');
+
+
       } catch (err) {
-        console.error('Error loading cars:', err);
+
+        console.error(
+          'Error loading cars:',
+          err
+        );
+
       }
+
     }
+
 
     async function loadStations() {
+
       try {
-        const res = await fetch('/api/stations');
-        allStations = await res.json();
+
+        const res =
+          await fetch('/api/stations');
+
+        allStations =
+          await res.json();
+
+
       } catch (err) {
-        console.error('Error loading stations:', err);
+
+        console.error(
+          'Error loading stations:',
+          err
+        );
+
       }
+
     }
 
-    function getDistanceInKm(lat1, lon1, lat2, lon2) {
+
+    function getDistanceInKm(
+      lat1,
+      lon1,
+      lat2,
+      lon2
+    ) {
+
       const R = 6371;
-      const dLat = (lat2 - lat1) * Math.PI / 180;
-      const dLon = (lon2 - lon1) * Math.PI / 180;
-      const a = 
-        Math.sin(dLat/2) * Math.sin(dLat/2) +
-        Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * 
-        Math.sin(dLon/2) * Math.sin(dLon/2);
-      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+      const dLat =
+        (lat2 - lat1) *
+        Math.PI / 180;
+
+      const dLon =
+        (lon2 - lon1) *
+        Math.PI / 180;
+
+
+      const a =
+
+        Math.sin(dLat / 2) *
+        Math.sin(dLat / 2)
+
+        +
+
+        Math.cos(
+          lat1 * Math.PI / 180
+        )
+
+        *
+
+        Math.cos(
+          lat2 * Math.PI / 180
+        )
+
+        *
+
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+
+
+      const c =
+
+        2 *
+
+        Math.atan2(
+          Math.sqrt(a),
+          Math.sqrt(1 - a)
+        );
+
+
       return R * c;
+
     }
 
-    // Auto GPS Tracking
+
+
+    // GPS Tracking
     function autoTrackLocation() {
+
       if (!navigator.geolocation) {
-        fallbackStationSelection("GPS not supported by browser");
+
+        fallbackStationSelection(
+          'GPS not supported by browser'
+        );
+
         return;
+
       }
+
 
       navigator.geolocation.getCurrentPosition(
-        (position) => {
-          userLat = position.coords.latitude;
-          userLng = position.coords.longitude;
-          updateLocationAndMap(userLat, userLng);
+
+        position => {
+
+          userLat =
+            position.coords.latitude;
+
+          userLng =
+            position.coords.longitude;
+
+
+          updateLocationAndMap(
+            userLat,
+            userLng
+          );
+
         },
-        (err) => {
-          console.warn('GPS location error or denied:', err);
+
+
+        err => {
+
+          console.warn(
+            'GPS location error or denied:',
+            err
+          );
+
           fallbackStationSelection();
+
         },
-        { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
+
+
+        {
+          enableHighAccuracy: true,
+          timeout: 8000,
+          maximumAge: 0
+        }
+
       );
+
     }
 
-    function updateLocationAndMap(lat, lng, forcedStation = null) {
-      const mapIframe = document.getElementById('mapIframe');
-      const mapPlaceholder = document.getElementById('mapPlaceholder');
-      const gpsBadge = document.getElementById('gpsBadge');
-      const stationText = document.getElementById('currentStationName');
 
-      mapIframe.src = `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
-      mapIframe.classList.remove('hidden');
-      mapPlaceholder.classList.add('hidden');
 
-      let station = forcedStation;
-      if (!station && allStations.length > 0) {
-        let minDist = Infinity;
-        allStations.forEach(st => {
-          if (st.lat && st.lng) {
-            const dist = getDistanceInKm(lat, lng, st.lat, st.lng);
-            if (dist < minDist) {
-              minDist = dist;
-              station = st;
+    function updateLocationAndMap(
+      lat,
+      lng,
+      forcedStation = null
+    ) {
+
+      const mapIframe =
+        document.getElementById(
+          'mapIframe'
+        );
+
+
+      const mapPlaceholder =
+        document.getElementById(
+          'mapPlaceholder'
+        );
+
+
+      const gpsBadge =
+        document.getElementById(
+          'gpsBadge'
+        );
+
+
+      const stationText =
+        document.getElementById(
+          'currentStationName'
+        );
+
+
+      mapIframe.src =
+        `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
+
+
+      mapIframe.classList.remove(
+        'hidden'
+      );
+
+
+      mapPlaceholder.classList.add(
+        'hidden'
+      );
+
+
+      let station =
+        forcedStation;
+
+
+      if (
+        !station &&
+        allStations.length > 0
+      ) {
+
+        let minDist =
+          Infinity;
+
+
+        allStations.forEach(
+          st => {
+
+            if (
+              st.lat &&
+              st.lng
+            ) {
+
+              const dist =
+                getDistanceInKm(
+                  lat,
+                  lng,
+                  st.lat,
+                  st.lng
+                );
+
+
+              if (
+                dist <
+                minDist
+              ) {
+
+                minDist =
+                  dist;
+
+                station =
+                  st;
+
+              }
+
             }
+
           }
-        });
+        );
+
       }
+
 
       if (station) {
-        currentKm = station.kmMarker;
-        stationText.innerText = `${station.name} (${station.brand})`;
-        gpsBadge.className = "text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700";
-        gpsBadge.innerText = "🟢 GPS Live";
+
+        currentKm =
+          station.kmMarker;
+
+
+        stationText.innerText =
+          `${station.name} (${station.brand})`;
+
+
+        gpsBadge.className =
+          'text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-700';
+
+
+        gpsBadge.innerText =
+          '🟢 GPS Live';
+
       }
+
     }
 
-    function fallbackStationSelection(msg = "GPS Disabled / Not Found") {
-      const gpsBadge = document.getElementById('gpsBadge');
-      gpsBadge.className = "text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-700";
-      gpsBadge.innerText = "⚠️ Manual Mode";
 
-      if (allStations.length > 0) {
-        const defaultStation = allStations[0];
-        updateLocationAndMap(defaultStation.lat || 19.907, defaultStation.lng || 99.832, defaultStation);
+
+    function fallbackStationSelection(
+      msg = 'GPS Disabled / Not Found'
+    ) {
+
+      const gpsBadge =
+        document.getElementById(
+          'gpsBadge'
+        );
+
+
+      gpsBadge.className =
+        'text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-700';
+
+
+      gpsBadge.innerText =
+        '⚠️ Manual Mode';
+
+
+      if (
+        allStations.length > 0
+      ) {
+
+        const defaultStation =
+          allStations[0];
+
+
+        updateLocationAndMap(
+
+          defaultStation.lat || 19.907,
+
+          defaultStation.lng || 99.832,
+
+          defaultStation
+
+        );
+
       }
+
     }
 
-    // Modal Handlers
+
+
+    // Modal
     function openStationModal() {
-      const modal = document.getElementById('stationModal');
-      modal.classList.remove('hidden');
+
+      const modal =
+        document.getElementById(
+          'stationModal'
+        );
+
+
+      modal.classList.remove(
+        'hidden'
+      );
+
+
       renderModalStations();
+
     }
+
+
 
     function closeStationModal() {
-      document.getElementById('stationModal').classList.add('hidden');
+
+      document
+        .getElementById(
+          'stationModal'
+        )
+        .classList.add(
+          'hidden'
+        );
+
     }
 
-    function renderModalStations(filterText = '') {
-      const listDiv = document.getElementById('modalStationList');
-      const query = filterText.toLowerCase();
 
-      let stationsWithDist = allStations.map(st => {
-        let dist = null;
-        if (userLat && userLng && st.lat && st.lng) {
-          dist = getDistanceInKm(userLat, userLng, st.lat, st.lng);
-        }
-        return { ...st, dist };
-      });
 
-      if (userLat && userLng) {
-        stationsWithDist.sort((a, b) => (a.dist || 9999) - (b.dist || 9999));
+    function renderModalStations(
+      filterText = ''
+    ) {
+
+      const listDiv =
+        document.getElementById(
+          'modalStationList'
+        );
+
+
+      const query =
+        filterText
+          .toLowerCase();
+
+
+      let stationsWithDist =
+        allStations.map(
+          st => {
+
+            let dist =
+              null;
+
+
+            if (
+              userLat &&
+              userLng &&
+              st.lat &&
+              st.lng
+            ) {
+
+              dist =
+                getDistanceInKm(
+
+                  userLat,
+                  userLng,
+
+                  st.lat,
+                  st.lng
+
+                );
+
+            }
+
+
+            return {
+              ...st,
+              dist
+            };
+
+          }
+        );
+
+
+      if (
+        userLat &&
+        userLng
+      ) {
+
+        stationsWithDist.sort(
+          (a, b) =>
+            (a.dist || 9999)
+            -
+            (b.dist || 9999)
+        );
+
       }
 
-      const filtered = stationsWithDist.filter(st => 
-        st.name.toLowerCase().includes(query) || 
-        st.brand.toLowerCase().includes(query)
-      );
 
-      if (filtered.length === 0) {
-        listDiv.innerHTML = `<div class="p-4 text-center text-xs text-slate-400">No stations found</div>`;
-        return;
-      }
+      const filtered =
+        stationsWithDist.filter(
+          st =>
 
-      listDiv.innerHTML = filtered.map(st => `
-        <div onclick="selectStationFromModal('${st.id}')" class="p-3 hover:bg-blue-50 cursor-pointer flex justify-between items-center transition rounded-xl">
-          <div>
-            <span class="text-xs font-bold text-slate-800 block">${st.name}</span>
-            <span class="text-[11px] text-slate-400 block">${st.brand} • KM ${Math.round(st.kmMarker)}</span>
+            st.name
+              .toLowerCase()
+              .includes(query)
+
+            ||
+
+            st.brand
+              .toLowerCase()
+              .includes(query)
+
+        );
+
+
+      if (
+        filtered.length === 0
+      ) {
+
+        listDiv.innerHTML = `
+          <div class="p-4 text-center text-xs text-slate-400">
+            No stations found
           </div>
-          ${st.dist !== null ? `<span class="text-[10px] font-bold bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md">${st.dist.toFixed(1)} km away</span>` : ''}
-        </div>
-      `).join('');
+        `;
+
+        return;
+
+      }
+
+
+      listDiv.innerHTML =
+
+        filtered.map(
+          st => `
+
+            <div
+              onclick="selectStationFromModal('${st.id}')"
+              class="p-3 hover:bg-blue-50 cursor-pointer flex justify-between items-center transition rounded-xl"
+            >
+
+              <div>
+
+                <span class="text-xs font-bold text-slate-800 block">
+                  ${st.name}
+                </span>
+
+                <span class="text-[11px] text-slate-400 block">
+                  ${st.brand}
+                  •
+                  KM ${Math.round(st.kmMarker)}
+                </span>
+
+              </div>
+
+
+              ${
+                st.dist !== null
+
+                ?
+
+                `
+                <span class="text-[10px] font-bold bg-blue-100 text-blue-700 px-2 py-0.5 rounded-md">
+                  ${st.dist.toFixed(1)} km away
+                </span>
+                `
+
+                :
+
+                ''
+              }
+
+            </div>
+
+          `
+        ).join('');
+
     }
+
+
 
     function filterModalStations() {
-      const query = document.getElementById('modalSearchInput').value;
-      renderModalStations(query);
-    }
 
-    function selectStationFromModal(stationId) {
-      const station = allStations.find(s => s.id === stationId);
-      if (!station) return;
+      const query =
+        document.getElementById(
+          'modalSearchInput'
+        ).value;
 
-      currentKm = station.kmMarker;
-      updateLocationAndMap(station.lat, station.lng, station);
-      closeStationModal();
-    }
 
-    // Car Search & Selection Logic
-    function onSearchCar() {
-      const query = document.getElementById('carSearchInput').value.trim().toLowerCase();
-      const resultsDiv = document.getElementById('searchResults');
-      const clearBtn = document.getElementById('clearSearchBtn');
-
-      if (!query) {
-        resultsDiv.classList.add('hidden');
-        clearBtn.classList.add('hidden');
-        return;
-      }
-
-      clearBtn.classList.remove('hidden');
-
-      const matches = allCars.filter(c => 
-        c.brand.toLowerCase().includes(query) || 
-        c.model.toLowerCase().includes(query)
+      renderModalStations(
+        query
       );
 
-      if (matches.length === 0) {
-        resultsDiv.innerHTML = `<div class="p-3 text-xs text-slate-400 text-center">No vehicle found</div>`;
-      } else {
-        resultsDiv.innerHTML = matches.map(c => `
-          <div onclick="selectCarFromSearch('${c.id}')" class="p-3 hover:bg-blue-50 cursor-pointer flex justify-between items-center transition">
-            <div>
-              <span class="text-xs font-bold text-blue-600 block">${c.brand}</span>
-              <span class="text-sm font-semibold text-slate-800">${c.model}</span>
-            </div>
-            <span class="text-[10px] font-mono bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md">${c.tankCapacity}L</span>
-          </div>
-        `).join('');
+    }
+
+
+
+    function selectStationFromModal(
+      stationId
+    ) {
+
+      const station =
+        allStations.find(
+          s =>
+            s.id ===
+            stationId
+        );
+
+
+      if (!station) {
+        return;
       }
 
-      resultsDiv.classList.remove('hidden');
+
+      currentKm =
+        station.kmMarker;
+
+
+      updateLocationAndMap(
+
+        station.lat,
+
+        station.lng,
+
+        station
+
+      );
+
+
+      closeStationModal();
+
     }
 
-    function selectCarFromSearch(carId) {
-      const car = allCars.find(c => c.id === carId);
-      if (!car) return;
 
-      const brandSelect = document.getElementById('brandSelect');
-      brandSelect.value = car.brand;
 
-      const filteredCars = allCars.filter(c => c.brand === car.brand);
-      const modelSelect = document.getElementById('modelSelect');
-      modelSelect.innerHTML = '<option value="">-- 2. Select Model --</option>' + 
-        filteredCars.map(c => `<option value="${c.id}">${c.model} (${c.tankCapacity}L)</option>`).join('');
-      modelSelect.disabled = false;
-      modelSelect.value = car.id;
+    // Car Search
+    function onSearchCar() {
 
-      document.getElementById('selectedCarId').value = car.id;
-      document.getElementById('carSearchInput').value = `${car.brand} - ${car.model}`;
+      const query =
+        document
+          .getElementById(
+            'carSearchInput'
+          )
+          .value
+          .trim()
+          .toLowerCase();
 
-      document.getElementById('searchResults').classList.add('hidden');
-      document.getElementById('clearSearchBtn').classList.remove('hidden');
+
+      const resultsDiv =
+        document.getElementById(
+          'searchResults'
+        );
+
+
+      const clearBtn =
+        document.getElementById(
+          'clearSearchBtn'
+        );
+
+
+      if (!query) {
+
+        resultsDiv.classList.add(
+          'hidden'
+        );
+
+        clearBtn.classList.add(
+          'hidden'
+        );
+
+        return;
+
+      }
+
+
+      clearBtn.classList.remove(
+        'hidden'
+      );
+
+
+      const matches =
+        allCars.filter(
+          c =>
+
+            c.brand
+              .toLowerCase()
+              .includes(query)
+
+            ||
+
+            c.model
+              .toLowerCase()
+              .includes(query)
+
+        );
+
+
+      if (
+        matches.length === 0
+      ) {
+
+        resultsDiv.innerHTML = `
+          <div class="p-3 text-xs text-slate-400 text-center">
+            No vehicle found
+          </div>
+        `;
+
+      } else {
+
+        resultsDiv.innerHTML =
+
+          matches.map(
+            c => `
+
+              <div
+                onclick="selectCarFromSearch('${c.id}')"
+                class="p-3 hover:bg-blue-50 cursor-pointer flex justify-between items-center transition"
+              >
+
+                <div>
+
+                  <span class="text-xs font-bold text-blue-600 block">
+                    ${c.brand}
+                  </span>
+
+                  <span class="text-sm font-semibold text-slate-800">
+                    ${c.model}
+                  </span>
+
+                </div>
+
+
+                <span class="text-[10px] font-mono bg-slate-100 text-slate-600 px-2 py-0.5 rounded-md">
+                  ${c.tankCapacity}L
+                </span>
+
+              </div>
+
+            `
+          ).join('');
+
+      }
+
+
+      resultsDiv.classList.remove(
+        'hidden'
+      );
+
     }
+
+
+
+    function selectCarFromSearch(
+      carId
+    ) {
+
+      const car =
+        allCars.find(
+          c =>
+            c.id ===
+            carId
+        );
+
+
+      if (!car) {
+        return;
+      }
+
+
+      const brandSelect =
+        document.getElementById(
+          'brandSelect'
+        );
+
+
+      brandSelect.value =
+        car.brand;
+
+
+      const filteredCars =
+        allCars.filter(
+          c =>
+            c.brand ===
+            car.brand
+        );
+
+
+      const modelSelect =
+        document.getElementById(
+          'modelSelect'
+        );
+
+
+      modelSelect.innerHTML =
+
+        '<option value="">-- 2. Select Model --</option>'
+
+        +
+
+        filteredCars.map(
+          c =>
+            `<option value="${c.id}">${c.model} (${c.tankCapacity}L)</option>`
+        ).join('');
+
+
+      modelSelect.disabled =
+        false;
+
+
+      modelSelect.value =
+        car.id;
+
+
+      document.getElementById(
+        'selectedCarId'
+      ).value =
+        car.id;
+
+
+      document.getElementById(
+        'carSearchInput'
+      ).value =
+        `${car.brand} - ${car.model}`;
+
+
+      document.getElementById(
+        'searchResults'
+      ).classList.add(
+        'hidden'
+      );
+
+
+      document.getElementById(
+        'clearSearchBtn'
+      ).classList.remove(
+        'hidden'
+      );
+
+    }
+
+
 
     function clearCarSearch() {
-      document.getElementById('carSearchInput').value = '';
-      document.getElementById('selectedCarId').value = '';
-      document.getElementById('searchResults').classList.add('hidden');
-      document.getElementById('clearSearchBtn').classList.add('hidden');
-      
-      document.getElementById('brandSelect').value = '';
-      const modelSelect = document.getElementById('modelSelect');
-      modelSelect.innerHTML = '<option value="">-- 2. Select Model --</option>';
-      modelSelect.disabled = true;
+
+      document.getElementById(
+        'carSearchInput'
+      ).value =
+        '';
+
+
+      document.getElementById(
+        'selectedCarId'
+      ).value =
+        '';
+
+
+      document.getElementById(
+        'searchResults'
+      ).classList.add(
+        'hidden'
+      );
+
+
+      document.getElementById(
+        'clearSearchBtn'
+      ).classList.add(
+        'hidden'
+      );
+
+
+      document.getElementById(
+        'brandSelect'
+      ).value =
+        '';
+
+
+      const modelSelect =
+        document.getElementById(
+          'modelSelect'
+        );
+
+
+      modelSelect.innerHTML =
+        '<option value="">-- 2. Select Model --</option>';
+
+
+      modelSelect.disabled =
+        true;
+
     }
+
+
 
     function onBrandChange() {
-      const selectedBrand = document.getElementById('brandSelect').value;
-      const modelSelect = document.getElementById('modelSelect');
-      
+
+      const selectedBrand =
+        document.getElementById(
+          'brandSelect'
+        ).value;
+
+
+      const modelSelect =
+        document.getElementById(
+          'modelSelect'
+        );
+
+
       if (!selectedBrand) {
-        modelSelect.innerHTML = '<option value="">-- 2. Select Model --</option>';
-        modelSelect.disabled = true;
-        document.getElementById('selectedCarId').value = '';
-        document.getElementById('carSearchInput').value = '';
-        document.getElementById('clearSearchBtn').classList.add('hidden');
+
+        modelSelect.innerHTML =
+          '<option value="">-- 2. Select Model --</option>';
+
+
+        modelSelect.disabled =
+          true;
+
+
+        document.getElementById(
+          'selectedCarId'
+        ).value =
+          '';
+
+
+        document.getElementById(
+          'carSearchInput'
+        ).value =
+          '';
+
+
+        document.getElementById(
+          'clearSearchBtn'
+        ).classList.add(
+          'hidden'
+        );
+
+
         return;
+
       }
 
-      const filteredCars = allCars.filter(c => c.brand === selectedBrand);
-      modelSelect.innerHTML = '<option value="">-- 2. Select Model --</option>' + 
-        filteredCars.map(c => `<option value="${c.id}">${c.model} (${c.tankCapacity}L)</option>`).join('');
-      modelSelect.disabled = false;
-      
-      document.getElementById('selectedCarId').value = '';
-      document.getElementById('carSearchInput').value = '';
-      document.getElementById('clearSearchBtn').classList.add('hidden');
+
+      const filteredCars =
+        allCars.filter(
+          c =>
+            c.brand ===
+            selectedBrand
+        );
+
+
+      modelSelect.innerHTML =
+
+        '<option value="">-- 2. Select Model --</option>'
+
+        +
+
+        filteredCars.map(
+          c =>
+            `<option value="${c.id}">${c.model} (${c.tankCapacity}L)</option>`
+        ).join('');
+
+
+      modelSelect.disabled =
+        false;
+
+
+      document.getElementById(
+        'selectedCarId'
+      ).value =
+        '';
+
+
+      document.getElementById(
+        'carSearchInput'
+      ).value =
+        '';
+
+
+      document.getElementById(
+        'clearSearchBtn'
+      ).classList.add(
+        'hidden'
+      );
+
     }
+
+
 
     function onModelChange() {
-      const carId = document.getElementById('modelSelect').value;
-      document.getElementById('selectedCarId').value = carId;
-      const car = allCars.find(c => c.id === carId);
+
+      const carId =
+        document.getElementById(
+          'modelSelect'
+        ).value;
+
+
+      document.getElementById(
+        'selectedCarId'
+      ).value =
+        carId;
+
+
+      const car =
+        allCars.find(
+          c =>
+            c.id ===
+            carId
+        );
+
+
       if (car) {
-        document.getElementById('carSearchInput').value = `${car.brand} - ${car.model}`;
-        document.getElementById('clearSearchBtn').classList.remove('hidden');
+
+        document.getElementById(
+          'carSearchInput'
+        ).value =
+          `${car.brand} - ${car.model}`;
+
+
+        document.getElementById(
+          'clearSearchBtn'
+        ).classList.remove(
+          'hidden'
+        );
+
       }
+
     }
 
-    document.addEventListener('click', (e) => {
-      const searchBox = document.getElementById('carSearchInput');
-      if (searchBox && !searchBox.closest('.relative').contains(e.target)) {
-        document.getElementById('searchResults').classList.add('hidden');
-      }
-    });
 
-    function setFuel(level) {
-      selectedFuel = level;
-      const btns = document.querySelectorAll('.fuel-btn');
-      btns.forEach((btn, idx) => {
-        if (idx + 1 === level) {
-          btn.className = "fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl bg-blue-600 text-white font-bold shadow-md transition";
-        } else {
-          btn.className = "fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold hover:bg-slate-50 transition";
+
+    document.addEventListener(
+      'click',
+      e => {
+
+        const searchBox =
+          document.getElementById(
+            'carSearchInput'
+          );
+
+
+        if (
+          searchBox &&
+          !searchBox
+            .closest('.relative')
+            .contains(e.target)
+        ) {
+
+          document.getElementById(
+            'searchResults'
+          ).classList.add(
+            'hidden'
+          );
+
         }
-      });
+
+      }
+    );
+
+
+
+    // Fuel
+    function setFuel(
+      level
+    ) {
+
+      selectedFuel =
+        level;
+
+
+      const btns =
+        document.querySelectorAll(
+          '.fuel-btn'
+        );
+
+
+      btns.forEach(
+        (btn, idx) => {
+
+          if (
+            idx + 1 ===
+            level
+          ) {
+
+            btn.className =
+              'fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl bg-blue-600 text-white font-bold shadow-md transition';
+
+          } else {
+
+            btn.className =
+              'fuel-btn flex flex-col items-center justify-center py-2.5 rounded-xl border border-slate-200 text-slate-600 font-bold hover:bg-slate-50 transition';
+
+          }
+
+        }
+      );
+
     }
 
+
+
+    // Calculate Trip
     async function calculateTrip() {
-      const carId = document.getElementById('selectedCarId').value;
-      
+
+      const carId =
+        document.getElementById(
+          'selectedCarId'
+        ).value;
+
+
       if (!carId) {
-        alert('Please select or search your vehicle model first!');
+
+        alert(
+          'Please select or search your vehicle model first!'
+        );
+
         return;
+
       }
 
-      const res = await fetch('/api/plan-trip', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ carId, fuelLevel: selectedFuel, selectedBrands: [], currentKm })
-      });
 
-      const data = await res.json();
-      const resultDiv = document.getElementById('result');
+      const res =
+        await fetch(
+          '/api/plan-trip',
+          {
 
-      if (!data.recommendedStation) {
+            method: 'POST',
+
+            headers: {
+              'Content-Type':
+                'application/json'
+            },
+
+            body:
+              JSON.stringify(
+                {
+
+                  carId,
+
+                  fuelLevel:
+                    selectedFuel,
+
+                  selectedBrands:
+                    [],
+
+                  currentKm
+
+                }
+              )
+
+          }
+        );
+
+
+      const data =
+        await res.json();
+
+
+      const resultDiv =
+        document.getElementById(
+          'result'
+        );
+
+
+      if (
+        !data.options ||
+        data.options.length === 0
+      ) {
+
         resultDiv.innerHTML = `
+
           <div class="bg-red-50 border border-red-200 text-red-600 p-4 rounded-2xl text-xs font-bold flex items-center gap-3">
+
             <i class="fa-solid fa-triangle-exclamation text-lg"></i>
-            <span>No safe station found within range! Please stop at the nearest station immediately.</span>
-          </div>`;
+
+            <span>
+              No reachable fuel station was found within your estimated range.
+              Please refuel as soon as possible.
+            </span>
+
+          </div>
+
+        `;
+
         return;
+
       }
 
-      const rec = data.recommendedStation;
+
+
+      const styleMap = {
+
+        soon: {
+
+          card:
+            'bg-amber-500',
+
+          badge:
+            'bg-amber-700/60',
+
+          border:
+            'border-amber-400/40',
+
+          sub:
+            'text-amber-100',
+
+          button:
+            'text-amber-700',
+
+          icon:
+            'fa-bolt'
+
+        },
+
+
+        recommended: {
+
+          card:
+            'bg-emerald-500',
+
+          badge:
+            'bg-emerald-700/60',
+
+          border:
+            'border-emerald-400/40',
+
+          sub:
+            'text-emerald-100',
+
+          button:
+            'text-emerald-700',
+
+          icon:
+            'fa-shield-halved'
+
+        },
+
+
+        relaxed: {
+
+          card:
+            'bg-indigo-500',
+
+          badge:
+            'bg-indigo-700/60',
+
+          border:
+            'border-indigo-400/40',
+
+          sub:
+            'text-indigo-100',
+
+          button:
+            'text-indigo-700',
+
+          icon:
+            'fa-road'
+
+        }
+
+      };
+
+
+
       resultDiv.innerHTML = `
-        <div class="bg-emerald-500 text-white p-4 rounded-2xl shadow-lg space-y-2 relative overflow-hidden">
-          <div class="flex justify-between items-start">
-            <span class="bg-emerald-700/60 text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider">Recommended Fuel Stop</span>
-            <span class="text-xs opacity-90 font-mono">KM ${rec.kmMarker}</span>
-          </div>
-          <div>
-            <h3 class="text-lg font-extrabold leading-tight">${rec.name}</h3>
-            <p class="text-xs text-emerald-100 mt-0.5">Brand: ${rec.brand}</p>
-          </div>
-          <div class="pt-2 border-t border-emerald-400/40 flex justify-between items-center">
+
+        <div class="space-y-3">
+
+
+          <div class="flex justify-between items-end px-1 gap-3">
+
             <div>
-              <span class="text-[10px] text-emerald-100 block">Distance to Station</span>
-              <span class="text-xl font-black">${rec.distanceFromUser} <span class="text-xs font-normal">km</span></span>
+
+              <span class="text-xs font-bold text-slate-500 uppercase tracking-wider block">
+                Fuel Stop Options
+              </span>
+
+              <span class="text-[10px] text-slate-400">
+                Choose based on how soon you want to refuel.
+              </span>
+
             </div>
-            <a href="${rec.googleMapUrl}" target="_blank" class="bg-white text-emerald-700 hover:bg-emerald-50 font-bold px-3.5 py-2 rounded-xl text-xs shadow-sm flex items-center gap-1.5 transition">
-              <i class="fa-solid fa-location-arrow"></i> Navigate
-            </a>
+
+
+            <span class="text-[10px] text-slate-400 text-right shrink-0">
+
+              Estimated range
+
+              <br>
+
+              <strong class="text-slate-600">
+                ${data.estimatedRemainingRange} km
+              </strong>
+
+            </span>
+
           </div>
+
+
+
+          ${
+
+            data.options.map(
+
+              option => {
+
+
+                const style =
+                  styleMap[
+                    option.type
+                  ]
+
+                  ||
+
+                  styleMap
+                    .recommended;
+
+
+                return `
+
+                  <div class="${style.card} text-white p-4 rounded-2xl shadow-lg space-y-2 relative overflow-hidden">
+
+
+                    <div class="flex justify-between items-start gap-2">
+
+
+                      <span class="${style.badge} text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider flex items-center gap-1.5">
+
+                        <i class="fa-solid ${style.icon}"></i>
+
+                        ${option.title}
+
+                      </span>
+
+
+                      <span class="text-xs opacity-90 font-mono shrink-0">
+                        KM ${option.kmMarker}
+                      </span>
+
+
+                    </div>
+
+
+
+                    <div>
+
+
+                      <h3 class="text-lg font-extrabold leading-tight">
+                        ${option.name}
+                      </h3>
+
+
+                      <p class="text-xs ${style.sub} mt-0.5">
+                        Brand:
+                        ${option.brand}
+                      </p>
+
+
+                      <p class="text-[11px] ${style.sub} mt-1 leading-relaxed">
+                        ${option.description}
+                      </p>
+
+
+                    </div>
+
+
+
+                    <div class="pt-2 border-t ${style.border} flex justify-between items-center gap-3">
+
+
+                      <div>
+
+
+                        <span class="text-[10px] ${style.sub} block">
+                          Distance to Station
+                        </span>
+
+
+                        <span class="text-xl font-black">
+
+                          ${option.distanceFromUser}
+
+                          <span class="text-xs font-normal">
+                            km
+                          </span>
+
+                        </span>
+
+
+                      </div>
+
+
+
+                      <a
+
+                        href="${option.googleMapUrl}"
+
+                        target="_blank"
+
+                        rel="noopener noreferrer"
+
+                        class="bg-white ${style.button} hover:bg-slate-50 font-bold px-3.5 py-2 rounded-xl text-xs shadow-sm flex items-center gap-1.5 transition shrink-0"
+
+                      >
+
+                        <i class="fa-solid fa-location-arrow"></i>
+
+                        Navigate
+
+                      </a>
+
+
+                    </div>
+
+
+                  </div>
+
+                `;
+
+              }
+
+            ).join('')
+
+          }
+
+
         </div>
+
       `;
+
     }
+
+
 
     initApp();
+
   </script>
+
 </body>
 </html>

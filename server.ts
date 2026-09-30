@@ -75,36 +75,119 @@ const app = new Elysia()
     const fuelEfficiency = Number(selectedCar.fuelEfficiency) || 15;
 
     const fullRange = tankCapacity * fuelEfficiency;
-    const currentFuelRatio = Number(fuelLevel) / 5;
+    const currentFuelRatio = Math.min(Math.max(Number(fuelLevel) / 5, 0), 1);
     const remainingKmCapacity = fullRange * currentFuelRatio;
+    const currentPositionKm = Number(currentKm) || 0;
 
-    let bufferRatio = 0.85;
-    if (Number(fuelLevel) === 1) {
-      bufferRatio = 0.50;
-    } else if (Number(fuelLevel) === 2) {
-      bufferRatio = 0.70;
-    }
-
-    const safeMaxKm = Number(currentKm) + (remainingKmCapacity * bufferRatio);
     const stations = await getStationsFromCSV();
+    const stationsAhead = stations.filter(s => s.kmMarker > currentPositionKm);
 
-    const validStations = stations.filter(s => s.kmMarker > Number(currentKm) && s.kmMarker <= safeMaxKm);
-    const recommended = validStations.length > 0 
-      ? validStations[validStations.length - 1] 
-      : stations.find(s => s.kmMarker > Number(currentKm));
+    // Never recommend a station beyond the car's estimated remaining range.
+    const reachableStations = stationsAhead.filter(
+      s => s.kmMarker <= currentPositionKm + remainingKmCapacity
+    );
 
-    if (!recommended) {
-      return { recommendedStation: null };
+    if (reachableStations.length === 0) {
+      return {
+        estimatedRemainingRange: Math.round(remainingKmCapacity * 10) / 10,
+        options: []
+      };
     }
+
+    function getFurthestStationWithin(ratio: number, excludedIds: string[] = []) {
+      const maxKm = currentPositionKm + (remainingKmCapacity * ratio);
+      const validStations = reachableStations.filter(
+        s => s.kmMarker <= maxKm && !excludedIds.includes(s.id)
+      );
+
+      return validStations.length > 0
+        ? validStations[validStations.length - 1]
+        : null;
+    }
+
+    function formatStation(
+      station: any,
+      type: string,
+      title: string,
+      description: string
+    ) {
+      if (!station) return null;
+
+      return {
+        type,
+        title,
+        description,
+        name: station.name,
+        brand: station.brand,
+        kmMarker: Math.round(station.kmMarker * 10) / 10,
+        distanceFromUser: Math.max(
+          0,
+          Math.round((station.kmMarker - currentPositionKm) * 10) / 10
+        ),
+        googleMapUrl: station.googleMapUrl
+      };
+    }
+
+    // Option 1: nearest reachable station for drivers who want to refuel soon.
+    const refuelSoonStation = reachableStations[0] || null;
+
+    // Option 2: balanced choice, keeping about 20% of the estimated range in reserve.
+    let recommendedStation = getFurthestStationWithin(
+      0.80,
+      refuelSoonStation ? [refuelSoonStation.id] : []
+    );
+
+    // If the 80% window is too short to produce a second station, use the next
+    // reachable station so the user still gets a meaningful choice.
+    if (!recommendedStation) {
+      recommendedStation = reachableStations.find(
+        s => s.id !== refuelSoonStation?.id
+      ) || null;
+    }
+
+    const excludedIds = [
+      refuelSoonStation?.id,
+      recommendedStation?.id
+    ].filter(Boolean) as string[];
+
+    // Option 3: farther stop, while still keeping roughly 8% of range in reserve.
+    let relaxedStation = getFurthestStationWithin(0.92, excludedIds);
+
+    // If there is no distinct station inside the 92% window, choose the furthest
+    // remaining reachable station rather than duplicating another card.
+    if (!relaxedStation) {
+      const remainingChoices = reachableStations.filter(
+        s => !excludedIds.includes(s.id)
+      );
+      relaxedStation = remainingChoices.length > 0
+        ? remainingChoices[remainingChoices.length - 1]
+        : null;
+    }
+
+    const options = [
+      formatStation(
+        refuelSoonStation,
+        'soon',
+        'Refuel Soon',
+        'The nearest reachable fuel station ahead.'
+      ),
+      formatStation(
+        recommendedStation,
+        'recommended',
+        'Recommended',
+        'A balanced stop that keeps about 20% of your estimated range in reserve.'
+      ),
+      formatStation(
+        relaxedStation,
+        'relaxed',
+        'Relaxed',
+        'A farther stop for less urgent refuelling, while keeping an emergency reserve.'
+      )
+    ].filter(Boolean);
 
     return {
-      recommendedStation: {
-        name: recommended.name,
-        brand: recommended.brand,
-        kmMarker: Math.round(recommended.kmMarker * 10) / 10,
-        distanceFromUser: Math.max(0, Math.round((recommended.kmMarker - Number(currentKm)) * 10) / 10),
-        googleMapUrl: recommended.googleMapUrl
-      }
+      estimatedRemainingRange: Math.round(remainingKmCapacity * 10) / 10,
+      options
     };
   })
 
