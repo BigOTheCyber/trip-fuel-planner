@@ -2,7 +2,11 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+  >
+
   <title>Trip Fuel Planner</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -12,11 +16,20 @@
     rel="stylesheet"
   >
 
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
   <style>
+    * {
+      font-family: "Manrope", sans-serif;
+    }
+
     @keyframes pageEnter {
       from {
         opacity: 0;
-        transform: translateY(12px);
+        transform: translateY(18px);
       }
       to {
         opacity: 1;
@@ -27,7 +40,7 @@
     @keyframes cardEnter {
       from {
         opacity: 0;
-        transform: translateY(16px) scale(0.99);
+        transform: translateY(16px) scale(0.985);
       }
       to {
         opacity: 1;
@@ -35,17 +48,17 @@
       }
     }
 
-    @keyframes softFloat {
+    @keyframes floatIcon {
       0%, 100% {
         transform: translateY(0);
       }
       50% {
-        transform: translateY(-3px);
+        transform: translateY(-4px);
       }
     }
 
     .page-enter {
-      animation: pageEnter 0.5s ease-out both;
+      animation: pageEnter 0.55s ease-out both;
     }
 
     .card-enter {
@@ -58,20 +71,19 @@
     .delay-3 { animation-delay: 0.24s; }
     .delay-4 { animation-delay: 0.32s; }
 
-    .soft-float {
-      animation: softFloat 3s ease-in-out infinite;
+    .float-icon {
+      animation: floatIcon 3s ease-in-out infinite;
     }
 
     .smooth-view {
       transition:
-        opacity 0.28s ease,
-        transform 0.28s ease;
+        opacity 0.3s ease,
+        transform 0.3s ease;
     }
   </style>
 </head>
 
-
-<body class="bg-[#DCE5EE] min-h-screen flex justify-center items-start sm:py-6 font-sans antialiased selection:bg-blue-500 selection:text-white">
+<body class="min-h-screen bg-[#111827] flex justify-center items-start sm:py-6 antialiased selection:bg-blue-500 selection:text-white">
 
   <!-- ===================================================== -->
   <!-- PLANNER VIEW -->
@@ -79,95 +91,100 @@
 
   <div
     id="plannerView"
-    class="smooth-view w-full max-w-md bg-[#EAF0F6] min-h-screen sm:min-h-[844px] sm:rounded-[38px] shadow-2xl overflow-hidden relative border border-white/40"
+    class="smooth-view w-full max-w-md min-h-screen sm:min-h-[844px] sm:rounded-[38px] overflow-hidden relative shadow-2xl bg-[#3457D5]"
   >
 
-    <!-- Header -->
+    <!-- Decorative background -->
 
-    <header class="page-enter relative overflow-hidden bg-gradient-to-br from-[#253449] via-[#2E4058] to-[#3C4D6E] text-white px-5 pt-8 pb-8 rounded-b-[34px] shadow-lg">
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
 
-      <div class="absolute -top-20 -right-16 w-48 h-48 bg-blue-300/10 rounded-full blur-3xl"></div>
-      <div class="absolute -bottom-20 -left-16 w-44 h-44 bg-indigo-300/10 rounded-full blur-3xl"></div>
+      <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-[#5B7CFA] opacity-50 blur-2xl"></div>
 
-      <div class="relative">
+      <div class="absolute top-[320px] -left-24 w-72 h-72 rounded-full bg-[#2446B9] opacity-50 blur-3xl"></div>
 
-        <div class="flex items-center justify-between mb-7">
+      <div class="absolute bottom-20 right-[-90px] w-64 h-64 rounded-full bg-[#7C5CFC] opacity-30 blur-3xl"></div>
 
-          <div class="flex items-center gap-2.5">
+    </div>
 
-            <div class="w-10 h-10 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center soft-float">
-              <i class="fa-solid fa-gas-pump text-blue-200"></i>
-            </div>
 
-            <div>
-              <p class="text-[10px] uppercase tracking-[0.2em] text-slate-300 font-bold">
-                Trip Assistant
-              </p>
+    <!-- Hero -->
 
-              <h1 class="text-sm font-black tracking-tight">
-                Trip Fuel Planner
-              </h1>
-            </div>
+    <header class="page-enter relative px-5 pt-8 pb-6 text-white">
 
+      <div class="flex justify-between items-center mb-7">
+
+        <div class="flex items-center gap-3">
+
+          <div class="w-11 h-11 rounded-2xl bg-white text-[#3457D5] flex items-center justify-center shadow-lg float-icon">
+            <i class="fa-solid fa-gas-pump"></i>
           </div>
 
+          <div>
+            <p class="text-[10px] uppercase tracking-[0.22em] text-blue-100 font-semibold">
+              Trip Assistant
+            </p>
 
-          <span class="text-[10px] bg-white/10 border border-white/10 px-3 py-1.5 rounded-full text-slate-200 font-semibold">
-            Chiang Rai → Bangkok
-          </span>
-
-        </div>
-
-
-        <div class="max-w-xs">
-
-          <h2 class="text-3xl font-black leading-[1.05] tracking-tight">
-            Plan smarter.
-            <span class="text-blue-200">Refuel safer.</span>
-          </h2>
-
-          <p class="text-sm text-slate-300 mt-3 leading-relaxed">
-            Choose your vehicle, confirm your location and fuel level, then get smarter fuel-stop suggestions.
-          </p>
+            <h1 class="text-sm font-extrabold tracking-tight">
+              Trip Fuel Planner
+            </h1>
+          </div>
 
         </div>
+
+
+        <span class="text-[10px] px-3 py-1.5 rounded-full bg-white/15 border border-white/20 text-white/90 font-semibold backdrop-blur-sm">
+          Chiang Rai → Bangkok
+        </span>
+
+      </div>
+
+
+      <div class="max-w-[310px]">
+
+        <h2 class="text-[34px] leading-[1.05] font-extrabold tracking-[-0.04em]">
+          Fuel planning,
+          <span class="text-[#C9D6FF]">made simple.</span>
+        </h2>
+
+        <p class="text-sm text-blue-100/90 mt-4 leading-relaxed font-medium">
+          Set your vehicle, location and fuel level to get smarter fuel-stop recommendations.
+        </p>
 
       </div>
 
     </header>
 
 
+    <!-- Content -->
 
-    <main class="p-4 space-y-4 pb-28">
+    <main class="relative px-4 pb-28 space-y-4">
 
-      <!-- ================================================= -->
-      <!-- VEHICLE -->
-      <!-- ================================================= -->
+      <!-- Vehicle -->
 
-      <section class="card-enter delay-1 bg-[#FDFEFE] rounded-[26px] p-4 shadow-[0_8px_24px_rgba(70,90,110,0.07)] border border-white/70">
+      <section class="card-enter delay-1 bg-white rounded-[28px] p-4 shadow-[0_18px_45px_rgba(18,28,70,0.18)]">
 
         <div class="flex items-center justify-between mb-4">
 
           <div class="flex items-center gap-3">
 
-            <div class="w-10 h-10 rounded-2xl bg-[#E8F0FA] text-[#4B6F9D] flex items-center justify-center">
+            <div class="w-10 h-10 rounded-2xl bg-[#EDF2FF] text-[#3457D5] flex items-center justify-center">
               <i class="fa-solid fa-car-side"></i>
             </div>
 
             <div>
-              <h3 class="text-sm font-black text-slate-800">
-                Your Vehicle
-              </h3>
-
-              <p class="text-[10px] text-slate-400 mt-0.5">
-                Select the car you are driving
+              <p class="text-[10px] uppercase tracking-[0.16em] text-slate-400 font-bold">
+                Step 01
               </p>
+
+              <h3 class="text-sm font-extrabold text-slate-900">
+                Choose your vehicle
+              </h3>
             </div>
 
           </div>
 
-          <span class="text-[10px] font-bold text-slate-300">
-            01
+          <span class="text-[10px] text-slate-300 font-semibold">
+            Vehicle
           </span>
 
         </div>
@@ -184,7 +201,7 @@
               id="carSearchInput"
               oninput="onSearchCar()"
               placeholder="Search brand or model..."
-              class="w-full bg-[#F3F6F9] border border-[#E7EDF3] text-slate-700 text-sm font-semibold rounded-2xl py-3 pl-9 pr-9 focus:outline-none focus:ring-2 focus:ring-blue-300/30 focus:border-blue-300 transition"
+              class="w-full bg-[#F5F7FB] border border-slate-100 text-slate-800 text-sm font-semibold rounded-2xl py-3.5 pl-9 pr-10 focus:outline-none focus:ring-2 focus:ring-blue-300/40 transition"
             >
 
             <button
@@ -200,7 +217,7 @@
 
           <div
             id="searchResults"
-            class="hidden absolute z-30 left-0 right-0 top-full mt-2 bg-white border border-[#E6ECF2] rounded-2xl shadow-xl max-h-60 overflow-y-auto divide-y divide-slate-100"
+            class="hidden absolute z-30 left-0 right-0 top-full mt-2 bg-white border border-slate-100 rounded-2xl shadow-2xl max-h-60 overflow-y-auto divide-y divide-slate-100"
           ></div>
 
         </div>
@@ -208,13 +225,13 @@
 
         <div class="flex items-center gap-3 my-3">
 
-          <div class="h-px bg-[#E7EDF3] flex-1"></div>
+          <div class="h-px bg-slate-100 flex-1"></div>
 
-          <span class="text-[9px] font-bold text-slate-300 uppercase tracking-widest">
-            or choose manually
+          <span class="text-[9px] text-slate-300 uppercase tracking-widest font-bold">
+            or select manually
           </span>
 
-          <div class="h-px bg-[#E7EDF3] flex-1"></div>
+          <div class="h-px bg-slate-100 flex-1"></div>
 
         </div>
 
@@ -224,7 +241,7 @@
           <select
             id="brandSelect"
             onchange="onBrandChange()"
-            class="w-full bg-[#F3F6F9] border border-[#E7EDF3] text-slate-600 text-xs font-semibold rounded-2xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-300/30"
+            class="w-full bg-[#F5F7FB] border border-slate-100 text-slate-700 text-xs font-semibold rounded-2xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-300/40"
           >
             <option value="">
               Brand
@@ -236,7 +253,7 @@
             id="modelSelect"
             onchange="onModelChange()"
             disabled
-            class="w-full bg-[#F3F6F9] border border-[#E7EDF3] text-slate-600 text-xs font-semibold rounded-2xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-300/30 disabled:opacity-40 disabled:cursor-not-allowed"
+            class="w-full bg-[#F5F7FB] border border-slate-100 text-slate-700 text-xs font-semibold rounded-2xl p-3 focus:outline-none focus:ring-2 focus:ring-blue-300/40 disabled:opacity-40 disabled:cursor-not-allowed"
           >
             <option value="">
               Model
@@ -254,92 +271,99 @@
       </section>
 
 
+      <!-- Location colored section -->
 
-      <!-- ================================================= -->
-      <!-- LOCATION -->
-      <!-- ================================================= -->
+      <section class="card-enter delay-2 rounded-[28px] bg-[#162D75] p-4 shadow-[0_18px_45px_rgba(19,35,85,0.22)] text-white overflow-hidden relative">
 
-      <section class="card-enter delay-2 bg-[#FDFEFE] rounded-[26px] p-4 shadow-[0_8px_24px_rgba(70,90,110,0.07)] border border-white/70">
+        <div class="absolute -right-10 -top-12 w-36 h-36 rounded-full bg-[#4771FF]/30"></div>
 
-        <div class="flex items-center justify-between mb-4">
+        <div class="relative">
 
-          <div class="flex items-center gap-3">
+          <div class="flex items-center justify-between mb-4">
 
-            <div class="w-10 h-10 rounded-2xl bg-[#F7EDEE] text-[#B86C73] flex items-center justify-center">
-              <i class="fa-solid fa-location-dot"></i>
+            <div class="flex items-center gap-3">
+
+              <div class="w-10 h-10 rounded-2xl bg-white/15 flex items-center justify-center">
+                <i class="fa-solid fa-location-dot text-[#FFB4B4]"></i>
+              </div>
+
+              <div>
+
+                <p class="text-[10px] uppercase tracking-[0.16em] text-blue-200 font-bold">
+                  Step 02
+                </p>
+
+                <h3 class="text-sm font-extrabold">
+                  Confirm your location
+                </h3>
+
+              </div>
+
             </div>
 
-            <div>
-              <h3 class="text-sm font-black text-slate-800">
-                Current Location
-              </h3>
 
-              <p class="text-[10px] text-slate-400 mt-0.5">
-                We use this as your starting point
-              </p>
-            </div>
-
-          </div>
-
-
-          <span
-            id="gpsBadge"
-            class="text-[9px] font-bold px-2.5 py-1 rounded-full bg-[#EDF1F5] text-slate-400"
-          >
-            Detecting...
-          </span>
-
-        </div>
-
-
-        <div class="flex items-center justify-between gap-3 bg-[#F3F6F9] rounded-2xl px-3.5 py-3 border border-[#E7EDF3]">
-
-          <div class="min-w-0">
-
-            <p class="text-[9px] uppercase tracking-widest font-bold text-slate-300">
-              Detected point
-            </p>
-
-            <p
-              id="currentStationName"
-              class="text-xs font-black text-slate-700 mt-1 truncate"
+            <span
+              id="gpsBadge"
+              class="text-[9px] font-bold px-2.5 py-1 rounded-full bg-white/10 text-blue-100"
             >
-              Locating via GPS...
-            </p>
+              Detecting...
+            </span>
 
           </div>
 
 
-          <button
-            type="button"
-            onclick="openStationModal()"
-            class="shrink-0 w-9 h-9 rounded-xl bg-white border border-[#E3EAF0] shadow-sm text-[#5278A4] hover:bg-[#EDF3F9] transition"
-          >
-            <i class="fa-solid fa-pen text-[11px]"></i>
-          </button>
+          <div class="bg-white rounded-[20px] p-3.5 flex items-center justify-between gap-3">
 
-        </div>
+            <div class="min-w-0">
+
+              <p class="text-[9px] uppercase tracking-widest text-slate-300 font-bold">
+                Starting point
+              </p>
+
+              <p
+                id="currentStationName"
+                class="text-xs font-extrabold text-slate-800 mt-1 truncate"
+              >
+                Locating via GPS...
+              </p>
+
+            </div>
 
 
-        <div class="mt-3 w-full h-36 rounded-[20px] overflow-hidden relative bg-[#DDE6ED]">
+            <button
+              type="button"
+              onclick="openStationModal()"
+              class="shrink-0 w-9 h-9 rounded-xl bg-[#EEF2FF] text-[#3457D5] flex items-center justify-center"
+            >
+              <i class="fa-solid fa-pen text-[11px]"></i>
+            </button>
 
-          <iframe
-            id="mapIframe"
-            class="w-full h-full border-0 hidden"
-            loading="lazy"
-            allowfullscreen
-            src=""
-          ></iframe>
+          </div>
 
-          <div
-            id="mapPlaceholder"
-            class="absolute inset-0 flex flex-col items-center justify-center gap-2 text-slate-400"
-          >
-            <i class="fa-solid fa-circle-notch fa-spin text-xl text-[#5D7FA6]"></i>
 
-            <span class="text-[10px]">
-              Finding your location
-            </span>
+          <div class="mt-3 w-full h-36 rounded-[20px] overflow-hidden relative bg-[#0E245D]">
+
+            <iframe
+              id="mapIframe"
+              class="w-full h-full border-0 hidden"
+              loading="lazy"
+              allowfullscreen
+              src=""
+            ></iframe>
+
+            <div
+              id="mapPlaceholder"
+              class="absolute inset-0 flex flex-col items-center justify-center gap-2 text-blue-100"
+            >
+
+              <i class="fa-solid fa-circle-notch fa-spin text-xl"></i>
+
+              <span class="text-[10px] font-medium">
+                Finding your location
+              </span>
+
+            </div>
+
           </div>
 
         </div>
@@ -347,36 +371,35 @@
       </section>
 
 
+      <!-- Fuel -->
 
-      <!-- ================================================= -->
-      <!-- FUEL -->
-      <!-- ================================================= -->
-
-      <section class="card-enter delay-3 bg-[#FDFEFE] rounded-[26px] p-4 shadow-[0_8px_24px_rgba(70,90,110,0.07)] border border-white/70">
+      <section class="card-enter delay-3 bg-white rounded-[28px] p-4 shadow-[0_18px_45px_rgba(18,28,70,0.18)]">
 
         <div class="flex items-center justify-between mb-4">
 
           <div class="flex items-center gap-3">
 
-            <div class="w-10 h-10 rounded-2xl bg-[#F5F0E5] text-[#B39258] flex items-center justify-center">
+            <div class="w-10 h-10 rounded-2xl bg-[#FFF2D8] text-[#E29A22] flex items-center justify-center">
               <i class="fa-solid fa-gauge-high"></i>
             </div>
 
             <div>
-              <h3 class="text-sm font-black text-slate-800">
-                Fuel Level
+
+              <p class="text-[10px] uppercase tracking-[0.16em] text-slate-400 font-bold">
+                Step 03
+              </p>
+
+              <h3 class="text-sm font-extrabold text-slate-900">
+                Select fuel level
               </h3>
 
-              <p class="text-[10px] text-slate-400 mt-0.5">
-                Select the closest gauge level
-              </p>
             </div>
 
           </div>
 
 
-          <span class="text-[10px] font-bold text-slate-300">
-            03
+          <span class="text-[10px] text-slate-300 font-semibold">
+            Fuel
           </span>
 
         </div>
@@ -384,7 +407,7 @@
 
         <div
           id="fuelGauge"
-          class="grid grid-cols-5 bg-[#E8EEF4] rounded-[18px] p-1.5 gap-1"
+          class="grid grid-cols-5 rounded-[20px] bg-[#EDF2FF] p-1.5 gap-1"
         >
 
           <button
@@ -392,8 +415,8 @@
             onclick="setFuel(1)"
             class="fuel-btn py-2.5 rounded-xl text-slate-500 font-bold transition"
           >
-            <span class="text-xs block">1/5</span>
-            <span class="text-[8px] font-medium opacity-60">Empty</span>
+            <span class="block text-xs">1/5</span>
+            <span class="text-[8px] font-semibold opacity-60">Empty</span>
           </button>
 
 
@@ -402,18 +425,18 @@
             onclick="setFuel(2)"
             class="fuel-btn py-2.5 rounded-xl text-slate-500 font-bold transition"
           >
-            <span class="text-xs block">2/5</span>
-            <span class="text-[8px] font-medium opacity-60">Low</span>
+            <span class="block text-xs">2/5</span>
+            <span class="text-[8px] font-semibold opacity-60">Low</span>
           </button>
 
 
           <button
             type="button"
             onclick="setFuel(3)"
-            class="fuel-btn py-2.5 rounded-xl bg-white text-[#4F78A5] font-black shadow-sm transition"
+            class="fuel-btn py-2.5 rounded-xl bg-[#3457D5] text-white font-extrabold shadow-md transition"
           >
-            <span class="text-xs block">3/5</span>
-            <span class="text-[8px] font-medium opacity-60">Half</span>
+            <span class="block text-xs">3/5</span>
+            <span class="text-[8px] font-semibold opacity-75">Half</span>
           </button>
 
 
@@ -422,8 +445,8 @@
             onclick="setFuel(4)"
             class="fuel-btn py-2.5 rounded-xl text-slate-500 font-bold transition"
           >
-            <span class="text-xs block">4/5</span>
-            <span class="text-[8px] font-medium opacity-60">Good</span>
+            <span class="block text-xs">4/5</span>
+            <span class="text-[8px] font-semibold opacity-60">Good</span>
           </button>
 
 
@@ -432,8 +455,8 @@
             onclick="setFuel(5)"
             class="fuel-btn py-2.5 rounded-xl text-slate-500 font-bold transition"
           >
-            <span class="text-xs block">5/5</span>
-            <span class="text-[8px] font-medium opacity-60">Full</span>
+            <span class="block text-xs">5/5</span>
+            <span class="text-[8px] font-semibold opacity-60">Full</span>
           </button>
 
         </div>
@@ -441,14 +464,13 @@
       </section>
 
 
+      <div class="card-enter delay-4 flex items-start gap-3 text-white/80 px-1">
 
-      <!-- Hint -->
+        <div class="mt-0.5 w-6 h-6 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+          <i class="fa-solid fa-shield-halved text-[10px]"></i>
+        </div>
 
-      <div class="card-enter delay-4 flex items-start gap-3 px-1">
-
-        <i class="fa-solid fa-shield-halved text-[#5E80A6] mt-0.5 text-xs"></i>
-
-        <p class="text-[10px] leading-relaxed text-slate-500">
+        <p class="text-[10px] leading-relaxed font-medium">
           Recommendations include a safety reserve and become more conservative when your fuel level is low.
         </p>
 
@@ -457,20 +479,17 @@
     </main>
 
 
-
     <!-- CTA -->
 
-    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-[#EAF0F6] via-[#EAF0F6] to-transparent pt-10">
+    <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-[#3457D5] via-[#3457D5] to-transparent pt-10">
 
       <button
         onclick="calculateTrip()"
-        class="w-full bg-[#2D3E52] hover:bg-[#263648] active:scale-[0.985] text-white font-black py-4 rounded-[20px] shadow-xl shadow-slate-700/10 flex items-center justify-center gap-2 text-sm transition"
+        class="w-full bg-white active:scale-[0.985] text-[#2446B9] font-extrabold py-4 rounded-[20px] shadow-[0_14px_30px_rgba(18,28,70,0.25)] flex items-center justify-center gap-2 text-sm transition"
       >
-        <span>
-          Calculate Fuel Stop
-        </span>
+        Calculate Fuel Stop
 
-        <i class="fa-solid fa-arrow-right text-blue-200 text-xs"></i>
+        <i class="fa-solid fa-arrow-right text-xs"></i>
       </button>
 
     </div>
@@ -485,74 +504,76 @@
 
   <div
     id="resultsView"
-    class="hidden smooth-view w-full max-w-md bg-[#EAF0F6] min-h-screen sm:min-h-[844px] sm:rounded-[38px] shadow-2xl overflow-hidden relative border border-white/40"
+    class="hidden smooth-view w-full max-w-md min-h-screen sm:min-h-[844px] sm:rounded-[38px] overflow-hidden relative shadow-2xl bg-[#243CB8]"
   >
 
-    <!-- Result Header -->
-
-    <header class="relative overflow-hidden bg-gradient-to-br from-[#2D3E52] via-[#354960] to-[#435676] text-white px-5 pt-8 pb-7 rounded-b-[32px] shadow-lg">
-
-      <div class="absolute -right-10 -top-10 w-36 h-36 rounded-full bg-white/8"></div>
-
-      <div class="absolute -left-12 bottom-0 w-28 h-28 rounded-full bg-blue-300/8"></div>
+    <div class="absolute inset-0 pointer-events-none overflow-hidden">
+      <div class="absolute -top-20 right-[-90px] w-72 h-72 rounded-full bg-[#597BFF] opacity-50 blur-3xl"></div>
+      <div class="absolute bottom-20 -left-24 w-72 h-72 rounded-full bg-[#4B22BD] opacity-30 blur-3xl"></div>
+    </div>
 
 
-      <div class="relative">
+    <!-- Results Header -->
 
-        <div class="flex justify-between items-center mb-4">
+    <header class="relative px-5 pt-8 pb-5 text-white">
 
-          <div class="flex items-center gap-2 text-blue-100">
+      <div class="flex justify-between items-center mb-6">
 
-            <i class="fa-solid fa-route"></i>
+        <div class="flex items-center gap-2">
 
-            <span class="text-xs font-semibold tracking-wide">
-              TRIP RESULTS
-            </span>
+          <div class="w-9 h-9 rounded-2xl bg-white/15 flex items-center justify-center">
+            <i class="fa-solid fa-route text-sm"></i>
+          </div>
+
+          <div>
+
+            <p class="text-[9px] uppercase tracking-[0.2em] text-blue-200 font-bold">
+              Trip Results
+            </p>
+
+            <p class="text-xs font-bold">
+              Chiang Rai → Bangkok
+            </p>
 
           </div>
 
-
-          <span class="text-[10px] bg-white/10 border border-white/10 px-2.5 py-1 rounded-full text-slate-200">
-            Chiang Rai → Bangkok
-          </span>
-
         </div>
 
-
-        <h2 class="text-2xl font-black tracking-tight">
-          Your Trip Summary
-        </h2>
-
-        <p class="text-xs text-slate-300 mt-1">
-          Vehicle range and fuel stops based on your current setup.
-        </p>
-
       </div>
+
+
+      <h2 class="text-[30px] leading-tight font-extrabold tracking-[-0.04em]">
+        Your trip
+        <span class="text-[#CAD5FF]">summary.</span>
+      </h2>
+
+      <p class="text-xs text-blue-100 mt-2 leading-relaxed">
+        Vehicle range and fuel-stop options based on your current setup.
+      </p>
 
     </header>
 
 
-
     <main
       id="resultsScroll"
-      class="p-5 space-y-5 overflow-y-auto"
+      class="relative px-4 pb-6 space-y-4"
     >
 
-      <!-- Vehicle Summary -->
+      <!-- Vehicle summary -->
 
-      <section class="bg-[#FDFEFE] rounded-3xl shadow-[0_8px_24px_rgba(70,90,110,0.07)] border border-white/70 overflow-hidden">
+      <section class="bg-white rounded-[28px] p-4 shadow-[0_18px_45px_rgba(15,25,80,0.22)]">
 
-        <div class="p-4 border-b border-[#EDF1F5] flex items-start justify-between gap-3">
+        <div class="flex justify-between items-start mb-4">
 
-          <div class="min-w-0">
+          <div>
 
-            <span class="text-[10px] font-bold text-[#557AA4] uppercase tracking-widest">
+            <p class="text-[9px] uppercase tracking-[0.18em] text-slate-400 font-bold">
               Selected Vehicle
-            </span>
+            </p>
 
             <h3
               id="resultCarName"
-              class="text-lg font-black text-slate-800 mt-1 leading-tight"
+              class="text-lg font-extrabold text-slate-900 mt-1"
             >
               Vehicle
             </h3>
@@ -560,39 +581,31 @@
           </div>
 
 
-          <div class="w-11 h-11 shrink-0 rounded-2xl bg-[#E8F0F8] text-[#557AA4] flex items-center justify-center">
-            <i class="fa-solid fa-car-side text-lg"></i>
+          <div class="w-11 h-11 rounded-2xl bg-[#EEF2FF] text-[#3457D5] flex items-center justify-center">
+            <i class="fa-solid fa-car-side"></i>
           </div>
 
         </div>
 
 
+        <div class="grid grid-cols-2 gap-2">
 
-        <div class="p-4 grid grid-cols-2 gap-3">
+          <div class="bg-[#F5F7FB] rounded-[20px] p-3">
 
-          <div class="bg-[#F3F6F9] rounded-2xl p-3 border border-[#E7EDF3]">
+            <p class="text-[9px] uppercase tracking-wider text-slate-400 font-bold">
+              Fuel Efficiency
+            </p>
 
-            <div class="flex items-center gap-2 text-slate-400 mb-1">
-
-              <i class="fa-solid fa-gauge-high text-[#5D7FA6]"></i>
-
-              <span class="text-[10px] font-bold uppercase tracking-wide">
-                Fuel Efficiency
-              </span>
-
-            </div>
-
-
-            <div class="flex items-end gap-1">
+            <div class="flex items-end gap-1 mt-1">
 
               <span
                 id="resultEfficiency"
-                class="text-2xl font-black text-slate-800"
+                class="text-2xl font-extrabold text-slate-900"
               >
                 --
               </span>
 
-              <span class="text-xs font-semibold text-slate-400 mb-1">
+              <span class="text-[10px] text-slate-400 font-semibold mb-1">
                 km/L
               </span>
 
@@ -601,29 +614,22 @@
           </div>
 
 
-          <div class="bg-[#F3F6F9] rounded-2xl p-3 border border-[#E7EDF3]">
+          <div class="bg-[#F5F7FB] rounded-[20px] p-3">
 
-            <div class="flex items-center gap-2 text-slate-400 mb-1">
+            <p class="text-[9px] uppercase tracking-wider text-slate-400 font-bold">
+              Tank Capacity
+            </p>
 
-              <i class="fa-solid fa-gas-pump text-[#6D7595]"></i>
-
-              <span class="text-[10px] font-bold uppercase tracking-wide">
-                Tank Capacity
-              </span>
-
-            </div>
-
-
-            <div class="flex items-end gap-1">
+            <div class="flex items-end gap-1 mt-1">
 
               <span
                 id="resultTankCapacity"
-                class="text-2xl font-black text-slate-800"
+                class="text-2xl font-extrabold text-slate-900"
               >
                 --
               </span>
 
-              <span class="text-xs font-semibold text-slate-400 mb-1">
+              <span class="text-[10px] text-slate-400 font-semibold mb-1">
                 L
               </span>
 
@@ -634,75 +640,70 @@
         </div>
 
 
+        <div class="mt-3 bg-[#111827] text-white rounded-[22px] p-4">
 
-        <div class="px-4 pb-4">
+          <div class="flex justify-between">
 
-          <div class="rounded-2xl bg-[#33475D] text-white p-4">
+            <div>
 
-            <div class="flex justify-between items-start gap-4">
+              <p class="text-[9px] uppercase tracking-wider text-slate-400 font-bold">
+                Fuel Level
+              </p>
 
-              <div>
+              <div class="flex items-center gap-2 mt-1">
 
-                <span class="text-[10px] uppercase tracking-widest text-slate-300 font-bold">
-                  Current Fuel Level
+                <span
+                  id="resultFuelLevel"
+                  class="text-xl font-extrabold"
+                >
+                  3/5
                 </span>
 
-                <div class="flex items-center gap-2 mt-1">
-
-                  <span
-                    id="resultFuelLevel"
-                    class="text-2xl font-black"
-                  >
-                    3/5
-                  </span>
-
-                  <span
-                    id="resultFuelPercent"
-                    class="text-xs text-slate-300"
-                  >
-                    60%
-                  </span>
-
-                </div>
-
-              </div>
-
-
-              <div class="text-right">
-
-                <span class="text-[10px] uppercase tracking-widest text-slate-300 font-bold">
-                  Estimated Range
+                <span
+                  id="resultFuelPercent"
+                  class="text-[10px] text-slate-400"
+                >
+                  60%
                 </span>
-
-                <div class="flex items-end justify-end gap-1 mt-1">
-
-                  <span
-                    id="resultRange"
-                    class="text-2xl font-black text-blue-200"
-                  >
-                    --
-                  </span>
-
-                  <span class="text-xs text-slate-300 mb-1">
-                    km
-                  </span>
-
-                </div>
 
               </div>
 
             </div>
 
 
-            <div class="mt-4 h-2 rounded-full bg-white/10 overflow-hidden">
+            <div class="text-right">
 
-              <div
-                id="resultFuelBar"
-                class="h-full rounded-full bg-gradient-to-r from-[#8BB0D2] to-[#A7B4D8] transition-all duration-700"
-                style="width:60%"
-              ></div>
+              <p class="text-[9px] uppercase tracking-wider text-slate-400 font-bold">
+                Estimated Range
+              </p>
+
+              <div class="flex items-end justify-end gap-1 mt-1">
+
+                <span
+                  id="resultRange"
+                  class="text-xl font-extrabold text-[#AFC1FF]"
+                >
+                  --
+                </span>
+
+                <span class="text-[10px] text-slate-400 mb-0.5">
+                  km
+                </span>
+
+              </div>
 
             </div>
+
+          </div>
+
+
+          <div class="mt-4 h-2 rounded-full bg-white/10 overflow-hidden">
+
+            <div
+              id="resultFuelBar"
+              class="h-full rounded-full bg-gradient-to-r from-[#6B8BFF] to-[#A17CFF] transition-all duration-700"
+              style="width:60%"
+            ></div>
 
           </div>
 
@@ -711,57 +712,49 @@
       </section>
 
 
+      <!-- Stop heading -->
 
-      <!-- Stops -->
+      <div class="flex items-end justify-between px-1 pt-1">
 
-      <section>
+        <div>
 
-        <div class="flex justify-between items-end mb-3 px-1">
+          <p class="text-[9px] uppercase tracking-[0.18em] text-blue-200 font-bold">
+            Route Suggestions
+          </p>
 
-          <div>
-
-            <span class="text-[10px] font-bold text-[#5C7FA6] uppercase tracking-widest">
-              Route Suggestions
-            </span>
-
-            <h3 class="text-lg font-black text-slate-800 mt-0.5">
-              Recommended Fuel Stops
-            </h3>
-
-          </div>
-
-
-          <span class="text-[10px] text-slate-400 text-right">
-            3 choices
-            <br>
-            by urgency
-          </span>
+          <h3 class="text-lg font-extrabold text-white mt-0.5">
+            Recommended Fuel Stops
+          </h3>
 
         </div>
 
 
-        <div
-          id="resultsStationList"
-          class="space-y-3"
-        ></div>
+        <span class="text-[9px] text-blue-200 text-right font-semibold">
+          3 choices
+          <br>
+          by urgency
+        </span>
 
-      </section>
+      </div>
 
 
+      <div
+        id="resultsStationList"
+        class="space-y-3"
+      ></div>
 
-      <!-- Finish -->
 
       <button
         onclick="finishTrip()"
-        class="w-full bg-[#2D3E52] hover:bg-[#263648] active:scale-[0.98] text-white font-bold py-4 rounded-2xl shadow-lg flex items-center justify-center gap-2 transition"
+        class="w-full bg-white text-[#2446B9] active:scale-[0.98] font-extrabold py-4 rounded-[20px] shadow-xl flex items-center justify-center gap-2 transition"
       >
         <i class="fa-solid fa-check"></i>
         Finish
       </button>
 
 
-      <p class="text-center text-[10px] text-slate-400 pb-2">
-        Return to the trip planner and start again.
+      <p class="text-center text-[10px] text-blue-200 pb-2 font-medium">
+        Return to the planner and start a new trip.
       </p>
 
     </main>
@@ -771,45 +764,44 @@
 
 
   <!-- ===================================================== -->
-  <!-- LOADING -->
+  <!-- LOADING VIEW -->
   <!-- ===================================================== -->
 
   <div
     id="loadingView"
-    class="hidden fixed inset-0 z-[70] bg-[#243244]/95 backdrop-blur-md flex items-center justify-center p-6"
+    class="hidden fixed inset-0 z-[70] bg-[#18245E]/95 backdrop-blur-lg flex items-center justify-center p-6"
   >
 
     <div class="w-full max-w-sm text-center text-white">
 
-      <div class="w-16 h-16 mx-auto rounded-3xl bg-gradient-to-br from-[#6689AF] to-[#66769F] shadow-2xl shadow-slate-900/20 flex items-center justify-center mb-6 animate-pulse">
-        <i class="fa-solid fa-gas-pump text-2xl"></i>
+      <div class="w-16 h-16 mx-auto rounded-[22px] bg-white text-[#3457D5] shadow-2xl flex items-center justify-center mb-6 animate-pulse">
+        <i class="fa-solid fa-gas-pump text-xl"></i>
       </div>
 
 
-      <h2 class="text-2xl font-black tracking-tight">
+      <h2 class="text-2xl font-extrabold tracking-tight">
         Planning your fuel stops...
       </h2>
 
-
-      <p class="text-sm text-slate-300 mt-2">
+      <p class="text-sm text-blue-200 mt-2 font-medium">
         Building safer options for your journey.
       </p>
 
 
-      <div class="mt-8 bg-white/5 border border-white/10 rounded-2xl p-4 text-left space-y-3">
+      <div class="mt-8 bg-white/10 border border-white/10 rounded-[22px] p-4 text-left space-y-3">
 
         <div
           id="loadingStep1"
-          class="flex items-center gap-3 text-sm text-slate-200"
+          class="flex items-center gap-3 text-sm text-white"
         >
-          <i class="fa-solid fa-circle-notch fa-spin text-blue-300 w-4 text-center"></i>
+          <i class="fa-solid fa-circle-notch fa-spin text-blue-200 w-4 text-center"></i>
           <span>Calculating remaining range</span>
         </div>
 
 
         <div
           id="loadingStep2"
-          class="flex items-center gap-3 text-sm text-slate-500"
+          class="flex items-center gap-3 text-sm text-blue-300/50"
         >
           <i class="fa-regular fa-circle w-4 text-center"></i>
           <span>Scanning stations ahead</span>
@@ -818,7 +810,7 @@
 
         <div
           id="loadingStep3"
-          class="flex items-center gap-3 text-sm text-slate-500"
+          class="flex items-center gap-3 text-sm text-blue-300/50"
         >
           <i class="fa-regular fa-circle w-4 text-center"></i>
           <span>Building your recommendations</span>
@@ -831,7 +823,7 @@
 
         <div
           id="loadingProgress"
-          class="h-full bg-gradient-to-r from-[#83A5C6] to-[#9AA8CF] rounded-full transition-all duration-500"
+          class="h-full bg-white rounded-full transition-all duration-500"
           style="width:12%"
         ></div>
 
@@ -849,29 +841,29 @@
 
   <div
     id="stationModal"
-    class="hidden fixed inset-0 z-50 bg-[#263646]/60 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4"
+    class="hidden fixed inset-0 z-50 bg-[#111827]/60 backdrop-blur-md flex items-end sm:items-center justify-center p-0 sm:p-4"
   >
 
-    <div class="bg-[#FDFEFE] w-full max-w-md rounded-t-[30px] sm:rounded-[30px] p-5 shadow-2xl space-y-4 max-h-[82vh] flex flex-col">
+    <div class="bg-white w-full max-w-md rounded-t-[30px] sm:rounded-[30px] p-5 shadow-2xl space-y-4 max-h-[82vh] flex flex-col">
 
       <div class="flex justify-between items-center">
 
         <div>
 
-          <h3 class="font-black text-slate-800 text-base">
+          <p class="text-[9px] uppercase tracking-[0.18em] text-[#3457D5] font-bold">
+            Starting Point
+          </p>
+
+          <h3 class="font-extrabold text-slate-900 text-base mt-1">
             Choose Your Location
           </h3>
-
-          <p class="text-[10px] text-slate-400 mt-1">
-            Select the closest station to your current position
-          </p>
 
         </div>
 
 
         <button
           onclick="closeStationModal()"
-          class="w-9 h-9 rounded-xl bg-[#EDF2F6] text-slate-500"
+          class="w-9 h-9 rounded-xl bg-[#F2F4F8] text-slate-500"
         >
           <i class="fa-solid fa-xmark"></i>
         </button>
@@ -888,7 +880,7 @@
           id="modalSearchInput"
           oninput="filterModalStations()"
           placeholder="Search station..."
-          class="w-full bg-[#F3F6F9] border border-[#E7EDF3] text-xs font-semibold rounded-2xl py-3 pl-9 pr-3 focus:outline-none focus:ring-2 focus:ring-blue-300/30"
+          class="w-full bg-[#F5F7FB] border border-slate-100 text-xs font-semibold rounded-2xl py-3 pl-9 pr-3 focus:outline-none focus:ring-2 focus:ring-blue-300/40"
         >
 
       </div>
@@ -922,13 +914,11 @@
     let currentKm = 0;
 
 
-
     async function initApp() {
       await loadCars();
       await loadStations();
       autoTrackLocation();
     }
-
 
 
     async function loadCars() {
@@ -983,7 +973,6 @@
     }
 
 
-
     async function loadStations() {
 
       try {
@@ -1004,7 +993,6 @@
       }
 
     }
-
 
 
     function getDistanceInKm(
@@ -1052,7 +1040,6 @@
       return R * c;
 
     }
-
 
 
     function autoTrackLocation() {
@@ -1106,7 +1093,6 @@
       );
 
     }
-
 
 
     function updateLocationAndMap(
@@ -1210,7 +1196,7 @@
 
 
         gpsBadge.className =
-          'text-[9px] font-bold px-2.5 py-1 rounded-full bg-[#E6F1EA] text-[#5E8C6A]';
+          'text-[9px] font-bold px-2.5 py-1 rounded-full bg-[#DDF7E8] text-[#2F8A5C]';
 
 
         gpsBadge.innerText =
@@ -1219,7 +1205,6 @@
       }
 
     }
-
 
 
     function fallbackStationSelection() {
@@ -1231,7 +1216,7 @@
 
 
       gpsBadge.className =
-        'text-[9px] font-bold px-2.5 py-1 rounded-full bg-[#F4EEE2] text-[#A5844C]';
+        'text-[9px] font-bold px-2.5 py-1 rounded-full bg-[#FFF0C9] text-[#A46A00]';
 
 
       gpsBadge.innerText =
@@ -1257,7 +1242,6 @@
     }
 
 
-
     function openStationModal() {
 
       document
@@ -1274,7 +1258,6 @@
     }
 
 
-
     function closeStationModal() {
 
       document
@@ -1286,7 +1269,6 @@
         );
 
     }
-
 
 
     function renderModalStations(
@@ -1391,12 +1373,12 @@
 
             <button
               onclick="selectStationFromModal('${station.id}')"
-              class="w-full p-3 hover:bg-[#F3F6F9] rounded-2xl text-left flex justify-between items-center gap-3 transition"
+              class="w-full p-3 hover:bg-[#F5F7FB] rounded-2xl text-left flex justify-between items-center gap-3 transition"
             >
 
               <div class="min-w-0">
 
-                <span class="text-xs font-black text-slate-700 block truncate">
+                <span class="text-xs font-extrabold text-slate-800 block truncate">
                   ${station.name}
                 </span>
 
@@ -1410,7 +1392,7 @@
               ${
                 station.dist !== null
                   ? `
-                    <span class="shrink-0 text-[9px] font-bold text-[#557AA4] bg-[#EAF1F8] px-2.5 py-1 rounded-full">
+                    <span class="shrink-0 text-[9px] font-bold text-[#3457D5] bg-[#EEF2FF] px-2.5 py-1 rounded-full">
                       ${station.dist.toFixed(1)} km
                     </span>
                   `
@@ -1423,7 +1405,6 @@
         ).join('');
 
     }
-
 
 
     function filterModalStations() {
@@ -1439,7 +1420,6 @@
       );
 
     }
-
 
 
     function selectStationFromModal(
@@ -1472,7 +1452,6 @@
       closeStationModal();
 
     }
-
 
 
     function onSearchCar() {
@@ -1554,23 +1533,23 @@
 
               <button
                 onclick="selectCarFromSearch('${car.id}')"
-                class="w-full p-3 hover:bg-[#F3F6F9] text-left flex justify-between items-center transition"
+                class="w-full p-3 hover:bg-[#F5F7FB] text-left flex justify-between items-center transition"
               >
 
                 <div>
 
-                  <span class="text-[10px] font-bold text-[#557AA4] block">
+                  <span class="text-[10px] font-bold text-[#3457D5] block">
                     ${car.brand}
                   </span>
 
-                  <span class="text-sm font-black text-slate-700">
+                  <span class="text-sm font-extrabold text-slate-800">
                     ${car.model}
                   </span>
 
                 </div>
 
 
-                <span class="text-[9px] bg-[#EEF2F5] text-slate-500 px-2 py-1 rounded-lg">
+                <span class="text-[9px] bg-[#EEF2FF] text-[#3457D5] px-2 py-1 rounded-lg font-semibold">
                   ${car.tankCapacity}L
                 </span>
 
@@ -1587,7 +1566,6 @@
       );
 
     }
-
 
 
     function selectCarFromSearch(
@@ -1674,7 +1652,6 @@
     }
 
 
-
     function clearCarSearch() {
 
       document.getElementById(
@@ -1723,7 +1700,6 @@
         true;
 
     }
-
 
 
     function onBrandChange() {
@@ -1801,7 +1777,6 @@
     }
 
 
-
     function onModelChange() {
 
       const carId =
@@ -1842,7 +1817,6 @@
     }
 
 
-
     document.addEventListener(
       'click',
       event => {
@@ -1872,7 +1846,6 @@
     );
 
 
-
     function setFuel(
       level
     ) {
@@ -1895,12 +1868,12 @@
           ) {
 
             button.className =
-              'fuel-btn py-2.5 rounded-xl bg-white text-[#4F78A5] font-black shadow-sm transition';
+              'fuel-btn py-2.5 rounded-xl bg-[#3457D5] text-white font-extrabold shadow-md transition';
 
           } else {
 
             button.className =
-              'fuel-btn py-2.5 rounded-xl text-slate-500 font-bold transition hover:text-slate-700';
+              'fuel-btn py-2.5 rounded-xl text-slate-500 font-bold transition';
 
           }
 
@@ -1908,7 +1881,6 @@
       );
 
     }
-
 
 
     function sleep(ms) {
@@ -1922,7 +1894,6 @@
       );
 
     }
-
 
 
     function setLoadingStep(
@@ -1965,13 +1936,13 @@
           ) {
 
             element.className =
-              'flex items-center gap-3 text-sm text-[#A9D2B5]';
+              'flex items-center gap-3 text-sm text-emerald-200';
 
 
             element
               .querySelector('i')
               .className =
-                'fa-solid fa-circle-check text-[#8FC29D] w-4 text-center';
+                'fa-solid fa-circle-check text-emerald-300 w-4 text-center';
 
 
           } else if (
@@ -1979,19 +1950,19 @@
           ) {
 
             element.className =
-              'flex items-center gap-3 text-sm text-slate-200';
+              'flex items-center gap-3 text-sm text-white';
 
 
             element
               .querySelector('i')
               .className =
-                'fa-solid fa-circle-notch fa-spin text-blue-300 w-4 text-center';
+                'fa-solid fa-circle-notch fa-spin text-blue-200 w-4 text-center';
 
 
           } else {
 
             element.className =
-              'flex items-center gap-3 text-sm text-slate-500';
+              'flex items-center gap-3 text-sm text-blue-300/50';
 
 
             element
@@ -2028,7 +1999,6 @@
     }
 
 
-
     function showLoadingView() {
 
       document
@@ -2045,7 +2015,6 @@
     }
 
 
-
     function hideLoadingView() {
 
       document
@@ -2059,7 +2028,6 @@
     }
 
 
-
     function getResultStyle(
       type
     ) {
@@ -2068,13 +2036,13 @@
 
         soon: {
           card:
-            'bg-gradient-to-br from-[#C9797E] to-[#B8626B]',
+            'bg-gradient-to-br from-[#F05D68] to-[#D94357]',
           soft:
             'bg-white/15',
           badge:
             'bg-white/15 text-white border-white/20',
           button:
-            'bg-white text-[#A85760] hover:bg-[#FFF5F5]',
+            'bg-white text-[#D94357] hover:bg-red-50',
           icon:
             'fa-bolt',
           number:
@@ -2084,13 +2052,13 @@
 
         recommended: {
           card:
-            'bg-gradient-to-br from-[#5E7FA7] to-[#566B94]',
+            'bg-gradient-to-br from-[#5577FF] to-[#3B4ED4]',
           soft:
             'bg-white/15',
           badge:
             'bg-white/15 text-white border-white/20',
           button:
-            'bg-white text-[#516E95] hover:bg-[#F4F7FB]',
+            'bg-white text-[#3B4ED4] hover:bg-blue-50',
           icon:
             'fa-shield-halved',
           number:
@@ -2100,13 +2068,13 @@
 
         relaxed: {
           card:
-            'bg-gradient-to-br from-[#659783] to-[#527F74]',
+            'bg-gradient-to-br from-[#24B47E] to-[#148A70]',
           soft:
             'bg-white/15',
           badge:
             'bg-white/15 text-white border-white/20',
           button:
-            'bg-white text-[#527F74] hover:bg-[#F4FAF7]',
+            'bg-white text-[#148A70] hover:bg-emerald-50',
           icon:
             'fa-road',
           number:
@@ -2123,7 +2091,6 @@
       );
 
     }
-
 
 
     function renderResultsPage(
@@ -2192,7 +2159,7 @@
             return `
 
               <article
-                class="${style.card} text-white rounded-[26px] shadow-lg shadow-slate-900/10 overflow-hidden relative"
+                class="${style.card} text-white rounded-[28px] shadow-xl shadow-black/10 overflow-hidden relative"
               >
 
                 <div class="absolute -right-10 -top-10 w-32 h-32 rounded-full bg-white/10"></div>
@@ -2206,7 +2173,7 @@
 
                     <div class="flex items-center gap-3 min-w-0">
 
-                      <div class="w-11 h-11 rounded-2xl bg-white text-slate-700 flex items-center justify-center font-black text-base shadow-sm shrink-0">
+                      <div class="w-11 h-11 rounded-2xl bg-white text-slate-900 flex items-center justify-center font-extrabold text-base shadow-sm shrink-0">
                         ${style.number}
                       </div>
 
@@ -2216,7 +2183,7 @@
                         <div class="flex items-center gap-2 flex-wrap">
 
                           <span
-                            class="inline-flex items-center gap-1.5 text-[9px] font-black uppercase tracking-widest px-2.5 py-1 rounded-full border ${style.badge}"
+                            class="inline-flex items-center gap-1.5 text-[9px] font-extrabold uppercase tracking-widest px-2.5 py-1 rounded-full border ${style.badge}"
                           >
 
                             <i class="fa-solid ${style.icon}"></i>
@@ -2229,7 +2196,7 @@
                           ${
                             option.type === 'recommended'
                               ? `
-                                <span class="text-[9px] font-black uppercase tracking-wider bg-white text-[#516E95] px-2 py-1 rounded-full">
+                                <span class="text-[9px] font-extrabold uppercase tracking-wider bg-white text-[#3B4ED4] px-2 py-1 rounded-full">
                                   Best Balance
                                 </span>
                               `
@@ -2250,28 +2217,25 @@
                   </div>
 
 
-
                   <div class="mt-5">
 
-                    <h4 class="text-xl font-black leading-tight tracking-tight">
+                    <h4 class="text-xl font-extrabold leading-tight tracking-tight">
                       ${option.name}
                     </h4>
 
-                    <p class="text-[11px] text-white/65 mt-1">
+                    <p class="text-[11px] text-white/70 mt-1 font-medium">
                       ${option.brand}
                     </p>
 
                   </div>
 
 
-
-                  <p class="text-xs text-white/80 leading-relaxed mt-3">
+                  <p class="text-xs text-white/85 leading-relaxed mt-3 font-medium">
                     ${option.description}
                   </p>
 
 
-
-                  <div class="${style.soft} rounded-2xl px-4 py-3 mt-5 backdrop-blur-sm">
+                  <div class="${style.soft} rounded-[20px] px-4 py-3 mt-5 backdrop-blur-sm">
 
                     <span class="text-[9px] uppercase tracking-widest font-bold text-white/60 block">
                       Distance From You
@@ -2280,7 +2244,7 @@
 
                     <div class="flex items-end gap-1 mt-1">
 
-                      <span class="text-3xl font-black tracking-tight">
+                      <span class="text-3xl font-extrabold tracking-tight">
                         ${option.distanceFromUser}
                       </span>
 
@@ -2293,12 +2257,11 @@
                   </div>
 
 
-
                   <a
                     href="${option.googleMapUrl}"
                     target="_blank"
                     rel="noopener noreferrer"
-                    class="${style.button} mt-3 w-full rounded-2xl py-3 px-4 font-black text-xs flex items-center justify-center gap-2 transition active:scale-[0.98] shadow-sm"
+                    class="${style.button} mt-3 w-full rounded-[18px] py-3 px-4 font-extrabold text-xs flex items-center justify-center gap-2 transition active:scale-[0.98] shadow-sm"
                   >
 
                     <i class="fa-solid fa-location-arrow"></i>
@@ -2319,7 +2282,6 @@
     }
 
 
-
     function switchToResultsPage() {
 
       const plannerView =
@@ -2336,7 +2298,7 @@
 
       plannerView.classList.add(
         'opacity-0',
-        '-translate-y-2',
+        '-translate-y-3',
         'scale-[0.985]'
       );
 
@@ -2351,7 +2313,7 @@
 
           plannerView.classList.remove(
             'opacity-0',
-            '-translate-y-2',
+            '-translate-y-3',
             'scale-[0.985]'
           );
 
@@ -2387,11 +2349,10 @@
           });
 
         },
-        240
+        250
       );
 
     }
-
 
 
     function finishTrip() {
@@ -2461,11 +2422,10 @@
           });
 
         },
-        240
+        250
       );
 
     }
-
 
 
     async function calculateTrip() {
@@ -2641,7 +2601,6 @@
       }
 
     }
-
 
 
     initApp();
