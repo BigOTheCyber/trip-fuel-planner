@@ -1,5 +1,11 @@
 ชื่อปั๊มน้ำมัน,แบรนด์,Latitude,Longitude,Google Maps Link,ห่างจากปั๊มก่อนหน้า (KM),น้องกิ๊ฟท์น้องมิ้นท์,เสี่ยโอ๊ค เห้ยโห,,,ฟังชั่นที่เเอบคิดได้สำหรับ ตัว App,Future improvement 
-Caltex,Caltex (คาลเท็กซ์),19.91466,99.84561,https://maps.google.com/?cid=7819198058654415296&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA,0,✅,,,,สำหรับคนมีบัตรปั้ม หรือ อยากเข้าเเค่ปัั้มบางเเบรนด์ ก็จะให้เลือกเเค่เเบรนด์นั้นได้ ดูได้สะดวก,ในอนาคตสามารถเพิ่มเส้นทางอื่นได้ เผื่อมีใครอยากทำต่อ
+PTT Station Maefahluang Chiang Rai,PTT (ปตท),20.0340751,99.875035,https://www.google.com/maps/search/?api=1&query=PTT+Maefahluang+Chiang+Rai,0
+Bangchak M Power Petroleum,Bangchak (บางจาก),0,0,https://www.google.com/maps/search/?api=1&query=Bangchak+M+Power+Petroleum+Chiang+Rai,2.6
+PTT Station Ban Du,PTT (ปตท),19.955636,99.8412706,https://www.google.com/maps/search/?api=1&query=PTT+Station+Ban+Du+Chiang+Rai,7.4
+PT Ban Du Chiang Rai,PT (พีที),0,0,https://www.google.com/maps/search/?api=1&query=PT+Ban+Du+Chiang+Rai,2.9
+Cosmo Ban Du,Cosmo (คอสโม),19.9571,99.85233,https://www.google.com/maps/search/?api=1&query=Cosmo+Ban+Du+Chiang+Rai,4
+Shell Ban Du,Shell (เชลล์),19.945001,99.84669,https://www.google.com/maps/search/?api=1&query=Shell+Ban+Du+Chiang+Rai,4
+Caltex,Caltex (คาลเท็กซ์),19.91466,99.84561,https://maps.google.com/?cid=7819198058654415296&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA,3
 PT Station - wiang,PT (พีที),19.9143,99.84382,https://maps.google.com/?cid=17091877269411911825&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA,0.19,✅,,,,กรอกปริมาณน้ำมันได้ ให้ App ช่วยคำนวณ ว่าน้ำมันประมาณนี้ จะไปหมดที่กิโลเมตรเท่าไหร่ + ปั้มเเนะนำ + ระบบเเจ้งเตือน,
 PTT Station (Petrol+NGV+EV),PTT (ปตท),19.90324,99.84087,https://maps.google.com/?cid=763582454633483617&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA,1.04,✅,,,,,
 PT Station Chiang Rai 4,PT (พีที),19.89638,99.83892,https://maps.google.com/?cid=1744369372674798028&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA,0.52,✅,,,,,
