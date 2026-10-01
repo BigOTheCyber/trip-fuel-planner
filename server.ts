@@ -180,9 +180,7 @@ async function getStationsFromCSV() {
             );
 
           const preset =
-            getSpecialPreset(
-              name
-            );
+            getSpecialPreset(name);
 
           const isSpecial =
             csvSpecial
@@ -207,8 +205,7 @@ async function getStationsFromCSV() {
             ||
             'A featured stop selected by the planner for this journey.';
 
-          let specialTags: string[] =
-            [];
+          let specialTags: string[] = [];
 
           const csvTags =
             row['specialTags']
@@ -298,6 +295,10 @@ const app =
   new Elysia()
 
 
+    // =====================================================
+    // FRONTEND
+    // =====================================================
+
     .get(
       '/',
       () => {
@@ -317,6 +318,10 @@ const app =
       }
     )
 
+
+    // =====================================================
+    // CARS API
+    // =====================================================
 
     .get(
       '/api/cars',
@@ -339,6 +344,10 @@ const app =
     )
 
 
+    // =====================================================
+    // STATIONS API
+    // =====================================================
+
     .get(
       '/api/stations',
       async () => {
@@ -346,6 +355,10 @@ const app =
       }
     )
 
+
+    // =====================================================
+    // PLAN TRIP
+    // =====================================================
 
     .post(
       '/api/plan-trip',
@@ -367,7 +380,7 @@ const app =
 
 
         // =================================================
-        // CAR DATA
+        // LOAD CAR DATA
         // =================================================
 
         let cars: any[] =
@@ -431,6 +444,10 @@ const app =
           15;
 
 
+        // =================================================
+        // RANGE CALCULATION
+        // =================================================
+
         const fullRange =
           tankCapacity
           *
@@ -462,7 +479,7 @@ const app =
 
 
         // =================================================
-        // STATIONS
+        // LOAD STATIONS
         // =================================================
 
         const stations =
@@ -477,6 +494,10 @@ const app =
               currentPositionKm
           );
 
+
+        // =================================================
+        // HELPERS
+        // =================================================
 
         function getFurthestStationWithin(
           ratio: number,
@@ -652,8 +673,12 @@ const app =
             soonStation?.id,
             recommendedStation?.id
           ]
-            .filter(Boolean)
-          as string[];
+            .filter(
+              id =>
+                typeof id
+                ===
+                'string'
+            );
 
 
         const relaxedStation =
@@ -664,7 +689,7 @@ const app =
 
 
         // =================================================
-        // DESCRIPTIONS
+        // RECOMMENDED DESCRIPTION
         // =================================================
 
         let recommendedDescription =
@@ -696,6 +721,10 @@ const app =
             'A safer stop with extra reserve for traffic, delays, or unexpected conditions.';
         }
 
+
+        // =================================================
+        // NORMAL OPTIONS
+        // =================================================
 
         const options =
           [
@@ -860,6 +889,10 @@ const app =
       }
     )
 
+
+    // =====================================================
+    // START SERVER
+    // =====================================================
 
     .listen(
       {
