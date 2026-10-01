@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-
   <title>Trip Fuel Planner</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
@@ -146,9 +145,13 @@
   >
 
     <div class="absolute inset-0 pointer-events-none overflow-hidden">
+
       <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-[#5B7CFA] opacity-50 blur-2xl"></div>
+
       <div class="absolute top-[320px] -left-24 w-72 h-72 rounded-full bg-[#2446B9] opacity-50 blur-3xl"></div>
+
       <div class="absolute bottom-20 right-[-90px] w-64 h-64 rounded-full bg-[#7C5CFC] opacity-30 blur-3xl"></div>
+
     </div>
 
 
@@ -839,7 +842,7 @@
 
 
       <!-- ================================================= -->
-      <!-- SPECIAL RECOMMENDATION -->
+      <!-- SPECIAL -->
       <!-- ================================================= -->
 
       <section
@@ -1083,15 +1086,23 @@
 
   <script>
 
-    let selectedFuel = 3;
+    let selectedFuel =
+      3;
 
-    let allCars = [];
-    let allStations = [];
+    let allCars =
+      [];
 
-    let userLat = null;
-    let userLng = null;
+    let allStations =
+      [];
 
-    let currentKm = 0;
+    let userLat =
+      null;
+
+    let userLng =
+      null;
+
+    let currentKm =
+      0;
 
 
 
@@ -1112,7 +1123,7 @@
 
 
     // =====================================================
-    // LOAD CARS
+    // CARS
     // =====================================================
 
     async function loadCars() {
@@ -1130,11 +1141,17 @@
 
 
         allCars =
-          Array.isArray(json)
+          Array.isArray(
+            json
+          )
             ?
             json
             :
-            (json.data || []);
+            (
+              json.data
+              ||
+              []
+            );
 
 
         const brands =
@@ -1178,7 +1195,7 @@
 
 
     // =====================================================
-    // LOAD STATIONS
+    // STATIONS
     // =====================================================
 
     async function loadStations() {
@@ -1530,7 +1547,7 @@
 
 
     // =====================================================
-    // STATION MODAL
+    // LOCATION MODAL
     // =====================================================
 
     function openStationModal() {
@@ -2776,7 +2793,7 @@
 
 
     // =====================================================
-    // RESULTS PAGE
+    // RESULTS
     // =====================================================
 
     function renderResultsPage(
@@ -2997,7 +3014,7 @@
 
 
     // =====================================================
-    // TRANSITIONS
+    // PAGE TRANSITION
     // =====================================================
 
     function switchToResultsPage() {
@@ -3092,6 +3109,10 @@
 
 
 
+    // =====================================================
+    // FINISH + GPS REFRESH
+    // =====================================================
+
     function finishTrip() {
 
       const plannerView =
@@ -3163,6 +3184,67 @@
 
             }
           );
+
+
+          // =============================================
+          // RESET LOCATION DISPLAY
+          // =============================================
+
+          const gpsBadge =
+            document.getElementById(
+              'gpsBadge'
+            );
+
+
+          const stationText =
+            document.getElementById(
+              'currentStationName'
+            );
+
+
+          const mapIframe =
+            document.getElementById(
+              'mapIframe'
+            );
+
+
+          const mapPlaceholder =
+            document.getElementById(
+              'mapPlaceholder'
+            );
+
+
+          gpsBadge.className =
+            'text-[9px] font-bold px-2.5 py-1 rounded-full bg-white/10 text-blue-100';
+
+
+          gpsBadge.innerText =
+            'Detecting...';
+
+
+          stationText.innerText =
+            'Updating location...';
+
+
+          mapIframe
+            .classList
+            .add(
+              'hidden'
+            );
+
+
+          mapPlaceholder
+            .classList
+            .remove(
+              'hidden'
+            );
+
+
+          // =============================================
+          // GET NEW GPS POSITION
+          // =============================================
+
+          autoTrackLocation();
 
 
           window.scrollTo(
