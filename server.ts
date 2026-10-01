@@ -6,16 +6,6 @@ const PORT = Number(process.env.PORT) || 3000;
 // =========================================================
 // CURATED SPECIAL STOPS
 // =========================================================
-//
-// Special Pick rules:
-//
-// 1. Must match one EXACT branch.
-// 2. Must be ahead of the driver.
-// 3. Must be inside the safe recommended range.
-// 4. If several are reachable, highest specialScore wins.
-//
-// Popularity/facilities NEVER override fuel safety.
-//
 
 const SPECIAL_STOPS = [
 
@@ -84,12 +74,6 @@ const SPECIAL_STOPS = [
   // =======================================================
   // NGAO
   // =======================================================
-  //
-  // IMPORTANT:
-  // ONLY this exact branch is special.
-  // Other stations containing "Ngao" are NOT automatically
-  // selected.
-  //
 
   {
     name:
@@ -339,20 +323,6 @@ function coordinateIsClose(
 // =========================================================
 // SAFE CSV PARSER
 // =========================================================
-//
-// The old version used:
-//
-// line.split(',')
-//
-// That breaks fields such as:
-//
-// "PT Gas Station Phayao (Punthai , Max Mart)"
-//
-// because the comma inside the station name was treated as
-// another column.
-//
-// This parser respects quoted CSV values.
-//
 
 function parseCSVLine(line: string) {
 
@@ -380,7 +350,6 @@ function parseCSVLine(line: string) {
       char === '"'
     ) {
 
-      // Handle escaped quote ""
       if (
         insideQuotes
         &&
@@ -577,10 +546,6 @@ async function getStationsFromCSV() {
           );
 
 
-          // ===============================================
-          // BASIC STATION DATA
-          // ===============================================
-
           const name =
             row['ชื่อปั๊มน้ำมัน']
             ||
@@ -641,18 +606,12 @@ async function getStationsFromCSV() {
             distFromPrev;
 
 
-
-          // ===============================================
-          // EXACT SPECIAL BRANCH CHECK
-          // ===============================================
-
           const special =
             getSpecialStop(
               name,
               lat,
               lng
             );
-
 
 
           return {
@@ -679,10 +638,6 @@ async function getStationsFromCSV() {
             kmMarker:
               accumulatedKm,
 
-
-            // =============================================
-            // SPECIAL PICK INFORMATION
-            // =============================================
 
             isSpecial:
               Boolean(
@@ -1013,15 +968,12 @@ const app =
         // =================================================
         // REACHABLE STATIONS
         // =================================================
-        //
-        // Never suggest a station outside the vehicle's
-        // estimated remaining range.
-        //
 
         const maximumReachKm =
           currentPositionKm
           +
           remainingKmCapacity;
+
 
 
         const reachableStations =
@@ -1287,9 +1239,6 @@ const app =
 
 
 
-        // If the safe window contains only the nearest
-        // station, use the next reachable station instead.
-
         if (
           !recommendedStation
         ) {
@@ -1364,10 +1313,6 @@ const app =
           );
 
 
-
-        // If there is no distinct station inside the 92%
-        // window, choose the furthest remaining reachable
-        // station without duplicating another option.
 
         if (
           !relaxedStation
@@ -1500,15 +1445,116 @@ const app =
 
 
         // =================================================
-        // SPECIAL PICK
+        // SPECIAL PICK — DYNAMIC TARGET SYSTEM
         // =================================================
         //
-        // Special Pick uses the SAME safe window as the
-        // normal Recommended option.
+        // OLD:
         //
-        // A high specialScore can NEVER make an unsafe
-        // station appear.
+        // Highest specialScore inside the safe range wins.
         //
+        // Problem:
+        // One strong stop could appear again and again.
+        //
+        //
+        // NEW:
+        //
+        // 1. Calculate an ideal stopping distance based on
+        //    the current fuel level.
+        //
+        // 2. Find Special Stops around that part of the trip.
+        //
+        // 3. Choose the station closest to the ideal target.
+        //
+        // 4. specialScore gives only a SMALL bonus.
+        //
+        // Therefore changing fuel level can naturally move
+        // the Special Pick farther or closer along the route.
+        // =================================================
+
+
+        // -------------------------------------------------
+        // IDEAL SPECIAL STOP RATIO
+        // -------------------------------------------------
+
+        let idealSpecialRatio =
+          0.75;
+
+
+        if (
+          Number(
+            fuelLevel
+          )
+          ===
+          1
+        ) {
+
+          idealSpecialRatio =
+            0.28;
+
+
+        } else if (
+          Number(
+            fuelLevel
+          )
+          ===
+          2
+        ) {
+
+          idealSpecialRatio =
+            0.42;
+
+
+        } else if (
+          Number(
+            fuelLevel
+          )
+          ===
+          3
+        ) {
+
+          idealSpecialRatio =
+            0.56;
+
+
+        } else if (
+          Number(
+            fuelLevel
+          )
+          ===
+          4
+        ) {
+
+          idealSpecialRatio =
+            0.67;
+
+
+        } else {
+
+          idealSpecialRatio =
+            0.75;
+
+        }
+
+
+
+        // -------------------------------------------------
+        // TARGET KM
+        // -------------------------------------------------
+
+        const idealSpecialKm =
+          currentPositionKm
+          +
+          (
+            remainingKmCapacity
+            *
+            idealSpecialRatio
+          );
+
+
+
+        // -------------------------------------------------
+        // MAXIMUM SAFE SPECIAL DISTANCE
+        // -------------------------------------------------
 
         const specialSafeMaxKm =
           currentPositionKm
@@ -1521,7 +1567,76 @@ const app =
 
 
 
-        const safeSpecialStations =
+        // -------------------------------------------------
+        // MINIMUM DISTANCE
+        //
+        // Prevent a "Special Pick" from appearing almost
+        // immediately after the driver's current position.
+        // -------------------------------------------------
+
+        let minimumSpecialDistance =
+          remainingKmCapacity
+          *
+          0.16;
+
+
+        if (
+          Number(
+            fuelLevel
+          )
+          ===
+          1
+        ) {
+
+          minimumSpecialDistance =
+            5;
+
+        }
+
+
+        minimumSpecialDistance =
+          Math.max(
+            5,
+            minimumSpecialDistance
+          );
+
+
+
+        const specialMinimumKm =
+          currentPositionKm
+          +
+          minimumSpecialDistance;
+
+
+
+        // -------------------------------------------------
+        // PREFERRED SEARCH WINDOW
+        //
+        // We don't want a "special" stop hundreds of km
+        // away from the ideal stopping point just because
+        // it has a high score.
+        //
+        // The allowed difference grows slightly with range.
+        // -------------------------------------------------
+
+        const allowedTargetDifference =
+          Math.max(
+
+            45,
+
+            remainingKmCapacity
+            *
+            0.22
+
+          );
+
+
+
+        // -------------------------------------------------
+        // CANDIDATES
+        // -------------------------------------------------
+
+        const specialCandidates =
           reachableStations
 
             .filter(
@@ -1532,9 +1647,77 @@ const app =
                 &&
 
                 station.kmMarker
+                >=
+                specialMinimumKm
+
+                &&
+
+                station.kmMarker
                 <=
                 specialSafeMaxKm
 
+            )
+
+            .map(
+              station => {
+
+
+                const targetDifference =
+                  Math.abs(
+                    station.kmMarker
+                    -
+                    idealSpecialKm
+                  );
+
+
+                // specialScore is intentionally only a
+                // small bonus.
+                //
+                // Score 100 = about 18 km advantage.
+                // Score 70 = no advantage.
+
+                const qualityBonus =
+                  Math.max(
+
+                    0,
+
+                    (
+                      station.specialScore
+                      -
+                      70
+                    )
+                    /
+                    30
+                    *
+                    18
+
+                  );
+
+
+                const selectionValue =
+                  targetDifference
+                  -
+                  qualityBonus;
+
+
+                return {
+
+                  station,
+
+                  targetDifference,
+
+                  selectionValue
+
+                };
+
+              }
+            )
+
+            .filter(
+              candidate =>
+                candidate.targetDifference
+                <=
+                allowedTargetDifference
             )
 
             .sort(
@@ -1545,33 +1728,58 @@ const app =
 
 
                 // -----------------------------------------
-                // 1. Higher curated score first
+                // MAIN FACTOR:
+                // closeness to ideal trip stopping point
                 // -----------------------------------------
 
                 if (
-                  b.specialScore
-                  !==
-                  a.specialScore
+                  Math.abs(
+                    a.selectionValue
+                    -
+                    b.selectionValue
+                  )
+                  >
+                  2
                 ) {
 
                   return (
-                    b.specialScore
+                    a.selectionValue
                     -
-                    a.specialScore
+                    b.selectionValue
                   );
 
                 }
 
 
                 // -----------------------------------------
-                // 2. If scores are equal,
-                //    prefer the farther useful stop
+                // CLOSE RESULT:
+                // higher curated quality score wins
+                // -----------------------------------------
+
+                if (
+                  b.station.specialScore
+                  !==
+                  a.station.specialScore
+                ) {
+
+                  return (
+                    b.station.specialScore
+                    -
+                    a.station.specialScore
+                  );
+
+                }
+
+
+                // -----------------------------------------
+                // FINAL TIE:
+                // farther useful stop wins
                 // -----------------------------------------
 
                 return (
-                  b.kmMarker
+                  b.station.kmMarker
                   -
-                  a.kmMarker
+                  a.station.kmMarker
                 );
 
               }
@@ -1579,14 +1787,22 @@ const app =
 
 
 
+        // =================================================
+        // SELECT SPECIAL STOP
+        // =================================================
+
         const specialStation =
-          safeSpecialStations.length > 0
+          specialCandidates.length > 0
             ?
-            safeSpecialStations[0]
+            specialCandidates[0].station
             :
             null;
 
 
+
+        // =================================================
+        // FORMAT SPECIAL RESPONSE
+        // =================================================
 
         const specialRecommendation =
           specialStation
