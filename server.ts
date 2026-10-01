@@ -7,14 +7,6 @@ const PORT = Number(process.env.PORT) || 3000;
 // SPECIAL STATION PRESETS
 // =========================================================
 
-// Starter curated stops.
-// We can expand this list later as we research more stations.
-//
-// Important:
-// These presets do NOT bypass the fuel safety calculation.
-// A special stop only appears when the vehicle can safely
-// reach it within the recommended fuel range.
-
 const SPECIAL_STATION_PRESETS = [
   {
     keywords: ['งาว', 'ngao', 'ngaw'],
@@ -50,7 +42,6 @@ function parseBoolean(value: any) {
 
 
 function getSpecialPreset(name: string) {
-
   const normalizedName =
     String(name || '')
       .toLowerCase();
@@ -68,38 +59,25 @@ function getSpecialPreset(name: string) {
 
 
 // =========================================================
-// STATION CSV
+// READ STATIONS CSV
 // =========================================================
 
 async function getStationsFromCSV() {
-
   try {
-
     const fileText =
       await Bun.file(
         'data/stations.csv'
       ).text();
 
-
     const lines =
       fileText
         .split(/\r?\n/)
-        .map(
-          line =>
-            line.trim()
-        )
-        .filter(
-          line =>
-            line.length > 0
-        );
+        .map(line => line.trim())
+        .filter(line => line.length > 0);
 
-
-    if (
-      lines.length <= 1
-    ) {
+    if (lines.length <= 1) {
       return [];
     }
-
 
     const headers =
       lines[0]
@@ -108,21 +86,15 @@ async function getStationsFromCSV() {
           header =>
             header
               .trim()
-              .replace(
-                /^"|"$/g,
-                ''
-              )
+              .replace(/^"|"$/g, '')
         );
 
-
     let accumulatedKm = 0;
-
 
     return lines
       .slice(1)
       .map(
         (line, index) => {
-
           const values =
             line
               .split(',')
@@ -130,25 +102,17 @@ async function getStationsFromCSV() {
                 value =>
                   value
                     .trim()
-                    .replace(
-                      /^"|"$/g,
-                      ''
-                    )
+                    .replace(/^"|"$/g, '')
               );
-
 
           const row: any = {};
 
-
           headers.forEach(
             (header, i) => {
-
               row[header] =
                 values[i];
-
             }
           );
-
 
           const name =
             row['ชื่อปั๊มน้ำมัน']
@@ -157,7 +121,6 @@ async function getStationsFromCSV() {
             ||
             'Gas Station';
 
-
           const brand =
             row['แบรนด์']
             ||
@@ -165,14 +128,12 @@ async function getStationsFromCSV() {
             ||
             'Station';
 
-
           const mapUrl =
             row['Google Maps Link']
             ||
             row['googleMapUrl']
             ||
             '';
-
 
           const lat =
             parseFloat(
@@ -183,7 +144,6 @@ async function getStationsFromCSV() {
             ||
             0;
 
-
           const lng =
             parseFloat(
               row['Longitude']
@@ -192,7 +152,6 @@ async function getStationsFromCSV() {
             )
             ||
             0;
-
 
           const distFromPrev =
             parseFloat(
@@ -203,25 +162,13 @@ async function getStationsFromCSV() {
             ||
             0;
 
-
           accumulatedKm +=
             distFromPrev;
 
 
-          // ---------------------------------------------
+          // =============================================
           // OPTIONAL SPECIAL DATA FROM CSV
-          // ---------------------------------------------
-          //
-          // In the future, stations.csv may contain:
-          //
-          // specialRecommend
-          // specialTitle
-          // specialDescription
-          // specialTags
-          // specialPriority
-          //
-          // Example:
-          // true,Traveler Favorite,...,"Food|Coffee|24/7",10
+          // =============================================
 
           const csvSpecial =
             parseBoolean(
@@ -232,18 +179,15 @@ async function getStationsFromCSV() {
               row['special']
             );
 
-
           const preset =
             getSpecialPreset(
               name
             );
 
-
           const isSpecial =
             csvSpecial
             ||
             Boolean(preset);
-
 
           const specialTitle =
             row['specialTitle']
@@ -254,7 +198,6 @@ async function getStationsFromCSV() {
             ||
             'Special Recommendation';
 
-
           const specialDescription =
             row['specialDescription']
             ||
@@ -264,10 +207,8 @@ async function getStationsFromCSV() {
             ||
             'A featured stop selected by the planner for this journey.';
 
-
           let specialTags: string[] =
             [];
-
 
           const csvTags =
             row['specialTags']
@@ -276,9 +217,7 @@ async function getStationsFromCSV() {
             ||
             '';
 
-
           if (csvTags) {
-
             specialTags =
               String(csvTags)
                 .split('|')
@@ -289,12 +228,9 @@ async function getStationsFromCSV() {
                 .filter(Boolean);
 
           } else if (preset) {
-
             specialTags =
               preset.tags;
-
           }
-
 
           const specialPriority =
             Number(
@@ -311,7 +247,6 @@ async function getStationsFromCSV() {
 
 
           return {
-
             id:
               `station-${index}`,
 
@@ -340,25 +275,18 @@ async function getStationsFromCSV() {
             specialTags,
 
             specialPriority
-
           };
-
         }
       );
 
-
   } catch (error) {
-
     console.error(
       'Error reading stations.csv:',
       error
     );
 
-
     return [];
-
   }
-
 }
 
 
@@ -373,11 +301,9 @@ const app =
     .get(
       '/',
       () => {
-
         return Bun.file(
           'index.html'
         );
-
       }
     )
 
@@ -385,11 +311,9 @@ const app =
     .get(
       '/index.html',
       () => {
-
         return Bun.file(
           'index.html'
         );
-
       }
     )
 
@@ -397,28 +321,20 @@ const app =
     .get(
       '/api/cars',
       async () => {
-
         try {
-
           return await Bun.file(
             'data/cars.json'
           ).json();
 
-
         } catch (error) {
-
           return {
-
             status:
               'error',
 
             message:
               'Cars data not found'
-
           };
-
         }
-
       }
     )
 
@@ -426,9 +342,7 @@ const app =
     .get(
       '/api/stations',
       async () => {
-
         return await getStationsFromCSV();
-
       }
     )
 
@@ -444,7 +358,6 @@ const app =
         }
       ) => {
 
-
         const {
           carId,
           fuelLevel = 3,
@@ -457,16 +370,14 @@ const app =
         // CAR DATA
         // =================================================
 
-        let cars: any[] = [];
-
+        let cars: any[] =
+          [];
 
         try {
-
           const carsData =
             await Bun.file(
               'data/cars.json'
             ).json();
-
 
           cars =
             Array.isArray(
@@ -481,24 +392,18 @@ const app =
                 []
               );
 
-
         } catch (error) {
-
-          cars = [];
-
+          cars =
+            [];
         }
 
 
         const selectedCar =
           cars.find(
             car =>
-              String(
-                car.id
-              )
+              String(car.id)
               ===
-              String(
-                carId
-              )
+              String(carId)
           )
           ||
           {
@@ -535,9 +440,7 @@ const app =
         const currentFuelRatio =
           Math.min(
             Math.max(
-              Number(
-                fuelLevel
-              )
+              Number(fuelLevel)
               /
               5,
               0
@@ -553,9 +456,7 @@ const app =
 
 
         const currentPositionKm =
-          Number(
-            currentKm
-          )
+          Number(currentKm)
           ||
           0;
 
@@ -581,7 +482,6 @@ const app =
           ratio: number,
           excludedIds: string[] = []
         ) {
-
           const maxKm =
             currentPositionKm
             +
@@ -590,7 +490,6 @@ const app =
               *
               ratio
             );
-
 
           const validStations =
             stationsAhead.filter(
@@ -604,22 +503,17 @@ const app =
                 )
             );
 
-
           if (
             validStations.length
             ===
             0
           ) {
-
             return null;
-
           }
-
 
           return validStations[
             validStations.length - 1
           ];
-
         }
 
 
@@ -629,14 +523,11 @@ const app =
           title: string,
           description: string
         ) {
-
           if (!station) {
             return null;
           }
 
-
           return {
-
             type,
 
             title,
@@ -676,14 +567,12 @@ const app =
 
             googleMapUrl:
               station.googleMapUrl
-
           };
-
         }
 
 
         // =================================================
-        // NORMAL RECOMMENDATION SAFETY RATIO
+        // RECOMMENDED SAFETY RATIO
         // =================================================
 
         let recommendedRatio =
@@ -691,52 +580,36 @@ const app =
 
 
         if (
-          Number(
-            fuelLevel
-          )
+          Number(fuelLevel)
           ===
           1
         ) {
-
           recommendedRatio =
             0.45;
 
-
         } else if (
-          Number(
-            fuelLevel
-          )
+          Number(fuelLevel)
           ===
           2
         ) {
-
           recommendedRatio =
             0.60;
 
-
         } else if (
-          Number(
-            fuelLevel
-          )
+          Number(fuelLevel)
           ===
           3
         ) {
-
           recommendedRatio =
             0.70;
 
-
         } else if (
-          Number(
-            fuelLevel
-          )
+          Number(fuelLevel)
           ===
           4
         ) {
-
           recommendedRatio =
             0.80;
-
         }
 
 
@@ -779,9 +652,7 @@ const app =
             soonStation?.id,
             recommendedStation?.id
           ]
-            .filter(
-              Boolean
-            )
+            .filter(Boolean)
           as string[];
 
 
@@ -801,53 +672,39 @@ const app =
 
 
         if (
-          Number(
-            fuelLevel
-          )
+          Number(fuelLevel)
           ===
           1
         ) {
-
           recommendedDescription =
             'Low fuel detected. A closer stop is recommended for a larger safety reserve.';
 
-
         } else if (
-          Number(
-            fuelLevel
-          )
+          Number(fuelLevel)
           ===
           2
         ) {
-
           recommendedDescription =
             'Fuel is running low, so a closer stop is recommended for extra safety.';
 
-
         } else if (
-          Number(
-            fuelLevel
-          )
+          Number(fuelLevel)
           ===
           3
         ) {
-
           recommendedDescription =
             'A safer stop with extra reserve for traffic, delays, or unexpected conditions.';
-
         }
 
 
         const options =
           [
-
             formatStation(
               soonStation,
               'soon',
               'Refuel Soon',
               'The nearest fuel station ahead.'
             ),
-
 
             formatStation(
               recommendedStation,
@@ -856,30 +713,19 @@ const app =
               recommendedDescription
             ),
 
-
             formatStation(
               relaxedStation,
               'relaxed',
               'Relaxed',
               'Travel farther while keeping an emergency fuel reserve.'
             )
-
           ]
-            .filter(
-              Boolean
-            );
+            .filter(Boolean);
 
 
         // =================================================
         // SPECIAL RECOMMENDATION
         // =================================================
-        //
-        // Important:
-        // Special stations must still stay inside the SAME
-        // safe range used by Recommended.
-        //
-        // Being a special station never makes the app
-        // recommend travelling beyond the safety buffer.
 
         const specialSafeMaxKm =
           currentPositionKm
@@ -904,32 +750,23 @@ const app =
             .sort(
               (a, b) => {
 
-                // Higher priority first.
-
                 if (
                   b.specialPriority
                   !==
                   a.specialPriority
                 ) {
-
                   return (
                     b.specialPriority
                     -
                     a.specialPriority
                   );
-
                 }
-
-
-                // If priority is equal,
-                // prefer the station farther along the route.
 
                 return (
                   b.kmMarker
                   -
                   a.kmMarker
                 );
-
               }
             );
 
@@ -946,7 +783,6 @@ const app =
           specialStation
             ?
             {
-
               type:
                 'special',
 
@@ -998,7 +834,6 @@ const app =
 
               googleMapUrl:
                 specialStation.googleMapUrl
-
             }
             :
             null;
@@ -1009,7 +844,6 @@ const app =
         // =================================================
 
         return {
-
           estimatedRemainingRange:
             Math.round(
               remainingKmCapacity
@@ -1022,9 +856,7 @@ const app =
           specialRecommendation,
 
           options
-
         };
-
       }
     )
 
@@ -1039,10 +871,8 @@ const app =
       },
 
       server => {
-
         console.log(
           `🚀 Trip Fuel Planner is running at http://${server.hostname}:${server.port}`
         );
-
       }
     );
