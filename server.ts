@@ -2,456 +2,1047 @@ import { Elysia } from 'elysia';
 
 const PORT = Number(process.env.PORT) || 3000;
 
+
+// =========================================================
+// SPECIAL STATION PRESETS
+// =========================================================
+
+// Starter curated stops.
+// We can expand this list later as we research more stations.
+//
+// Important:
+// These presets do NOT bypass the fuel safety calculation.
+// A special stop only appears when the vehicle can safely
+// reach it within the recommended fuel range.
+
+const SPECIAL_STATION_PRESETS = [
+  {
+    keywords: ['งาว', 'ngao', 'ngaw'],
+    title: 'Featured Route Stop',
+    description:
+      'A featured stop around Ngao, highlighted when it fits safely within your remaining fuel range.',
+    tags: [
+      'Featured Stop',
+      'Route Break'
+    ],
+    priority: 10
+  }
+];
+
+
+// =========================================================
+// HELPERS
+// =========================================================
+
+function parseBoolean(value: any) {
+  const normalized =
+    String(value || '')
+      .trim()
+      .toLowerCase();
+
+  return [
+    'true',
+    '1',
+    'yes',
+    'y'
+  ].includes(normalized);
+}
+
+
+function getSpecialPreset(name: string) {
+
+  const normalizedName =
+    String(name || '')
+      .toLowerCase();
+
+  return SPECIAL_STATION_PRESETS.find(
+    preset =>
+      preset.keywords.some(
+        keyword =>
+          normalizedName.includes(
+            keyword.toLowerCase()
+          )
+      )
+  );
+}
+
+
+// =========================================================
+// STATION CSV
+// =========================================================
+
 async function getStationsFromCSV() {
+
   try {
-    const fileText = await Bun.file('data/stations.csv').text();
 
-    const lines = fileText
-      .split(/\r?\n/)
-      .map(l => l.trim())
-      .filter(l => l.length > 0);
+    const fileText =
+      await Bun.file(
+        'data/stations.csv'
+      ).text();
 
-    if (lines.length <= 1) {
+
+    const lines =
+      fileText
+        .split(/\r?\n/)
+        .map(
+          line =>
+            line.trim()
+        )
+        .filter(
+          line =>
+            line.length > 0
+        );
+
+
+    if (
+      lines.length <= 1
+    ) {
       return [];
     }
 
-    const headers = lines[0]
-      .split(',')
-      .map(h => h.trim().replace(/^"|"$/g, ''));
+
+    const headers =
+      lines[0]
+        .split(',')
+        .map(
+          header =>
+            header
+              .trim()
+              .replace(
+                /^"|"$/g,
+                ''
+              )
+        );
+
 
     let accumulatedKm = 0;
 
-    return lines.slice(1).map((line, index) => {
-      const values = line
-        .split(',')
-        .map(v => v.trim().replace(/^"|"$/g, ''));
 
-      const row: any = {};
+    return lines
+      .slice(1)
+      .map(
+        (line, index) => {
 
-      headers.forEach((header, i) => {
-        row[header] = values[i];
-      });
+          const values =
+            line
+              .split(',')
+              .map(
+                value =>
+                  value
+                    .trim()
+                    .replace(
+                      /^"|"$/g,
+                      ''
+                    )
+              );
 
-      const name =
-        row['ชื่อปั๊มน้ำมัน'] ||
-        row['name'] ||
-        'Gas Station';
 
-      const brand =
-        row['แบรนด์'] ||
-        row['brand'] ||
-        'Station';
+          const row: any = {};
 
-      const mapUrl =
-        row['Google Maps Link'] ||
-        row['googleMapUrl'] ||
-        '';
 
-      const lat =
-        parseFloat(row['Latitude'] || '0') || 0;
+          headers.forEach(
+            (header, i) => {
 
-      const lng =
-        parseFloat(row['Longitude'] || '0') || 0;
+              row[header] =
+                values[i];
 
-      const distFromPrev =
-        parseFloat(
-          row['ห่างจากปั๊มก่อนหน้า (KM)'] || '0'
-        ) || 0;
+            }
+          );
 
-      accumulatedKm += distFromPrev;
 
-      return {
-        id: `station-${index}`,
-        name,
-        brand,
-        lat,
-        lng,
-        googleMapUrl:
-          mapUrl ||
-          `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name)}`,
-        kmMarker: accumulatedKm
-      };
-    });
+          const name =
+            row['ชื่อปั๊มน้ำมัน']
+            ||
+            row['name']
+            ||
+            'Gas Station';
+
+
+          const brand =
+            row['แบรนด์']
+            ||
+            row['brand']
+            ||
+            'Station';
+
+
+          const mapUrl =
+            row['Google Maps Link']
+            ||
+            row['googleMapUrl']
+            ||
+            '';
+
+
+          const lat =
+            parseFloat(
+              row['Latitude']
+              ||
+              '0'
+            )
+            ||
+            0;
+
+
+          const lng =
+            parseFloat(
+              row['Longitude']
+              ||
+              '0'
+            )
+            ||
+            0;
+
+
+          const distFromPrev =
+            parseFloat(
+              row['ห่างจากปั๊มก่อนหน้า (KM)']
+              ||
+              '0'
+            )
+            ||
+            0;
+
+
+          accumulatedKm +=
+            distFromPrev;
+
+
+          // ---------------------------------------------
+          // OPTIONAL SPECIAL DATA FROM CSV
+          // ---------------------------------------------
+          //
+          // In the future, stations.csv may contain:
+          //
+          // specialRecommend
+          // specialTitle
+          // specialDescription
+          // specialTags
+          // specialPriority
+          //
+          // Example:
+          // true,Traveler Favorite,...,"Food|Coffee|24/7",10
+
+          const csvSpecial =
+            parseBoolean(
+              row['specialRecommend']
+              ||
+              row['Special Recommend']
+              ||
+              row['special']
+            );
+
+
+          const preset =
+            getSpecialPreset(
+              name
+            );
+
+
+          const isSpecial =
+            csvSpecial
+            ||
+            Boolean(preset);
+
+
+          const specialTitle =
+            row['specialTitle']
+            ||
+            row['Special Title']
+            ||
+            preset?.title
+            ||
+            'Special Recommendation';
+
+
+          const specialDescription =
+            row['specialDescription']
+            ||
+            row['Special Description']
+            ||
+            preset?.description
+            ||
+            'A featured stop selected by the planner for this journey.';
+
+
+          let specialTags: string[] =
+            [];
+
+
+          const csvTags =
+            row['specialTags']
+            ||
+            row['Special Tags']
+            ||
+            '';
+
+
+          if (csvTags) {
+
+            specialTags =
+              String(csvTags)
+                .split('|')
+                .map(
+                  tag =>
+                    tag.trim()
+                )
+                .filter(Boolean);
+
+          } else if (preset) {
+
+            specialTags =
+              preset.tags;
+
+          }
+
+
+          const specialPriority =
+            Number(
+              row['specialPriority']
+              ||
+              row['Special Priority']
+              ||
+              preset?.priority
+              ||
+              0
+            )
+            ||
+            0;
+
+
+          return {
+
+            id:
+              `station-${index}`,
+
+            name,
+
+            brand,
+
+            lat,
+
+            lng,
+
+            googleMapUrl:
+              mapUrl
+              ||
+              `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(name)}`,
+
+            kmMarker:
+              accumulatedKm,
+
+            isSpecial,
+
+            specialTitle,
+
+            specialDescription,
+
+            specialTags,
+
+            specialPriority
+
+          };
+
+        }
+      );
+
 
   } catch (error) {
+
     console.error(
       'Error reading stations.csv:',
       error
     );
 
+
     return [];
+
   }
+
 }
 
 
+// =========================================================
+// APP
+// =========================================================
 
-const app = new Elysia()
-
-  .get('/', () => {
-    return Bun.file('index.html');
-  })
-
-  .get('/index.html', () => {
-    return Bun.file('index.html');
-  })
+const app =
+  new Elysia()
 
 
+    .get(
+      '/',
+      () => {
 
-  .get('/api/cars', async () => {
-    try {
-      return await Bun.file(
-        'data/cars.json'
-      ).json();
+        return Bun.file(
+          'index.html'
+        );
 
-    } catch (error) {
-      return {
-        status: 'error',
-        message: 'Cars data not found'
-      };
-    }
-  })
+      }
+    )
 
 
+    .get(
+      '/index.html',
+      () => {
 
-  .get('/api/stations', async () => {
-    return await getStationsFromCSV();
-  })
+        return Bun.file(
+          'index.html'
+        );
 
-
-
-  .post(
-    '/api/plan-trip',
-
-    async ({ body }: { body: any }) => {
-
-      const {
-        carId,
-        fuelLevel = 3,
-        currentKm = 0
-      } = body || {};
+      }
+    )
 
 
-      let cars: any[] = [];
+    .get(
+      '/api/cars',
+      async () => {
 
-      try {
-        const carsData =
-          await Bun.file(
+        try {
+
+          return await Bun.file(
             'data/cars.json'
           ).json();
 
-        cars =
-          Array.isArray(carsData)
-            ? carsData
-            : (carsData.data || []);
 
-      } catch (e) {
-        cars = [];
+        } catch (error) {
+
+          return {
+
+            status:
+              'error',
+
+            message:
+              'Cars data not found'
+
+          };
+
+        }
+
       }
+    )
 
 
+    .get(
+      '/api/stations',
+      async () => {
 
-      const selectedCar =
-        cars.find(
-          c =>
-            String(c.id) ===
-            String(carId)
-        )
-        ||
+        return await getStationsFromCSV();
+
+      }
+    )
+
+
+    .post(
+      '/api/plan-trip',
+
+      async (
         {
-          tankCapacity: 45,
-          fuelEfficiency: 15
-        };
+          body
+        }: {
+          body: any
+        }
+      ) => {
 
 
-      const tankCapacity =
-        Number(
-          selectedCar.tankCapacity
-        ) || 45;
+        const {
+          carId,
+          fuelLevel = 3,
+          currentKm = 0
+        } =
+          body || {};
 
 
-      const fuelEfficiency =
-        Number(
-          selectedCar.fuelEfficiency
-        ) || 15;
+        // =================================================
+        // CAR DATA
+        // =================================================
+
+        let cars: any[] = [];
 
 
+        try {
 
-      const fullRange =
-        tankCapacity *
-        fuelEfficiency;
-
-
-      const currentFuelRatio =
-        Math.min(
-          Math.max(
-            Number(fuelLevel) / 5,
-            0
-          ),
-          1
-        );
+          const carsData =
+            await Bun.file(
+              'data/cars.json'
+            ).json();
 
 
-      const remainingKmCapacity =
-        fullRange *
-        currentFuelRatio;
+          cars =
+            Array.isArray(
+              carsData
+            )
+              ?
+              carsData
+              :
+              (
+                carsData.data
+                ||
+                []
+              );
 
 
-      const currentPositionKm =
-        Number(currentKm) || 0;
+        } catch (error) {
+
+          cars = [];
+
+        }
 
 
-
-      const stations =
-        await getStationsFromCSV();
-
-
-      const stationsAhead =
-        stations.filter(
-          station =>
-            station.kmMarker >
-            currentPositionKm
-        );
-
-
-
-      function getFurthestStationWithin(
-        ratio: number,
-        excludedIds: string[] = []
-      ) {
-
-        const maxKm =
-          currentPositionKm +
-          (
-            remainingKmCapacity *
-            ratio
-          );
-
-
-        const validStations =
-          stationsAhead.filter(
-            station =>
-              station.kmMarker <= maxKm &&
-              !excludedIds.includes(
-                station.id
+        const selectedCar =
+          cars.find(
+            car =>
+              String(
+                car.id
               )
+              ===
+              String(
+                carId
+              )
+          )
+          ||
+          {
+            tankCapacity:
+              45,
+
+            fuelEfficiency:
+              15
+          };
+
+
+        const tankCapacity =
+          Number(
+            selectedCar.tankCapacity
+          )
+          ||
+          45;
+
+
+        const fuelEfficiency =
+          Number(
+            selectedCar.fuelEfficiency
+          )
+          ||
+          15;
+
+
+        const fullRange =
+          tankCapacity
+          *
+          fuelEfficiency;
+
+
+        const currentFuelRatio =
+          Math.min(
+            Math.max(
+              Number(
+                fuelLevel
+              )
+              /
+              5,
+              0
+            ),
+            1
           );
+
+
+        const remainingKmCapacity =
+          fullRange
+          *
+          currentFuelRatio;
+
+
+        const currentPositionKm =
+          Number(
+            currentKm
+          )
+          ||
+          0;
+
+
+        // =================================================
+        // STATIONS
+        // =================================================
+
+        const stations =
+          await getStationsFromCSV();
+
+
+        const stationsAhead =
+          stations.filter(
+            station =>
+              station.kmMarker
+              >
+              currentPositionKm
+          );
+
+
+        function getFurthestStationWithin(
+          ratio: number,
+          excludedIds: string[] = []
+        ) {
+
+          const maxKm =
+            currentPositionKm
+            +
+            (
+              remainingKmCapacity
+              *
+              ratio
+            );
+
+
+          const validStations =
+            stationsAhead.filter(
+              station =>
+                station.kmMarker
+                <=
+                maxKm
+                &&
+                !excludedIds.includes(
+                  station.id
+                )
+            );
+
+
+          if (
+            validStations.length
+            ===
+            0
+          ) {
+
+            return null;
+
+          }
+
+
+          return validStations[
+            validStations.length - 1
+          ];
+
+        }
+
+
+        function formatStation(
+          station: any,
+          type: string,
+          title: string,
+          description: string
+        ) {
+
+          if (!station) {
+            return null;
+          }
+
+
+          return {
+
+            type,
+
+            title,
+
+            description,
+
+            name:
+              station.name,
+
+            brand:
+              station.brand,
+
+            kmMarker:
+              Math.round(
+                station.kmMarker
+                *
+                10
+              )
+              /
+              10,
+
+            distanceFromUser:
+              Math.max(
+                0,
+                Math.round(
+                  (
+                    station.kmMarker
+                    -
+                    currentPositionKm
+                  )
+                  *
+                  10
+                )
+                /
+                10
+              ),
+
+            googleMapUrl:
+              station.googleMapUrl
+
+          };
+
+        }
+
+
+        // =================================================
+        // NORMAL RECOMMENDATION SAFETY RATIO
+        // =================================================
+
+        let recommendedRatio =
+          0.85;
 
 
         if (
-          validStations.length === 0
+          Number(
+            fuelLevel
+          )
+          ===
+          1
         ) {
-          return null;
+
+          recommendedRatio =
+            0.45;
+
+
+        } else if (
+          Number(
+            fuelLevel
+          )
+          ===
+          2
+        ) {
+
+          recommendedRatio =
+            0.60;
+
+
+        } else if (
+          Number(
+            fuelLevel
+          )
+          ===
+          3
+        ) {
+
+          recommendedRatio =
+            0.70;
+
+
+        } else if (
+          Number(
+            fuelLevel
+          )
+          ===
+          4
+        ) {
+
+          recommendedRatio =
+            0.80;
+
         }
 
 
-        return validStations[
-          validStations.length - 1
-        ];
-      }
+        // =================================================
+        // OPTION 1 — REFUEL SOON
+        // =================================================
+
+        const soonStation =
+          stationsAhead.length > 0
+            ?
+            stationsAhead[0]
+            :
+            null;
 
 
+        // =================================================
+        // OPTION 2 — RECOMMENDED
+        // =================================================
 
-      function formatStation(
-        station: any,
-        type: string,
-        title: string,
-        description: string
-      ) {
+        const recommendedStation =
+          getFurthestStationWithin(
+            recommendedRatio,
 
-        if (!station) {
-          return null;
+            soonStation
+              ?
+              [
+                soonStation.id
+              ]
+              :
+              []
+          );
+
+
+        // =================================================
+        // OPTION 3 — RELAXED
+        // =================================================
+
+        const excludedIds =
+          [
+            soonStation?.id,
+            recommendedStation?.id
+          ]
+            .filter(
+              Boolean
+            )
+          as string[];
+
+
+        const relaxedStation =
+          getFurthestStationWithin(
+            0.92,
+            excludedIds
+          );
+
+
+        // =================================================
+        // DESCRIPTIONS
+        // =================================================
+
+        let recommendedDescription =
+          'A balanced fuel stop with a comfortable safety reserve.';
+
+
+        if (
+          Number(
+            fuelLevel
+          )
+          ===
+          1
+        ) {
+
+          recommendedDescription =
+            'Low fuel detected. A closer stop is recommended for a larger safety reserve.';
+
+
+        } else if (
+          Number(
+            fuelLevel
+          )
+          ===
+          2
+        ) {
+
+          recommendedDescription =
+            'Fuel is running low, so a closer stop is recommended for extra safety.';
+
+
+        } else if (
+          Number(
+            fuelLevel
+          )
+          ===
+          3
+        ) {
+
+          recommendedDescription =
+            'A safer stop with extra reserve for traffic, delays, or unexpected conditions.';
+
         }
 
 
-        return {
-          type,
-          title,
-          description,
+        const options =
+          [
 
-          name:
-            station.name,
-
-          brand:
-            station.brand,
-
-          kmMarker:
-            Math.round(
-              station.kmMarker * 10
-            ) / 10,
-
-          distanceFromUser:
-            Math.max(
-              0,
-              Math.round(
-                (
-                  station.kmMarker -
-                  currentPositionKm
-                ) * 10
-              ) / 10
+            formatStation(
+              soonStation,
+              'soon',
+              'Refuel Soon',
+              'The nearest fuel station ahead.'
             ),
 
-          googleMapUrl:
-            station.googleMapUrl
+
+            formatStation(
+              recommendedStation,
+              'recommended',
+              'Recommended',
+              recommendedDescription
+            ),
+
+
+            formatStation(
+              relaxedStation,
+              'relaxed',
+              'Relaxed',
+              'Travel farther while keeping an emergency fuel reserve.'
+            )
+
+          ]
+            .filter(
+              Boolean
+            );
+
+
+        // =================================================
+        // SPECIAL RECOMMENDATION
+        // =================================================
+        //
+        // Important:
+        // Special stations must still stay inside the SAME
+        // safe range used by Recommended.
+        //
+        // Being a special station never makes the app
+        // recommend travelling beyond the safety buffer.
+
+        const specialSafeMaxKm =
+          currentPositionKm
+          +
+          (
+            remainingKmCapacity
+            *
+            recommendedRatio
+          );
+
+
+        const safeSpecialStations =
+          stationsAhead
+            .filter(
+              station =>
+                station.isSpecial
+                &&
+                station.kmMarker
+                <=
+                specialSafeMaxKm
+            )
+            .sort(
+              (a, b) => {
+
+                // Higher priority first.
+
+                if (
+                  b.specialPriority
+                  !==
+                  a.specialPriority
+                ) {
+
+                  return (
+                    b.specialPriority
+                    -
+                    a.specialPriority
+                  );
+
+                }
+
+
+                // If priority is equal,
+                // prefer the station farther along the route.
+
+                return (
+                  b.kmMarker
+                  -
+                  a.kmMarker
+                );
+
+              }
+            );
+
+
+        const specialStation =
+          safeSpecialStations.length > 0
+            ?
+            safeSpecialStations[0]
+            :
+            null;
+
+
+        const specialRecommendation =
+          specialStation
+            ?
+            {
+
+              type:
+                'special',
+
+              title:
+                specialStation.specialTitle
+                ||
+                'Special Recommendation',
+
+              description:
+                specialStation.specialDescription
+                ||
+                'A featured stop selected for this journey.',
+
+              tags:
+                specialStation.specialTags
+                ||
+                [],
+
+              name:
+                specialStation.name,
+
+              brand:
+                specialStation.brand,
+
+              kmMarker:
+                Math.round(
+                  specialStation.kmMarker
+                  *
+                  10
+                )
+                /
+                10,
+
+              distanceFromUser:
+                Math.max(
+                  0,
+                  Math.round(
+                    (
+                      specialStation.kmMarker
+                      -
+                      currentPositionKm
+                    )
+                    *
+                    10
+                  )
+                  /
+                  10
+                ),
+
+              googleMapUrl:
+                specialStation.googleMapUrl
+
+            }
+            :
+            null;
+
+
+        // =================================================
+        // RESPONSE
+        // =================================================
+
+        return {
+
+          estimatedRemainingRange:
+            Math.round(
+              remainingKmCapacity
+              *
+              10
+            )
+            /
+            10,
+
+          specialRecommendation,
+
+          options
+
         };
+
       }
+    )
 
 
+    .listen(
+      {
+        port:
+          PORT,
 
-      // =========================
-      // OPTION 1 — REFUEL SOON
-      // =========================
+        hostname:
+          '0.0.0.0'
+      },
 
-      const soonStation =
-        stationsAhead.length > 0
-          ? stationsAhead[0]
-          : null;
+      server => {
 
-
-
-      // =========================
-      // OPTION 2 — RECOMMENDED
-      // =========================
-
-      let recommendedRatio = 0.85;
-
-
-      if (
-        Number(fuelLevel) === 1
-      ) {
-        recommendedRatio = 0.45;
-
-      } else if (
-        Number(fuelLevel) === 2
-      ) {
-        recommendedRatio = 0.60;
-
-      } else if (
-        Number(fuelLevel) === 3
-      ) {
-        recommendedRatio = 0.70;
-
-      } else if (
-        Number(fuelLevel) === 4
-      ) {
-        recommendedRatio = 0.80;
-      }
-
-
-
-      const recommendedStation =
-        getFurthestStationWithin(
-
-          recommendedRatio,
-
-          soonStation
-            ? [soonStation.id]
-            : []
-
+        console.log(
+          `🚀 Trip Fuel Planner is running at http://${server.hostname}:${server.port}`
         );
 
-
-
-      // =========================
-      // OPTION 3 — RELAXED
-      // =========================
-
-      const excludedIds = [
-        soonStation?.id,
-        recommendedStation?.id
-      ].filter(Boolean) as string[];
-
-
-
-      const relaxedStation =
-        getFurthestStationWithin(
-          0.92,
-          excludedIds
-        );
-
-
-
-      // =========================
-      // DESCRIPTIONS
-      // =========================
-
-      let recommendedDescription =
-        'A balanced fuel stop with a comfortable safety reserve.';
-
-
-      if (
-        Number(fuelLevel) === 1
-      ) {
-        recommendedDescription =
-          'Low fuel detected. A closer stop is recommended for a larger safety reserve.';
-
-      } else if (
-        Number(fuelLevel) === 2
-      ) {
-        recommendedDescription =
-          'Fuel is running low, so a closer stop is recommended for extra safety.';
-
-      } else if (
-        Number(fuelLevel) === 3
-      ) {
-        recommendedDescription =
-          'A safer stop with extra reserve for traffic, delays, or unexpected conditions.';
-
       }
-
-
-
-      const options = [
-
-        formatStation(
-          soonStation,
-          'soon',
-          'Refuel Soon',
-          'The nearest fuel station ahead.'
-        ),
-
-
-        formatStation(
-          recommendedStation,
-          'recommended',
-          'Recommended',
-          recommendedDescription
-        ),
-
-
-        formatStation(
-          relaxedStation,
-          'relaxed',
-          'Relaxed',
-          'Travel farther while keeping an emergency fuel reserve.'
-        )
-
-      ].filter(Boolean);
-
-
-
-      return {
-
-        estimatedRemainingRange:
-          Math.round(
-            remainingKmCapacity * 10
-          ) / 10,
-
-        options
-      };
-    }
-  )
-
-
-
-  .listen(
-    {
-      port: PORT,
-      hostname: '0.0.0.0'
-    },
-
-    server => {
-      console.log(
-        `🚀 Trip Fuel Planner is running at http://${server.hostname}:${server.port}`
-      );
-    }
-  );
+    );
