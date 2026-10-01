@@ -2,11 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
-  >
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
   <title>Trip Fuel Planner</title>
 
@@ -42,7 +38,7 @@
     @keyframes cardEnter {
       from {
         opacity: 0;
-        transform: translateY(16px) scale(0.985);
+        transform: translateY(16px) scale(.985);
       }
 
       to {
@@ -65,7 +61,7 @@
     @keyframes galaxyGlow {
       0%,
       100% {
-        opacity: 0.65;
+        opacity: .65;
         transform: scale(1);
       }
 
@@ -78,8 +74,8 @@
     @keyframes sparkle {
       0%,
       100% {
-        opacity: 0.25;
-        transform: scale(0.8) rotate(0deg);
+        opacity: .25;
+        transform: scale(.8) rotate(0deg);
       }
 
       50% {
@@ -89,28 +85,28 @@
     }
 
     .page-enter {
-      animation: pageEnter 0.55s ease-out both;
+      animation: pageEnter .55s ease-out both;
     }
 
     .card-enter {
       opacity: 0;
-      animation: cardEnter 0.5s ease-out forwards;
+      animation: cardEnter .5s ease-out forwards;
     }
 
     .delay-1 {
-      animation-delay: 0.08s;
+      animation-delay: .08s;
     }
 
     .delay-2 {
-      animation-delay: 0.16s;
+      animation-delay: .16s;
     }
 
     .delay-3 {
-      animation-delay: 0.24s;
+      animation-delay: .24s;
     }
 
     .delay-4 {
-      animation-delay: 0.32s;
+      animation-delay: .32s;
     }
 
     .float-icon {
@@ -119,8 +115,8 @@
 
     .smooth-view {
       transition:
-        opacity 0.3s ease,
-        transform 0.3s ease;
+        opacity .3s ease,
+        transform .3s ease;
     }
 
     .galaxy-glow {
@@ -138,11 +134,10 @@
   </style>
 </head>
 
-
 <body class="min-h-screen bg-[#111827] flex justify-center items-start sm:py-6 antialiased selection:bg-blue-500 selection:text-white">
 
   <!-- ===================================================== -->
-  <!-- PLANNER -->
+  <!-- PLANNER VIEW -->
   <!-- ===================================================== -->
 
   <div
@@ -151,17 +146,11 @@
   >
 
     <div class="absolute inset-0 pointer-events-none overflow-hidden">
-
       <div class="absolute -top-20 -right-20 w-64 h-64 rounded-full bg-[#5B7CFA] opacity-50 blur-2xl"></div>
-
       <div class="absolute top-[320px] -left-24 w-72 h-72 rounded-full bg-[#2446B9] opacity-50 blur-3xl"></div>
-
       <div class="absolute bottom-20 right-[-90px] w-64 h-64 rounded-full bg-[#7C5CFC] opacity-30 blur-3xl"></div>
-
     </div>
 
-
-    <!-- Hero -->
 
     <header class="page-enter relative px-5 pt-8 pb-6 text-white">
 
@@ -256,7 +245,10 @@
 
 
 
-        <div class="relative">
+        <div
+          class="relative"
+          id="carSearchWrapper"
+        >
 
           <div class="relative">
 
@@ -593,8 +585,6 @@
 
 
 
-    <!-- CTA -->
-
     <div class="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-[#3457D5] via-[#3457D5] to-transparent pt-10">
 
       <button
@@ -615,7 +605,7 @@
 
 
   <!-- ===================================================== -->
-  <!-- RESULTS -->
+  <!-- RESULTS VIEW -->
   <!-- ===================================================== -->
 
   <div
@@ -632,8 +622,6 @@
     </div>
 
 
-
-    <!-- Results Header -->
 
     <header class="relative px-5 pt-8 pb-5 text-white">
 
@@ -663,7 +651,6 @@
       </div>
 
 
-
       <h2 class="text-[30px] leading-tight font-extrabold tracking-[-0.04em]">
         Your trip
         <span class="text-[#CAD5FF]">
@@ -684,10 +671,6 @@
       id="resultsScroll"
       class="relative px-4 pb-6 space-y-4"
     >
-
-      <!-- ================================================= -->
-      <!-- VEHICLE SUMMARY -->
-      <!-- ================================================= -->
 
       <section class="bg-white rounded-[28px] p-4 shadow-[0_18px_45px_rgba(15,25,80,0.22)]">
 
@@ -885,18 +868,11 @@
         </div>
 
 
-
-        <div
-          id="specialRecommendationCard"
-        ></div>
+        <div id="specialRecommendationCard"></div>
 
       </section>
 
 
-
-      <!-- ================================================= -->
-      <!-- NORMAL RECOMMENDATIONS -->
-      <!-- ================================================= -->
 
       <div class="flex items-end justify-between px-1 pt-1">
 
@@ -935,11 +911,9 @@
         onclick="finishTrip()"
         class="w-full bg-white text-[#2446B9] active:scale-[0.98] font-extrabold py-4 rounded-[20px] shadow-xl flex items-center justify-center gap-2 transition"
       >
-
         <i class="fa-solid fa-check"></i>
 
         Finish
-
       </button>
 
 
@@ -1038,7 +1012,7 @@
 
 
   <!-- ===================================================== -->
-  <!-- LOCATION MODAL -->
+  <!-- STATION MODAL -->
   <!-- ===================================================== -->
 
   <div
@@ -1109,23 +1083,15 @@
 
   <script>
 
-    let selectedFuel =
-      3;
+    let selectedFuel = 3;
 
-    let allCars =
-      [];
+    let allCars = [];
+    let allStations = [];
 
-    let allStations =
-      [];
+    let userLat = null;
+    let userLng = null;
 
-    let userLat =
-      null;
-
-    let userLng =
-      null;
-
-    let currentKm =
-      0;
+    let currentKm = 0;
 
 
 
@@ -1146,7 +1112,7 @@
 
 
     // =====================================================
-    // CARS
+    // LOAD CARS
     // =====================================================
 
     async function loadCars() {
@@ -1164,17 +1130,11 @@
 
 
         allCars =
-          Array.isArray(
-            json
-          )
+          Array.isArray(json)
             ?
             json
             :
-            (
-              json.data
-              ||
-              []
-            );
+            (json.data || []);
 
 
         const brands =
@@ -1218,7 +1178,7 @@
 
 
     // =====================================================
-    // STATIONS
+    // LOAD STATIONS
     // =====================================================
 
     async function loadStations() {
@@ -1325,12 +1285,8 @@
         2
         *
         Math.atan2(
-          Math.sqrt(
-            a
-          ),
-          Math.sqrt(
-            1 - a
-          )
+          Math.sqrt(a),
+          Math.sqrt(1 - a)
         );
 
 
@@ -1361,52 +1317,51 @@
       }
 
 
-      navigator.geolocation
-        .getCurrentPosition(
+      navigator.geolocation.getCurrentPosition(
 
-          position => {
+        position => {
 
-            userLat =
-              position.coords.latitude;
-
-
-            userLng =
-              position.coords.longitude;
+          userLat =
+            position.coords.latitude;
 
 
-            updateLocationAndMap(
-              userLat,
-              userLng
-            );
-
-          },
+          userLng =
+            position.coords.longitude;
 
 
-          error => {
+          updateLocationAndMap(
+            userLat,
+            userLng
+          );
 
-            console.warn(
-              'GPS location error or denied:',
-              error
-            );
-
-
-            fallbackStationSelection();
-
-          },
+        },
 
 
-          {
-            enableHighAccuracy:
-              true,
+        error => {
 
-            timeout:
-              8000,
+          console.warn(
+            'GPS location error or denied:',
+            error
+          );
 
-            maximumAge:
-              0
-          }
 
-        );
+          fallbackStationSelection();
+
+        },
+
+
+        {
+          enableHighAccuracy:
+            true,
+
+          timeout:
+            8000,
+
+          maximumAge:
+            0
+        }
+
+      );
 
     }
 
@@ -1563,14 +1518,8 @@
 
 
         updateLocationAndMap(
-          defaultStation.lat
-          ||
-          19.907,
-
-          defaultStation.lng
-          ||
-          99.832,
-
+          defaultStation.lat || 19.907,
+          defaultStation.lng || 99.832,
           defaultStation
         );
 
@@ -1581,7 +1530,7 @@
 
 
     // =====================================================
-    // LOCATION MODAL
+    // STATION MODAL
     // =====================================================
 
     function openStationModal() {
@@ -1785,14 +1734,10 @@
 
     function filterModalStations() {
 
-      const query =
+      renderModalStations(
         document.getElementById(
           'modalSearchInput'
-        ).value;
-
-
-      renderModalStations(
-        query
+        ).value
       );
 
     }
@@ -1805,8 +1750,8 @@
 
       const station =
         allStations.find(
-          station =>
-            station.id
+          item =>
+            item.id
             ===
             stationId
         );
@@ -1864,18 +1809,14 @@
 
       if (!query) {
 
-        resultsDiv
-          .classList
-          .add(
-            'hidden'
-          );
+        resultsDiv.classList.add(
+          'hidden'
+        );
 
 
-        clearBtn
-          .classList
-          .add(
-            'hidden'
-          );
+        clearBtn.classList.add(
+          'hidden'
+        );
 
 
         return;
@@ -1883,11 +1824,9 @@
       }
 
 
-      clearBtn
-        .classList
-        .remove(
-          'hidden'
-        );
+      clearBtn.classList.remove(
+        'hidden'
+      );
 
 
       const matches =
@@ -1962,11 +1901,9 @@
       }
 
 
-      resultsDiv
-        .classList
-        .remove(
-          'hidden'
-        );
+      resultsDiv.classList.remove(
+        'hidden'
+      );
 
     }
 
@@ -1978,10 +1915,10 @@
 
       const car =
         allCars.find(
-          car =>
-            car.id
+          item =>
+            String(item.id)
             ===
-            carId
+            String(carId)
         );
 
 
@@ -2242,10 +2179,10 @@
 
       const car =
         allCars.find(
-          car =>
-            car.id
+          item =>
+            String(item.id)
             ===
-            carId
+            String(carId)
         );
 
 
@@ -2279,22 +2216,18 @@
 
       event => {
 
-        const searchBox =
+        const wrapper =
           document.getElementById(
-            'carSearchInput'
+            'carSearchWrapper'
           );
 
 
         if (
-          searchBox
+          wrapper
           &&
-          !searchBox
-            .closest(
-              '.relative'
-            )
-            .contains(
-              event.target
-            )
+          !wrapper.contains(
+            event.target
+          )
         ) {
 
           document
@@ -2534,7 +2467,7 @@
 
 
     // =====================================================
-    // NORMAL RESULT COLORS
+    // RESULT COLORS
     // =====================================================
 
     function getResultStyle(
@@ -2625,7 +2558,7 @@
 
 
     // =====================================================
-    // SPECIAL CARD
+    // SPECIAL RECOMMENDATION
     // =====================================================
 
     function renderSpecialRecommendation(
@@ -2684,322 +2617,166 @@
       const tagsHtml =
         tags
           .map(
-            tag => `
-
-              <span class="text-[9px] font-bold bg-white/15 border border-white/15 text-white/90 px-2.5 py-1 rounded-full backdrop-blur-sm">
-                ${tag}
-              </span>
-
-            `
+            tag =>
+              `<span class="text-[9px] font-bold bg-white/15 border border-white/15 text-white/90 px-2.5 py-1 rounded-full backdrop-blur-sm">${tag}</span>`
           )
           .join('');
 
 
-      card.innerHTML = `
+      card.innerHTML =
+        `
 
-        <article
-          class="
-            relative
-            overflow-hidden
-            rounded-[30px]
-            text-white
-            shadow-[0_20px_55px_rgba(47,15,90,0.35)]
-            border
-            border-white/20
-          "
-          style="
-            background:
-              radial-gradient(circle at 12% 18%, rgba(255,123,221,0.95) 0%, rgba(255,123,221,0) 30%),
-              radial-gradient(circle at 90% 5%, rgba(94,208,255,0.75) 0%, rgba(94,208,255,0) 35%),
-              radial-gradient(circle at 80% 90%, rgba(116,76,255,0.9) 0%, rgba(116,76,255,0) 38%),
-              linear-gradient(135deg, #7C2AE8 0%, #BE3FE4 42%, #5652F5 100%);
-          "
-        >
-
-          <!-- Galaxy glow -->
-
-          <div
-            class="
-              galaxy-glow
-              absolute
-              -right-16
-              -top-20
-              w-56
-              h-56
-              rounded-full
-              bg-pink-300/25
-              blur-2xl
+          <article
+            class="relative overflow-hidden rounded-[30px] text-white shadow-[0_20px_55px_rgba(47,15,90,0.35)] border border-white/20"
+            style="
+              background:
+                radial-gradient(circle at 12% 18%, rgba(255,123,221,.95) 0%, rgba(255,123,221,0) 30%),
+                radial-gradient(circle at 90% 5%, rgba(94,208,255,.75) 0%, rgba(94,208,255,0) 35%),
+                radial-gradient(circle at 80% 90%, rgba(116,76,255,.9) 0%, rgba(116,76,255,0) 38%),
+                linear-gradient(135deg,#7C2AE8 0%,#BE3FE4 42%,#5652F5 100%);
             "
-          ></div>
+          >
+
+            <div class="galaxy-glow absolute -right-16 -top-20 w-56 h-56 rounded-full bg-pink-300/25 blur-2xl"></div>
+
+            <div class="galaxy-glow absolute -left-20 bottom-[-70px] w-56 h-56 rounded-full bg-blue-300/20 blur-3xl"></div>
 
 
-          <div
-            class="
-              galaxy-glow
-              absolute
-              -left-20
-              bottom-[-70px]
-              w-56
-              h-56
-              rounded-full
-              bg-blue-300/20
-              blur-3xl
-            "
-          ></div>
+            <i class="galaxy-sparkle fa-solid fa-star absolute right-8 top-8 text-white/70 text-[8px]"></i>
 
+            <i class="galaxy-sparkle-delay fa-solid fa-star absolute right-16 top-16 text-pink-100/80 text-[6px]"></i>
 
-          <!-- Tiny stars -->
-
-          <i
-            class="
-              galaxy-sparkle
-              fa-solid
-              fa-star
-              absolute
-              right-8
-              top-8
-              text-white/70
-              text-[8px]
-            "
-          ></i>
-
-
-          <i
-            class="
-              galaxy-sparkle-delay
-              fa-solid
-              fa-star
-              absolute
-              right-16
-              top-16
-              text-pink-100/80
-              text-[6px]
-            "
-          ></i>
-
-
-          <i
-            class="
-              galaxy-sparkle
-              fa-solid
-              fa-star
-              absolute
-              left-8
-              bottom-12
-              text-blue-100/70
-              text-[6px]
-            "
-          ></i>
+            <i class="galaxy-sparkle fa-solid fa-star absolute left-8 bottom-12 text-blue-100/70 text-[6px]"></i>
 
 
 
-          <div class="relative p-5">
+            <div class="relative p-5">
 
-            <!-- Badge row -->
+              <div class="flex justify-between items-start gap-3">
 
-            <div class="flex justify-between items-start gap-3">
+                <div class="flex items-center gap-2 flex-wrap">
 
-              <div class="flex items-center gap-2 flex-wrap">
+                  <span class="inline-flex items-center gap-1.5 text-[9px] uppercase tracking-[0.17em] font-extrabold bg-white text-[#812CC8] px-3 py-1.5 rounded-full shadow-sm">
 
-                <span
-                  class="
-                    inline-flex
-                    items-center
-                    gap-1.5
-                    text-[9px]
-                    uppercase
-                    tracking-[0.17em]
-                    font-extrabold
-                    bg-white
-                    text-[#812CC8]
-                    px-3
-                    py-1.5
-                    rounded-full
-                    shadow-sm
-                  "
-                >
+                    <i class="fa-solid fa-wand-magic-sparkles"></i>
 
-                  <i class="fa-solid fa-sparkles"></i>
+                    Special Pick
 
-                  Special Pick
-
-                </span>
+                  </span>
 
 
-                <span
-                  class="
-                    text-[9px]
-                    font-bold
-                    uppercase
-                    tracking-wider
-                    bg-white/15
-                    border
-                    border-white/15
-                    px-2.5
-                    py-1.5
-                    rounded-full
-                  "
-                >
-                  ${special.title}
+                  <span class="text-[9px] font-bold uppercase tracking-wider bg-white/15 border border-white/15 px-2.5 py-1.5 rounded-full">
+
+                    ${special.title}
+
+                  </span>
+
+                </div>
+
+
+                <span class="text-[10px] text-white/60 font-semibold whitespace-nowrap">
+                  KM ${special.kmMarker}
                 </span>
 
               </div>
 
 
-              <span class="text-[10px] text-white/60 font-semibold whitespace-nowrap">
-                KM ${special.kmMarker}
-              </span>
 
-            </div>
+              <div class="mt-6">
+
+                <p class="text-[9px] uppercase tracking-[0.2em] text-pink-100/80 font-bold">
+                  Featured along your route
+                </p>
+
+
+                <h4 class="text-2xl font-extrabold tracking-[-0.03em] mt-1 leading-tight">
+                  ${special.name}
+                </h4>
+
+
+                <p class="text-[11px] text-white/70 mt-1 font-medium">
+                  ${special.brand}
+                </p>
+
+              </div>
 
 
 
-            <!-- Station -->
-
-            <div class="mt-6">
-
-              <p class="text-[9px] uppercase tracking-[0.2em] text-pink-100/80 font-bold">
-                Featured along your route
+              <p class="text-xs text-white/85 leading-relaxed mt-4 font-medium max-w-[320px]">
+                ${special.description}
               </p>
 
 
-              <h4 class="text-2xl font-extrabold tracking-[-0.03em] mt-1 leading-tight">
-                ${special.name}
-              </h4>
-
-
-              <p class="text-[11px] text-white/70 mt-1 font-medium">
-                ${special.brand}
-              </p>
-
-            </div>
+              ${
+                tagsHtml
+                  ?
+                  `<div class="flex flex-wrap gap-2 mt-4">${tagsHtml}</div>`
+                  :
+                  ''
+              }
 
 
 
-            <p class="text-xs text-white/85 leading-relaxed mt-4 font-medium max-w-[320px]">
-              ${special.description}
-            </p>
+              <div class="mt-5 rounded-[20px] bg-[#24104A]/25 border border-white/10 backdrop-blur-md px-4 py-3 flex items-center justify-between gap-3">
+
+                <div>
+
+                  <span class="block text-[9px] uppercase tracking-widest font-bold text-white/55">
+                    Distance From You
+                  </span>
 
 
+                  <div class="flex items-end gap-1 mt-1">
 
-            ${
-              tagsHtml
-                ?
-                `
-                  <div class="flex flex-wrap gap-2 mt-4">
-                    ${tagsHtml}
+                    <span class="text-3xl font-extrabold">
+                      ${special.distanceFromUser}
+                    </span>
+
+
+                    <span class="text-xs text-white/60 font-semibold mb-1">
+                      km
+                    </span>
+
                   </div>
-                `
-                :
-                ''
-            }
+
+                </div>
 
 
+                <div class="w-11 h-11 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center">
 
-            <!-- Distance -->
-
-            <div
-              class="
-                mt-5
-                rounded-[20px]
-                bg-[#24104A]/25
-                border
-                border-white/10
-                backdrop-blur-md
-                px-4
-                py-3
-                flex
-                items-center
-                justify-between
-                gap-3
-              "
-            >
-
-              <div>
-
-                <span class="block text-[9px] uppercase tracking-widest font-bold text-white/55">
-                  Distance From You
-                </span>
-
-
-                <div class="flex items-end gap-1 mt-1">
-
-                  <span class="text-3xl font-extrabold">
-                    ${special.distanceFromUser}
-                  </span>
-
-
-                  <span class="text-xs text-white/60 font-semibold mb-1">
-                    km
-                  </span>
+                  <i class="fa-solid fa-star text-yellow-200"></i>
 
                 </div>
 
               </div>
 
 
-              <div
-                class="
-                  w-11
-                  h-11
-                  rounded-2xl
-                  bg-white/10
-                  border
-                  border-white/10
-                  flex
-                  items-center
-                  justify-center
-                "
+
+              <a
+                href="${special.googleMapUrl}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="mt-3 w-full rounded-[18px] bg-white text-[#7A2CCB] py-3.5 px-4 text-xs font-extrabold flex items-center justify-center gap-2 shadow-lg transition active:scale-[0.98]"
               >
-                <i class="fa-solid fa-star text-yellow-200"></i>
-              </div>
+
+                <i class="fa-solid fa-location-arrow"></i>
+
+                Navigate to Special Stop
+
+              </a>
 
             </div>
 
+          </article>
 
-
-            <a
-              href="${special.googleMapUrl}"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="
-                mt-3
-                w-full
-                rounded-[18px]
-                bg-white
-                text-[#7A2CCB]
-                py-3.5
-                px-4
-                text-xs
-                font-extrabold
-                flex
-                items-center
-                justify-center
-                gap-2
-                shadow-lg
-                transition
-                active:scale-[0.98]
-              "
-            >
-
-              <i class="fa-solid fa-location-arrow"></i>
-
-              Navigate to Special Stop
-
-            </a>
-
-          </div>
-
-        </article>
-
-      `;
+        `;
 
     }
 
 
 
     // =====================================================
-    // RESULT PAGE
+    // RESULTS PAGE
     // =====================================================
 
     function renderResultsPage(
@@ -3064,16 +2841,10 @@
           `${selectedFuel * 20}%`;
 
 
-      // Special card first.
-
       renderSpecialRecommendation(
-        data.specialRecommendation
-        ||
-        null
+        data.specialRecommendation || null
       );
 
-
-      // Normal cards.
 
       const stationList =
         document.getElementById(
@@ -3103,6 +2874,7 @@
                   <div class="absolute -left-12 -bottom-16 w-40 h-40 rounded-full bg-black/5"></div>
 
 
+
                   <div class="relative p-5">
 
                     <div class="flex justify-between items-start gap-4">
@@ -3130,15 +2902,9 @@
 
 
                             ${
-                              option.type
-                              ===
-                              'recommended'
+                              option.type === 'recommended'
                                 ?
-                                `
-                                  <span class="text-[9px] font-extrabold uppercase tracking-wider bg-white text-[#128A68] px-2 py-1 rounded-full">
-                                    Best Balance
-                                  </span>
-                                `
+                                '<span class="text-[9px] font-extrabold uppercase tracking-wider bg-white text-[#128A68] px-2 py-1 rounded-full">Best Balance</span>'
                                 :
                                 ''
                             }
@@ -3231,7 +2997,7 @@
 
 
     // =====================================================
-    // PAGE TRANSITIONS
+    // TRANSITIONS
     // =====================================================
 
     function switchToResultsPage() {
@@ -3445,9 +3211,9 @@
       const selectedCar =
         allCars.find(
           car =>
-            car.id
+            String(car.id)
             ===
-            carId
+            String(carId)
         );
 
 
@@ -3598,7 +3364,7 @@
         switchToResultsPage();
 
 
-      } catch (error: any) {
+      } catch (error) {
 
         console.error(
           'Trip calculation error:',
@@ -3610,9 +3376,11 @@
 
 
         alert(
-          error?.message
-          ||
-          'Something went wrong while planning your fuel stops. Please try again.'
+          error && error.message
+            ?
+            error.message
+            :
+            'Something went wrong while planning your fuel stops. Please try again.'
         );
 
       }
