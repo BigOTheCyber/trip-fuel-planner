@@ -1,2122 +1,2192 @@
 [
   {
     "id": 1,
+    "name": "PTT Station Maefahluang Chiang Rai",
+    "brand": "PTT (ปตท)",
+    "lat": 20.0340751,
+    "lng": 99.875035,
+    "googleMapUrl": "https://www.google.com/maps/search/?api=1&query=PTT+Maefahluang+Chiang+Rai",
+    "distFromPrev": 5.164378,
+    "kmMarker": 5.164378
+  },
+  {
+    "id": 2,
+    "name": "PT Station Nang Lae (MFU Medical Center)",
+    "brand": "PT (พีที)",
+    "lat": 20.030774,
+    "lng": 99.8732758,
+    "googleMapUrl": "https://www.google.com/maps/search/?api=1&query=20.0307740%2C99.8732758",
+    "distFromPrev": 0.396191,
+    "kmMarker": 5.560569
+  },
+  {
+    "id": 3,
+    "name": "Bangchak M Power Petroleum (KFC Mae Fah Luang)",
+    "brand": "Bangchak (บางจาก)",
+    "lat": 20.011491,
+    "lng": 99.869132,
+    "googleMapUrl": "https://www.google.com/maps/search/?api=1&query=20.011491%2C99.869132",
+    "distFromPrev": 2.190246,
+    "kmMarker": 7.750815
+  },
+  {
+    "id": 4,
+    "name": "PTT Station Ban Du",
+    "brand": "PTT (ปตท)",
+    "lat": 19.955636,
+    "lng": 99.8412706,
+    "googleMapUrl": "https://www.google.com/maps/search/?api=1&query=PTT+Station+Ban+Du+Chiang+Rai",
+    "distFromPrev": 7.549989,
+    "kmMarker": 15.300804
+  },
+  {
+    "id": 5,
+    "name": "PT Ban Du Chiang Rai",
+    "brand": "PT (พีที)",
+    "lat": 0.0,
+    "lng": 0.0,
+    "googleMapUrl": "https://www.google.com/maps/search/?api=1&query=PT+Ban+Du+Chiang+Rai",
+    "distFromPrev": 2.9,
+    "kmMarker": 18.200804
+  },
+  {
+    "id": 6,
+    "name": "Cosmo Ban Du",
+    "brand": "Cosmo (คอสโม)",
+    "lat": 19.9571,
+    "lng": 99.85233,
+    "googleMapUrl": "https://www.google.com/maps/search/?api=1&query=Cosmo+Ban+Du+Chiang+Rai",
+    "distFromPrev": 4.0,
+    "kmMarker": 22.200804
+  },
+  {
+    "id": 7,
+    "name": "Shell Ban Du",
+    "brand": "Shell (เชลล์)",
+    "lat": 19.945001,
+    "lng": 99.84669,
+    "googleMapUrl": "https://www.google.com/maps/search/?api=1&query=Shell+Ban+Du+Chiang+Rai",
+    "distFromPrev": 4.0,
+    "kmMarker": 26.200804
+  },
+  {
+    "id": 8,
     "name": "Caltex",
     "brand": "Caltex (คาลเท็กซ์)",
     "lat": 19.91466,
     "lng": 99.84561,
     "googleMapUrl": "https://maps.google.com/?cid=7819198058654415296&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
-    "distFromPrev": 0,
-    "kmMarker": 0
+    "distFromPrev": 3.0,
+    "kmMarker": 29.200804
   },
   {
-    "id": 2,
+    "id": 9,
     "name": "PT Station - wiang",
     "brand": "PT (พีที)",
     "lat": 19.9143,
     "lng": 99.84382,
     "googleMapUrl": "https://maps.google.com/?cid=17091877269411911825&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.19,
-    "kmMarker": 0.19
+    "kmMarker": 29.390804
   },
   {
-    "id": 3,
+    "id": 10,
     "name": "PTT Station (Petrol+NGV+EV)",
     "brand": "PTT (ปตท)",
     "lat": 19.90324,
     "lng": 99.84087,
     "googleMapUrl": "https://maps.google.com/?cid=763582454633483617&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.04,
-    "kmMarker": 1.23
+    "kmMarker": 30.430804
   },
   {
-    "id": 4,
+    "id": 11,
     "name": "PT Station Chiang Rai 4",
     "brand": "PT (พีที)",
     "lat": 19.89638,
     "lng": 99.83892,
     "googleMapUrl": "https://maps.google.com/?cid=1744369372674798028&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.52,
-    "kmMarker": 1.75
+    "kmMarker": 30.950804
   },
   {
-    "id": 5,
+    "id": 12,
     "name": "Bangchak Station (Petrol+EV)",
     "brand": "Bangchak (บางจาก)",
     "lat": 19.88249,
     "lng": 99.83384,
     "googleMapUrl": "https://maps.google.com/?cid=7508331087064879376&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.59,
-    "kmMarker": 2.34
+    "kmMarker": 31.540804
   },
   {
-    "id": 6,
+    "id": 13,
     "name": "PTT Station (Petrol+EV) (Mae Kon Petroleum Company Limited)",
     "brand": "PTT (ปตท)",
     "lat": 19.87537,
     "lng": 99.82924,
     "googleMapUrl": "https://maps.google.com/?cid=6013310469751993248&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.6,
-    "kmMarker": 2.94
+    "kmMarker": 32.140804
   },
   {
-    "id": 7,
+    "id": 14,
     "name": "PT STATION - เชียงราย 7 (น้ำมัน+LPG)",
     "brand": "PT (พีที)",
     "lat": 19.87137,
     "lng": 99.82711,
     "googleMapUrl": "https://maps.google.com/?cid=3637315646974743126&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.59,
-    "kmMarker": 3.53
+    "kmMarker": 32.730804
   },
   {
-    "id": 8,
+    "id": 15,
     "name": "Bangchak Service Station",
     "brand": "Bangchak (บางจาก)",
     "lat": 19.84005,
     "lng": 99.79511,
     "googleMapUrl": "https://maps.google.com/?cid=11673386835964275544&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 4.88,
-    "kmMarker": 8.41
+    "kmMarker": 37.610804
   },
   {
-    "id": 9,
+    "id": 16,
     "name": "PT Service Station",
     "brand": "PT (พีที)",
     "lat": 19.84026,
     "lng": 99.79571,
     "googleMapUrl": "https://maps.google.com/?cid=17207388795840116416&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 4.5,
-    "kmMarker": 12.91
+    "kmMarker": 42.110804
   },
   {
-    "id": 10,
+    "id": 17,
     "name": "ปั๊มน้ำมัน พีที แม่ลาว 1",
     "brand": "PT (พีที)",
     "lat": 19.8023,
     "lng": 99.7536,
     "googleMapUrl": "https://maps.google.com/?cid=7714506471407772807&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 6.42,
-    "kmMarker": 19.33
+    "kmMarker": 48.530804
   },
   {
-    "id": 11,
+    "id": 18,
     "name": "PT Fuel Station",
     "brand": "PT (พีที)",
     "lat": 19.79429,
     "lng": 99.74892,
     "googleMapUrl": "https://maps.google.com/?cid=10581874852496217768&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.09,
-    "kmMarker": 20.42
+    "kmMarker": 49.620804
   },
   {
-    "id": 12,
+    "id": 19,
     "name": "PTT Station (Petrol+EV) Chom Mok Keao",
     "brand": "PTT (ปตท)",
     "lat": 19.76892,
     "lng": 99.73636,
     "googleMapUrl": "https://maps.google.com/?cid=13252311366033969853&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.73,
-    "kmMarker": 23.15
+    "kmMarker": 52.350804
   },
   {
-    "id": 13,
+    "id": 20,
     "name": "Bangchak - SUSCO - Chom Mok Kaeo",
     "brand": "Bangchak (บางจาก)",
     "lat": 19.75943,
     "lng": 99.73454,
     "googleMapUrl": "https://maps.google.com/?cid=15093100982420878458&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.07,
-    "kmMarker": 24.22
+    "kmMarker": 53.420804
   },
   {
-    "id": 14,
+    "id": 21,
     "name": "PTT Station (Petrol+EV)",
     "brand": "PTT (ปตท)",
     "lat": 19.75282,
     "lng": 99.73134,
     "googleMapUrl": "https://maps.google.com/?cid=11826794091492339448&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.05,
-    "kmMarker": 25.27
+    "kmMarker": 54.470804
   },
   {
-    "id": 15,
+    "id": 22,
     "name": "Bangchak",
     "brand": "Bangchak (บางจาก)",
     "lat": 19.72444,
     "lng": 99.71564,
     "googleMapUrl": "https://maps.google.com/?cid=2616385037807840664&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 4.7,
-    "kmMarker": 29.97
+    "kmMarker": 59.170804
   },
   {
-    "id": 16,
+    "id": 23,
     "name": "PT Gas Station Phan3 (Max Mart)",
     "brand": "PT (พีที)",
     "lat": 19.59981,
     "lng": 99.74942,
     "googleMapUrl": "https://maps.google.com/?cid=16734643049559866678&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 14.46,
-    "kmMarker": 44.43
+    "kmMarker": 73.630804
   },
   {
-    "id": 17,
+    "id": 24,
     "name": "PT Gas Station Phan 7",
     "brand": "PT (พีที)",
     "lat": 19.5803,
     "lng": 99.74483,
     "googleMapUrl": "https://maps.google.com/?cid=2091903735133535674&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.52,
-    "kmMarker": 46.95
+    "kmMarker": 76.150804
   },
   {
-    "id": 18,
+    "id": 25,
     "name": "PTT Station ปตท.อำเภอพาน (น้ำมัน+EV)",
     "brand": "PTT (ปตท)",
     "lat": 19.56536,
     "lng": 99.75202,
     "googleMapUrl": "https://maps.google.com/?cid=1051519785353338448&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.41,
-    "kmMarker": 48.36
+    "kmMarker": 77.560804
   },
   {
-    "id": 19,
+    "id": 26,
     "name": "Bangchak",
     "brand": "Bangchak (บางจาก)",
     "lat": 19.56337,
     "lng": 99.75048,
     "googleMapUrl": "https://maps.google.com/?cid=9631332337571569439&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.6,
-    "kmMarker": 48.96
+    "kmMarker": 78.160804
   },
   {
-    "id": 20,
+    "id": 27,
     "name": "ปั๊ม PT สาขา พาน1",
     "brand": "PT (พีที)",
     "lat": 19.54735,
     "lng": 99.74138,
     "googleMapUrl": "https://maps.google.com/?cid=7078972456770024729&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.7,
-    "kmMarker": 51.66
+    "kmMarker": 80.860804
   },
   {
-    "id": 21,
+    "id": 28,
     "name": "PTT Station",
     "brand": "PTT (ปตท)",
     "lat": 19.54009,
     "lng": 99.74157,
     "googleMapUrl": "https://maps.google.com/?cid=1274089390302757570&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.62,
-    "kmMarker": 52.28
+    "kmMarker": 81.480804
   },
   {
-    "id": 22,
+    "id": 29,
     "name": "PT Gas Station",
     "brand": "PT (พีที)",
     "lat": 19.53643,
     "lng": 99.7421,
     "googleMapUrl": "https://maps.google.com/?cid=17901691681063647308&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.61,
-    "kmMarker": 52.89
+    "kmMarker": 82.090804
   },
   {
-    "id": 23,
+    "id": 30,
     "name": "ปั๊ม บางจาก บมจ.ซัสโก้ สาขา พาน",
     "brand": "Bangchak (บางจาก)",
     "lat": 19.52635,
     "lng": 99.74395,
     "googleMapUrl": "https://maps.google.com/?cid=14747378907489691620&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.21,
-    "kmMarker": 54.1
+    "kmMarker": 83.300804
   },
   {
-    "id": 24,
+    "id": 31,
     "name": "ปั้มน้ำมันคาลเท็กซ์ อ.พาน",
     "brand": "Caltex (คาลเท็กซ์)",
     "lat": 19.47832,
     "lng": 99.7514,
     "googleMapUrl": "https://maps.google.com/?cid=13331895786399405856&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 4.9,
-    "kmMarker": 59
+    "kmMarker": 88.200804
   },
   {
-    "id": 25,
+    "id": 32,
     "name": "ปั๊ม บางจาก บมจ.ซัสโก้ สาขา ศรีถ้อย",
     "brand": "Bangchak (บางจาก)",
     "lat": 19.35996,
     "lng": 99.79694,
     "googleMapUrl": "https://maps.google.com/?cid=4544241283171380278&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 14.4,
-    "kmMarker": 73.4
+    "kmMarker": 102.600804
   },
   {
-    "id": 26,
+    "id": 33,
     "name": "PT (Petroleum Thai Corporation Company Limited)",
     "brand": "PT (พีที)",
     "lat": 19.34999,
     "lng": 99.80383,
     "googleMapUrl": "https://maps.google.com/?cid=15371451958785992385&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.01,
-    "kmMarker": 74.41
+    "kmMarker": 103.610804
   },
   {
-    "id": 27,
+    "id": 34,
     "name": "Caltex Purethai Mae Chai",
     "brand": "Caltex (คาลเท็กซ์)",
     "lat": 19.33092,
     "lng": 99.82624,
     "googleMapUrl": "https://maps.google.com/?cid=16999277646094376224&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 3.27,
-    "kmMarker": 77.68
+    "kmMarker": 106.880804
   },
   {
-    "id": 28,
+    "id": 35,
     "name": "สถานี น้ำมัน PT สาขา พะเยา2",
     "brand": "PT (พีที)",
     "lat": 19.21781,
     "lng": 99.86825,
     "googleMapUrl": "https://maps.google.com/?cid=1173437927762671038&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 13.85,
-    "kmMarker": 91.53
+    "kmMarker": 120.730804
   },
   {
-    "id": 29,
+    "id": 36,
     "name": "PTT Charging StationPTT Station",
     "brand": "PTT (ปตท)",
     "lat": 19.20349,
     "lng": 99.87139,
-    "googleMapUrl": "\"https://www.google.com/maps/place/PTT+Charging+Station/@19.2030801",
-    "distFromPrev": 99.8715092,
-    "kmMarker": 191.4
+    "googleMapUrl": "https://www.google.com/maps/place/PTT+Charging+Station/@19.2030801,99.8715092,20.75z/data=!4m14!1m7!3m6!1s0x30d9d363ade9ad4d:0xb621c8cf54c9a95f!2sPTT+Station!8m2!3d19.2031992!4d99.8714936!16s%2Fg%2F11bc8wn127!3m5!1s0x30d9d363ac109293:0xb97436e8b0b9d575!8m2!3d19.2031972!4d99.8715055!16s%2Fg%2F11vhcxfg15?entry=ttu&g_ep=EgoyMDI2MDcyMC4wIKXMDSoASAFQAw%3D%3D",
+    "distFromPrev": 1.68,
+    "kmMarker": 122.410804
   },
   {
-    "id": 30,
-    "name": "\"PT Gas Station Phayao (Punthai",
-    "brand": "Max Mart)\"",
-    "lat": null,
-    "lng": 19.196,
-    "googleMapUrl": "99.87598",
-    "distFromPrev": 0,
-    "kmMarker": 191.4
+    "id": 37,
+    "name": "PT Gas Station Phayao (Punthai , Max Mart)",
+    "brand": "PT (พีที)",
+    "lat": 19.196,
+    "lng": 99.87598,
+    "googleMapUrl": "https://maps.google.com/?cid=16590504049204293100&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
+    "distFromPrev": 0.67,
+    "kmMarker": 123.080804
   },
   {
-    "id": 31,
+    "id": 38,
     "name": "Shell",
     "brand": "Shell (เชลล์)",
     "lat": 19.15643,
     "lng": 99.91437,
     "googleMapUrl": "https://maps.google.com/?cid=16781796556481753140&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 6.17,
-    "kmMarker": 197.57
+    "kmMarker": 129.250804
   },
   {
-    "id": 32,
+    "id": 39,
     "name": "PT Oil+LPG",
     "brand": "PT (พีที)",
     "lat": 19.15132,
     "lng": 99.9133,
     "googleMapUrl": "https://maps.google.com/?cid=14679541759910032530&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.61,
-    "kmMarker": 198.18
+    "kmMarker": 129.860804
   },
   {
-    "id": 33,
+    "id": 40,
     "name": "PTT Station (Petrol+NGV+EV)",
     "brand": "PTT (ปตท)",
     "lat": 19.14564,
     "lng": 99.91224,
     "googleMapUrl": "https://maps.google.com/?cid=3509684265042731669&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.53,
-    "kmMarker": 198.71
+    "kmMarker": 130.390804
   },
   {
-    "id": 34,
+    "id": 41,
     "name": "PT Gas Station",
     "brand": "PT (พีที)",
     "lat": 19.09833,
     "lng": 99.912,
     "googleMapUrl": "https://maps.google.com/?cid=4003417060890145134&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.7,
-    "kmMarker": 200.41
+    "kmMarker": 132.090804
   },
   {
-    "id": 35,
+    "id": 42,
     "name": "ปั๊ม PT พะเยา7",
     "brand": "PT (พีที)",
     "lat": 19.05903,
     "lng": 99.93144,
     "googleMapUrl": "https://maps.google.com/?cid=175428797910878570&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 4.62,
-    "kmMarker": 205.03
+    "kmMarker": 136.710804
   },
   {
-    "id": 36,
+    "id": 43,
     "name": "PT Gas Station",
     "brand": "PT (พีที)",
     "lat": 18.82093,
     "lng": 99.95041,
     "googleMapUrl": "https://maps.google.com/?cid=15348706086205173452&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 31.1,
-    "kmMarker": 236.13
+    "kmMarker": 167.810804
   },
   {
-    "id": 37,
+    "id": 44,
     "name": "PTT Station (Petrol+EV) Ngao",
     "brand": "PTT (ปตท)",
     "lat": 18.78519,
     "lng": 99.96716,
     "googleMapUrl": "https://maps.google.com/?cid=15601189515048708784&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 4.59,
-    "kmMarker": 240.72
+    "kmMarker": 172.400804
   },
   {
-    "id": 38,
+    "id": 45,
     "name": "Shell",
     "brand": "Shell (เชลล์)",
     "lat": 18.75079,
     "lng": 99.97566,
     "googleMapUrl": "https://maps.google.com/?cid=7678970748371373806&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 4.21,
-    "kmMarker": 244.93
+    "kmMarker": 176.610804
   },
   {
-    "id": 39,
+    "id": 46,
     "name": "PTT สาขางาว Ngao",
     "brand": "PTT (ปตท)",
     "lat": 18.73885,
     "lng": 99.97369,
     "googleMapUrl": "https://maps.google.com/?cid=6757103553932946280&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.07,
-    "kmMarker": 246
+    "kmMarker": 177.680804
   },
   {
-    "id": 40,
+    "id": 47,
     "name": "Caltex งาว By Tanadon Energy",
     "brand": "Caltex (คาลเท็กซ์)",
     "lat": 18.73186,
     "lng": 99.9702,
     "googleMapUrl": "https://maps.google.com/?cid=10071932811469552161&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.07,
-    "kmMarker": 247.07
+    "kmMarker": 178.750804
   },
   {
-    "id": 41,
+    "id": 48,
     "name": "PT Gas Station",
     "brand": "PT (พีที)",
     "lat": 18.60887,
     "lng": 100.0381,
     "googleMapUrl": "https://maps.google.com/?cid=13087616396086705822&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 16.6,
-    "kmMarker": 263.67
+    "kmMarker": 195.350804
   },
   {
-    "id": 42,
+    "id": 49,
     "name": "PT Gas Station",
     "brand": "PT (พีที)",
     "lat": 18.41341,
     "lng": 100.183,
     "googleMapUrl": "https://maps.google.com/?cid=6179408742453618497&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 28.65,
-    "kmMarker": 292.32
+    "kmMarker": 224.000804
   },
   {
-    "id": 43,
+    "id": 50,
     "name": "PTT petrol station. Song",
     "brand": "PTT (ปตท)",
     "lat": 18.38761,
     "lng": 100.1944,
     "googleMapUrl": "https://maps.google.com/?cid=15454639791147742456&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 3.12,
-    "kmMarker": 295.44
+    "kmMarker": 227.120804
   },
   {
-    "id": 44,
+    "id": 51,
     "name": "ปั๊ม บางจาก บมจ.ซัสโก้ สาขา แดนชุมพล",
     "brand": "Bangchak (บางจาก)",
     "lat": 18.3776,
     "lng": 100.2002,
     "googleMapUrl": "https://maps.google.com/?cid=16548476768609827303&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.04,
-    "kmMarker": 296.48
+    "kmMarker": 228.160804
   },
   {
-    "id": 45,
+    "id": 52,
     "name": "PTT (Sathit Service Registered Ordinary Partnership)",
     "brand": "PTT (ปตท)",
     "lat": 18.30886,
     "lng": 100.296,
     "googleMapUrl": "https://maps.google.com/?cid=10924233016757929792&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 13.4,
-    "kmMarker": 309.88
+    "kmMarker": 241.560804
   },
   {
-    "id": 46,
+    "id": 53,
     "name": "Bangchak - Thavat Borikan Prae R.O.P.(Rongkwang)",
     "brand": "Bangchak (บางจาก)",
     "lat": 18.30181,
     "lng": 100.285,
     "googleMapUrl": "https://maps.google.com/?cid=3924245996308955238&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 3.3,
-    "kmMarker": 313.18
+    "kmMarker": 244.860804
   },
   {
-    "id": 47,
+    "id": 54,
     "name": "PT Gas Station",
     "brand": "PT (พีที)",
     "lat": 18.29653,
     "lng": 100.2793,
     "googleMapUrl": "https://maps.google.com/?cid=9501755571341384698&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.72,
-    "kmMarker": 313.9
+    "kmMarker": 245.580804
   },
   {
-    "id": 48,
+    "id": 55,
     "name": "ปั๊มน้ำมัน PT",
     "brand": "PT (พีที)",
     "lat": 18.2522,
     "lng": 100.2292,
     "googleMapUrl": "https://maps.google.com/?cid=14095546130347463626&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 8.06,
-    "kmMarker": 321.96
+    "kmMarker": 253.640804
   },
   {
-    "id": 49,
+    "id": 56,
     "name": "ปั๊มพีที แพร่2",
     "brand": "PT (พีที)",
     "lat": 18.21455,
     "lng": 100.2037,
     "googleMapUrl": "https://maps.google.com/?cid=7699038767631544991&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 5.08,
-    "kmMarker": 327.04
+    "kmMarker": 258.720804
   },
   {
-    "id": 50,
+    "id": 57,
     "name": "PT (Mae Kham Mee)",
     "brand": "PT (พีที)",
     "lat": 18.19642,
     "lng": 100.1912,
     "googleMapUrl": "https://maps.google.com/?cid=11379991963598094095&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 3.1,
-    "kmMarker": 330.14
+    "kmMarker": 261.820804
   },
   {
-    "id": 51,
+    "id": 58,
     "name": "ปั๊มน้ำมันบางจาก - หสน.ธวัชบริการแพร่",
     "brand": "Bangchak (บางจาก)",
     "lat": 18.18998,
     "lng": 100.1881,
     "googleMapUrl": "https://maps.google.com/?cid=16597013311972795590&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.58,
-    "kmMarker": 330.72
+    "kmMarker": 262.400804
   },
   {
-    "id": 52,
+    "id": 59,
     "name": "PTT Station (Petrol+EV)",
     "brand": "PTT (ปตท)",
     "lat": 18.18828,
     "lng": 100.1859,
     "googleMapUrl": "https://maps.google.com/?cid=7859689836864147509&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.58,
-    "kmMarker": 331.3
+    "kmMarker": 262.980804
   },
   {
-    "id": 53,
+    "id": 60,
     "name": "Shell",
     "brand": "Shell (เชลล์)",
     "lat": 18.18954,
     "lng": 100.1868,
     "googleMapUrl": "https://maps.google.com/?cid=17375199744288227198&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
-    "distFromPrev": 0,
-    "kmMarker": 331.3
+    "distFromPrev": 0.0,
+    "kmMarker": 262.980804
   },
   {
-    "id": 54,
+    "id": 61,
     "name": "PT ปั๊มน้ำมัน พีที แพร่4",
     "brand": "PT (พีที)",
     "lat": 18.15921,
     "lng": 100.1766,
     "googleMapUrl": "https://maps.google.com/?cid=8533352022282183023&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 3.28,
-    "kmMarker": 334.58
+    "kmMarker": 266.260804
   },
   {
-    "id": 55,
+    "id": 62,
     "name": "PTT Station (Petrol+NGV+EV)",
     "brand": "PTT (ปตท)",
     "lat": 18.11697,
     "lng": 100.1535,
     "googleMapUrl": "https://maps.google.com/?cid=1742812554384178027&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 5.67,
-    "kmMarker": 340.25
+    "kmMarker": 271.930804
   },
   {
-    "id": 56,
+    "id": 63,
     "name": "PT Gas Station",
     "brand": "PT (พีที)",
     "lat": 18.1042,
     "lng": 100.135,
     "googleMapUrl": "https://maps.google.com/?cid=11220499226266222102&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.54,
-    "kmMarker": 342.79
+    "kmMarker": 274.470804
   },
   {
-    "id": 57,
+    "id": 64,
     "name": "PT",
     "brand": "PT (พีที)",
     "lat": 18.09264,
     "lng": 100.1311,
     "googleMapUrl": "https://maps.google.com/?cid=3842969588575543063&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.04,
-    "kmMarker": 343.83
+    "kmMarker": 275.510804
   },
   {
-    "id": 58,
+    "id": 65,
     "name": "PT",
     "brand": "PT (พีที)",
     "lat": 18.09003,
     "lng": 100.1288,
     "googleMapUrl": "https://maps.google.com/?cid=2102657613065849271&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.52,
-    "kmMarker": 344.35
+    "kmMarker": 276.030804
   },
   {
-    "id": 59,
+    "id": 66,
     "name": "Susco",
     "brand": "Susco (ซัสโก้)",
     "lat": 18.08685,
     "lng": 100.1268,
     "googleMapUrl": "https://maps.google.com/?cid=13953579229030005572&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 3.5,
-    "kmMarker": 347.85
+    "kmMarker": 279.530804
   },
   {
-    "id": 60,
+    "id": 67,
     "name": "ปั๊มน้ำมัน พีที สูงเม่น",
     "brand": "PT (พีที)",
     "lat": 18.06869,
     "lng": 100.1197,
     "googleMapUrl": "https://maps.google.com/?cid=9502493535097502936&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 4.9,
-    "kmMarker": 352.75
+    "kmMarker": 284.430804
   },
   {
-    "id": 61,
+    "id": 68,
     "name": "PTT STATION น้ำชำสูงเม่น",
     "brand": "PTT (ปตท)",
     "lat": 18.04134,
     "lng": 100.1116,
     "googleMapUrl": "https://maps.google.com/?cid=1844466285744675165&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 4.5,
-    "kmMarker": 357.25
+    "kmMarker": 288.930804
   },
   {
-    "id": 62,
+    "id": 69,
     "name": "PTT",
     "brand": "PTT (ปตท)",
     "lat": 18.03748,
     "lng": 100.1106,
     "googleMapUrl": "https://maps.google.com/?cid=4859118980120440186&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.5,
-    "kmMarker": 357.75
+    "kmMarker": 289.430804
   },
   {
-    "id": 63,
+    "id": 70,
     "name": "PT Gas Station",
     "brand": "PT (พีที)",
     "lat": 17.97576,
     "lng": 100.0831,
     "googleMapUrl": "https://maps.google.com/?cid=13722672855939669556&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 7.89,
-    "kmMarker": 365.64
+    "kmMarker": 297.320804
   },
   {
-    "id": 64,
+    "id": 71,
     "name": "ปั๊ม บางจาก บมจ.ซัสโก้ สาขา แม่จั๊วะ",
     "brand": "Bangchak (บางจาก)",
     "lat": 17.97187,
     "lng": 100.0746,
     "googleMapUrl": "https://maps.google.com/?cid=15412837922792355894&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.18,
-    "kmMarker": 366.82
+    "kmMarker": 298.500804
   },
   {
-    "id": 65,
+    "id": 72,
     "name": "Shell (SriMongkol Branch1)",
     "brand": "Shell (เชลล์)",
     "lat": 17.96669,
     "lng": 100.0666,
     "googleMapUrl": "https://maps.google.com/?cid=7203687025726663421&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.11,
-    "kmMarker": 367.93
+    "kmMarker": 299.610804
   },
   {
-    "id": 66,
+    "id": 73,
     "name": "PTT Station (Petrol+EV)",
     "brand": "PTT (ปตท)",
     "lat": 17.95658,
     "lng": 100.0684,
     "googleMapUrl": "https://maps.google.com/?cid=12615455588200417961&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.04,
-    "kmMarker": 368.97
+    "kmMarker": 300.650804
   },
   {
-    "id": 67,
+    "id": 74,
     "name": "ปั๊ม PT พีที ด่านนาขาม",
     "brand": "PT (พีที)",
     "lat": 17.79567,
     "lng": 100.1156,
     "googleMapUrl": "https://maps.google.com/?cid=17680718805345220336&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 23.2,
-    "kmMarker": 392.17
+    "kmMarker": 323.850804
   },
   {
-    "id": 68,
+    "id": 75,
     "name": "สถานีบริการน้ำมันพีทีอุตรดิตถ์7 (น้ำมัน+LPG)",
     "brand": "PT (พีที)",
     "lat": 17.74413,
     "lng": 100.1339,
     "googleMapUrl": "https://maps.google.com/?cid=6969748856561702374&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 6.52,
-    "kmMarker": 398.69
+    "kmMarker": 330.370804
   },
   {
-    "id": 69,
+    "id": 76,
     "name": "PTT Station PTT Wang Si Pump Intersection",
     "brand": "PTT (ปตท)",
     "lat": 17.67777,
     "lng": 100.1455,
     "googleMapUrl": "https://maps.google.com/?cid=15821369471720287168&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 7.84,
-    "kmMarker": 406.53
+    "kmMarker": 338.210804
   },
   {
-    "id": 70,
+    "id": 77,
     "name": "ปั๊มน้ำมัน PT อุตรดิตถ์ 2",
     "brand": "PT (พีที)",
     "lat": 17.67218,
     "lng": 100.1485,
     "googleMapUrl": "https://maps.google.com/?cid=11278771986035418867&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.7,
-    "kmMarker": 408.23
+    "kmMarker": 339.910804
   },
   {
-    "id": 71,
+    "id": 78,
     "name": "ปั๊ม บางจาก บมจ.ซัสโก้ สาขา คุ้งตะเภา",
     "brand": "Bangchak (บางจาก)",
     "lat": 17.63092,
     "lng": 100.1255,
     "googleMapUrl": "https://maps.google.com/?cid=8646663453208691105&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 4.79,
-    "kmMarker": 413.02
+    "kmMarker": 344.700804
   },
   {
-    "id": 72,
+    "id": 79,
     "name": "PTT Station (Petrol+EV)",
     "brand": "PTT (ปตท)",
     "lat": 17.60529,
     "lng": 100.1238,
     "googleMapUrl": "https://maps.google.com/?cid=3038793233568016173&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 3.26,
-    "kmMarker": 416.28
+    "kmMarker": 347.960804
   },
   {
-    "id": 73,
+    "id": 80,
     "name": "PTT Station (Petrol+EV)",
     "brand": "PTT (ปตท)",
     "lat": 17.59659,
     "lng": 100.1272,
     "googleMapUrl": "https://maps.google.com/?cid=13700721859978625475&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.58,
-    "kmMarker": 416.86
+    "kmMarker": 348.540804
   },
   {
-    "id": 74,
+    "id": 81,
     "name": "ปั๊มเชลล์อุตรดิตถ์-แยก ช้าง ม้า วัว ควาย-ขาล่องถนนสาย11",
     "brand": "Shell (เชลล์)",
     "lat": 17.59885,
     "lng": 100.1263,
     "googleMapUrl": "https://maps.google.com/?cid=14711740618418224447&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
-    "distFromPrev": 0,
-    "kmMarker": 416.86
+    "distFromPrev": 0.0,
+    "kmMarker": 348.540804
   },
   {
-    "id": 75,
+    "id": 82,
     "name": "PT (Petroleum Thai Corporation Company Limited)",
     "brand": "PT (พีที)",
     "lat": 17.58476,
     "lng": 100.1397,
     "googleMapUrl": "https://maps.google.com/?cid=5683488597802410596&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.07,
-    "kmMarker": 418.93
+    "kmMarker": 350.610804
   },
   {
-    "id": 76,
+    "id": 83,
     "name": "ปั๊มน้ำมัน PT (น้ำมัน+LPG) ดงช้างดี",
     "brand": "PT (พีที)",
     "lat": 17.54492,
     "lng": 100.1888,
     "googleMapUrl": "https://maps.google.com/?cid=8931369555176819799&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 6.87,
-    "kmMarker": 425.8
+    "kmMarker": 357.480804
   },
   {
-    "id": 77,
+    "id": 84,
     "name": "ปั๊ม บางจาก บมจ.ซัสโก้ สาขา หาดกรวด",
     "brand": "Bangchak (บางจาก)",
     "lat": 17.54326,
     "lng": 100.1916,
     "googleMapUrl": "https://maps.google.com/?cid=14196250870349297473&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.57,
-    "kmMarker": 426.37
+    "kmMarker": 358.050804
   },
   {
-    "id": 78,
+    "id": 85,
     "name": "PT Gas Station",
     "brand": "PT (พีที)",
     "lat": 17.492,
     "lng": 100.2339,
     "googleMapUrl": "https://maps.google.com/?cid=14938694866901289082&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 7.9,
-    "kmMarker": 434.27
+    "kmMarker": 365.950804
   },
   {
-    "id": 79,
+    "id": 86,
     "name": "PT",
     "brand": "PT (พีที)",
     "lat": 17.48384,
     "lng": 100.2341,
     "googleMapUrl": "https://maps.google.com/?cid=17646776377909723564&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.56,
-    "kmMarker": 434.83
+    "kmMarker": 366.510804
   },
   {
-    "id": 80,
+    "id": 87,
     "name": "ปั๊มน้ำมัน PT พรหมพิราม 2",
     "brand": "PT (พีที)",
     "lat": 17.12129,
     "lng": 100.2983,
     "googleMapUrl": "https://maps.google.com/?cid=9245116799132263545&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 47.1,
-    "kmMarker": 481.93
+    "kmMarker": 413.610804
   },
   {
-    "id": 81,
+    "id": 88,
     "name": "Bangchak Fuel Station",
     "brand": "Bangchak (บางจาก)",
     "lat": 17.11727,
     "lng": 100.3013,
     "googleMapUrl": "https://maps.google.com/?cid=14845881597610741261&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.02,
-    "kmMarker": 482.95
+    "kmMarker": 414.630804
   },
   {
-    "id": 82,
+    "id": 89,
     "name": "PT Station Phromphiram6 LPG EV",
     "brand": "PT (พีที)",
     "lat": 17.09653,
     "lng": 100.3106,
     "googleMapUrl": "https://maps.google.com/?cid=11392321471446056200&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.05,
-    "kmMarker": 485
+    "kmMarker": 416.680804
   },
   {
-    "id": 83,
+    "id": 90,
     "name": "Shell วัดโบสถ์",
     "brand": "Shell (เชลล์)",
     "lat": 16.99354,
     "lng": 100.327,
     "googleMapUrl": "https://maps.google.com/?cid=6277595728542628848&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 11.62,
-    "kmMarker": 496.62
+    "kmMarker": 428.300804
   },
   {
-    "id": 84,
+    "id": 91,
     "name": "PTT Station",
     "brand": "PTT (ปตท)",
     "lat": 16.98954,
     "lng": 100.3272,
     "googleMapUrl": "https://maps.google.com/?cid=10337634876389943258&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.54,
-    "kmMarker": 497.16
+    "kmMarker": 428.840804
   },
   {
-    "id": 85,
+    "id": 92,
     "name": "Bangchak Station (Petrol+EV)",
     "brand": "Bangchak (บางจาก)",
     "lat": 16.95868,
     "lng": 100.3391,
     "googleMapUrl": "https://maps.google.com/?cid=8963187285091292639&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 3.98,
-    "kmMarker": 501.14
+    "kmMarker": 432.820804
   },
   {
-    "id": 86,
+    "id": 93,
     "name": "ปั๊มน้ำมัน PT",
     "brand": "PT (พีที)",
     "lat": 16.90802,
     "lng": 100.3565,
     "googleMapUrl": "https://maps.google.com/?cid=1478638605762279706&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 5.85,
-    "kmMarker": 506.99
+    "kmMarker": 438.670804
   },
   {
-    "id": 87,
+    "id": 94,
     "name": "ปั๊ม บางจาก บมจ.ซัสโก้ สาขา ดอนทอง",
     "brand": "Bangchak (บางจาก)",
     "lat": 16.88271,
     "lng": 100.3585,
     "googleMapUrl": "https://maps.google.com/?cid=17872145197892924944&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.56,
-    "kmMarker": 509.55
+    "kmMarker": 441.230804
   },
   {
-    "id": 88,
+    "id": 95,
     "name": "Shell",
     "brand": "Shell (เชลล์)",
     "lat": 16.8592,
     "lng": 100.352,
     "googleMapUrl": "https://maps.google.com/?cid=10205519527662845880&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.63,
-    "kmMarker": 512.18
+    "kmMarker": 443.860804
   },
   {
-    "id": 89,
+    "id": 96,
     "name": "PTT Station",
     "brand": "PTT (ปตท)",
     "lat": 16.85701,
     "lng": 100.3505,
     "googleMapUrl": "https://maps.google.com/?cid=586555317893581215&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 7.4,
-    "kmMarker": 519.58
+    "kmMarker": 451.260804
   },
   {
-    "id": 90,
+    "id": 97,
     "name": "PTT Station Don thong 1",
     "brand": "PTT (ปตท)",
     "lat": 16.85376,
     "lng": 100.3494,
     "googleMapUrl": "https://maps.google.com/?cid=15416855830802502601&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.57,
-    "kmMarker": 520.15
+    "kmMarker": 451.830804
   },
   {
-    "id": 91,
+    "id": 98,
     "name": "Bangchak",
     "brand": "Bangchak (บางจาก)",
     "lat": 16.85149,
     "lng": 100.3471,
     "googleMapUrl": "https://maps.google.com/?cid=8235665383234776919&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.8,
-    "kmMarker": 520.95
+    "kmMarker": 452.630804
   },
   {
-    "id": 92,
+    "id": 99,
     "name": "PTT Station",
     "brand": "PTT (ปตท)",
     "lat": 16.83057,
     "lng": 100.3625,
     "googleMapUrl": "https://maps.google.com/?cid=174365610411177391&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 3.07,
-    "kmMarker": 524.02
+    "kmMarker": 455.700804
   },
   {
-    "id": 93,
+    "id": 100,
     "name": "Shell โกลด์ ปิโตรเลียม สเตชั่น",
     "brand": "Shell (เชลล์)",
     "lat": 16.83132,
     "lng": 100.4083,
     "googleMapUrl": "https://maps.google.com/?cid=16249889991185775913&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 5.16,
-    "kmMarker": 529.18
+    "kmMarker": 460.860804
   },
   {
-    "id": 94,
+    "id": 101,
     "name": "PTT.Noppornoil Wangthong",
     "brand": "PTT (ปตท)",
     "lat": 16.82767,
     "lng": 100.4147,
     "googleMapUrl": "https://maps.google.com/?cid=3258465241641052980&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.56,
-    "kmMarker": 529.74
+    "kmMarker": 461.420804
   },
   {
-    "id": 95,
+    "id": 102,
     "name": "PT (Song Khwae Service Limited Partnership)",
     "brand": "PT (พีที)",
     "lat": 16.825,
     "lng": 100.4277,
     "googleMapUrl": "https://maps.google.com/?cid=11056889019753294551&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.3,
-    "kmMarker": 531.04
+    "kmMarker": 462.720804
   },
   {
-    "id": 96,
+    "id": 103,
     "name": "Bangchak (Gasoline and LPG)",
     "brand": "Bangchak (บางจาก)",
     "lat": 16.61165,
     "lng": 100.4496,
     "googleMapUrl": "https://maps.google.com/?cid=13429943289878141888&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 24.98,
-    "kmMarker": 556.02
+    "kmMarker": 487.700804
   },
   {
-    "id": 97,
+    "id": 104,
     "name": "ปั๊ม PT สาขาสากเหล็ก3",
     "brand": "PT (พีที)",
     "lat": 16.5043,
     "lng": 100.4708,
     "googleMapUrl": "https://maps.google.com/?cid=13414915313366086232&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 12.23,
-    "kmMarker": 568.25
+    "kmMarker": 499.930804
   },
   {
-    "id": 98,
+    "id": 105,
     "name": "PTT Station",
     "brand": "PTT (ปตท)",
     "lat": 16.48625,
     "lng": 100.482,
     "googleMapUrl": "https://maps.google.com/?cid=9691280449674990439&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.03,
-    "kmMarker": 570.28
+    "kmMarker": 501.960804
   },
   {
-    "id": 99,
+    "id": 106,
     "name": "ปั๊ม บางจาก บมจ.ซัสโก้ สาขา วังทรายพูน",
     "brand": "Bangchak (บางจาก)",
     "lat": 16.417,
     "lng": 100.5203,
     "googleMapUrl": "https://maps.google.com/?cid=395955099478401490&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 8.66,
-    "kmMarker": 578.94
+    "kmMarker": 510.620804
   },
   {
-    "id": 100,
+    "id": 107,
     "name": "ปั๊มเอสโซ่",
     "brand": "Bangchak (บางจาก)",
     "lat": 16.40975,
     "lng": 100.5252,
     "googleMapUrl": "https://maps.google.com/?cid=13522121561882535528&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.02,
-    "kmMarker": 579.96
+    "kmMarker": 511.640804
   },
   {
-    "id": 101,
+    "id": 108,
     "name": "Shell",
     "brand": "Shell (เชลล์)",
     "lat": 16.32733,
     "lng": 100.5706,
     "googleMapUrl": "https://maps.google.com/?cid=16395742571861913376&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 10.71,
-    "kmMarker": 590.67
+    "kmMarker": 522.350804
   },
   {
-    "id": 102,
+    "id": 109,
     "name": "Esso Gas Station",
     "brand": "Bangchak (บางจาก)",
     "lat": 16.23136,
     "lng": 100.6242,
     "googleMapUrl": "https://maps.google.com/?cid=10620345885341518483&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 11.78,
-    "kmMarker": 602.45
+    "kmMarker": 534.130804
   },
   {
-    "id": 103,
+    "id": 110,
     "name": "Shell",
     "brand": "Shell (เชลล์)",
     "lat": 16.16674,
     "lng": 100.6271,
     "googleMapUrl": "https://maps.google.com/?cid=10358032496593334553&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 7.32,
-    "kmMarker": 609.77
+    "kmMarker": 541.450804
   },
   {
-    "id": 104,
+    "id": 111,
     "name": "ปั๊มน้ำมัน PT&LPG",
     "brand": "PT (พีที)",
     "lat": 16.14705,
     "lng": 100.6208,
     "googleMapUrl": "https://maps.google.com/?cid=12668574169691150676&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.15,
-    "kmMarker": 611.92
+    "kmMarker": 543.600804
   },
   {
-    "id": 105,
+    "id": 112,
     "name": "ปั้ม พีที สาขาเขาทราย-ทับคล้อ",
     "brand": "PT (พีที)",
     "lat": 16.14255,
     "lng": 100.6196,
     "googleMapUrl": "https://maps.google.com/?cid=14039507822105516349&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.3,
-    "kmMarker": 614.22
+    "kmMarker": 545.900804
   },
   {
-    "id": 106,
+    "id": 113,
     "name": "PTT Station ปตท.เขาทราย พิจิตร",
     "brand": "PTT (ปตท)",
     "lat": 16.13907,
     "lng": 100.6213,
     "googleMapUrl": "https://maps.google.com/?cid=2813341863793818644&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 3.4,
-    "kmMarker": 617.62
+    "kmMarker": 549.300804
   },
   {
-    "id": 107,
+    "id": 114,
     "name": "PTT Station (Petrol+EV) (Wang Ngio Charoenkij Petroleum Limited Partnership)",
     "brand": "PTT (ปตท)",
     "lat": 16.03236,
     "lng": 100.6302,
     "googleMapUrl": "https://maps.google.com/?cid=5994661319061738738&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 11.94,
-    "kmMarker": 629.56
+    "kmMarker": 561.240804
   },
   {
-    "id": 108,
+    "id": 115,
     "name": "ปั๊ม บางจาก บมจ.ซัสโก้ สาขา หนองกลับ",
     "brand": "Bangchak (บางจาก)",
     "lat": 15.97393,
     "lng": 100.6263,
     "googleMapUrl": "https://maps.google.com/?cid=1145427417629172799&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 6.29,
-    "kmMarker": 635.85
+    "kmMarker": 567.530804
   },
   {
-    "id": 109,
+    "id": 116,
     "name": "Bangchak - Vichit Thanaphan Borikan (Branch3)",
     "brand": "Bangchak (บางจาก)",
     "lat": 15.87667,
     "lng": 100.6068,
     "googleMapUrl": "https://maps.google.com/?cid=10734982012682687295&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 11.31,
-    "kmMarker": 647.16
+    "kmMarker": 578.840804
   },
   {
-    "id": 110,
+    "id": 117,
     "name": "ปั๊มน้ำมัน PT",
     "brand": "PT (พีที)",
     "lat": 15.77852,
     "lng": 100.6068,
     "googleMapUrl": "https://maps.google.com/?cid=11646683621196076698&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 11.19,
-    "kmMarker": 658.35
+    "kmMarker": 590.030804
   },
   {
-    "id": 111,
+    "id": 118,
     "name": "ปั๊มน้ำมันบางจาก - ไพศาลี",
     "brand": "Bangchak (บางจาก)",
     "lat": 15.64894,
     "lng": 100.5821,
     "googleMapUrl": "https://maps.google.com/?cid=8673235447708197865&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 14.45,
-    "kmMarker": 672.8
+    "kmMarker": 604.480804
   },
   {
-    "id": 112,
+    "id": 119,
     "name": "PT Gas Station",
     "brand": "PT (พีที)",
     "lat": 15.61906,
     "lng": 100.5762,
     "googleMapUrl": "https://maps.google.com/?cid=17898368143183500111&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 3.64,
-    "kmMarker": 676.44
+    "kmMarker": 608.120804
   },
   {
-    "id": 113,
+    "id": 120,
     "name": "PTT Station (Petrol+EV)",
     "brand": "PTT (ปตท)",
     "lat": 15.5917,
     "lng": 100.5647,
     "googleMapUrl": "https://maps.google.com/?cid=6981936051612725626&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 3.19,
-    "kmMarker": 679.63
+    "kmMarker": 611.310804
   },
   {
-    "id": 114,
+    "id": 121,
     "name": "PT Gas Station",
     "brand": "PT (พีที)",
     "lat": 15.36599,
     "lng": 100.5062,
     "googleMapUrl": "https://maps.google.com/?cid=5281469561723255826&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 25.62,
-    "kmMarker": 705.25
+    "kmMarker": 636.930804
   },
   {
-    "id": 115,
+    "id": 122,
     "name": "PTT Station Chansen oil ปตท. จันเสนออยล์",
     "brand": "PTT (ปตท)",
     "lat": 15.10416,
     "lng": 100.3888,
     "googleMapUrl": "https://maps.google.com/?cid=7637135826609799464&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 33.25,
-    "kmMarker": 738.5
+    "kmMarker": 670.180804
   },
   {
-    "id": 116,
+    "id": 123,
     "name": "ปั๊มน้ำมันพีที สาขา อินทร์บุรี3",
     "brand": "PT (พีที)",
     "lat": 15.04299,
     "lng": 100.334,
     "googleMapUrl": "https://maps.google.com/?cid=7401559978751396619&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 9.73,
-    "kmMarker": 748.23
+    "kmMarker": 679.910804
   },
   {
-    "id": 117,
+    "id": 124,
     "name": "Bangchak Station (Petrol+EV) Patthanan 2018",
     "brand": "Bangchak (บางจาก)",
     "lat": 15.03829,
     "lng": 100.3341,
     "googleMapUrl": "https://maps.google.com/?cid=2805745826428681199&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.8,
-    "kmMarker": 751.03
+    "kmMarker": 682.710804
   },
   {
-    "id": 118,
+    "id": 125,
     "name": "Shell",
     "brand": "Shell (เชลล์)",
     "lat": 15.0329,
     "lng": 100.336,
     "googleMapUrl": "https://maps.google.com/?cid=15429017540447646633&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 5.4,
-    "kmMarker": 756.43
+    "kmMarker": 688.110804
   },
   {
-    "id": 119,
+    "id": 126,
     "name": "PTT Station",
     "brand": "PTT (ปตท)",
     "lat": 15.02685,
     "lng": 100.3368,
     "googleMapUrl": "https://maps.google.com/?cid=11696136989437538606&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 5.2,
-    "kmMarker": 761.63
+    "kmMarker": 693.310804
   },
   {
-    "id": 120,
+    "id": 127,
     "name": "PTT Station (With Jiffy)",
     "brand": "PTT (ปตท)",
     "lat": 15.02412,
     "lng": 100.3389,
     "googleMapUrl": "https://maps.google.com/?cid=12900105214123650469&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.5,
-    "kmMarker": 762.13
+    "kmMarker": 693.810804
   },
   {
-    "id": 121,
+    "id": 128,
     "name": "บางจาก ท่างาม อินทร์บุรี",
     "brand": "Bangchak (บางจาก)",
     "lat": 15.0216,
     "lng": 100.3393,
     "googleMapUrl": "https://maps.google.com/?cid=4378997081528839170&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.51,
-    "kmMarker": 762.64
+    "kmMarker": 694.320804
   },
   {
-    "id": 122,
+    "id": 129,
     "name": "Shell",
     "brand": "Shell (เชลล์)",
     "lat": 15.01406,
     "lng": 100.3413,
     "googleMapUrl": "https://maps.google.com/?cid=1165295542312500152&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.7,
-    "kmMarker": 763.34
+    "kmMarker": 695.020804
   },
   {
-    "id": 123,
+    "id": 130,
     "name": "PT gas station ( In Buri 2 )",
     "brand": "PT (พีที)",
     "lat": 15.01126,
     "lng": 100.3427,
     "googleMapUrl": "https://maps.google.com/?cid=11227891432756237821&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.51,
-    "kmMarker": 763.85
+    "kmMarker": 695.530804
   },
   {
-    "id": 124,
+    "id": 131,
     "name": "สถานี น้ำมัน PT สาขา อินทร์บุรี1",
     "brand": "PT (พีที)",
     "lat": 15.00592,
     "lng": 100.3438,
     "googleMapUrl": "https://maps.google.com/?cid=15519831845870200055&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.52,
-    "kmMarker": 764.37
+    "kmMarker": 696.050804
   },
   {
-    "id": 125,
+    "id": 132,
     "name": "Bangchak (Bangchak Green Net Company Limited)",
     "brand": "Bangchak (บางจาก)",
     "lat": 14.98113,
     "lng": 100.3571,
     "googleMapUrl": "https://maps.google.com/?cid=4403474009046155182&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 5.6,
-    "kmMarker": 769.97
+    "kmMarker": 701.650804
   },
   {
-    "id": 126,
+    "id": 133,
     "name": "PTT Station (Petrol+EV) (With Jiffy)",
     "brand": "PTT (ปตท)",
     "lat": 14.91608,
     "lng": 100.402,
     "googleMapUrl": "https://maps.google.com/?cid=16392449268869469759&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 8.49,
-    "kmMarker": 778.46
+    "kmMarker": 710.140804
   },
   {
-    "id": 127,
+    "id": 134,
     "name": "PTT Station",
     "brand": "PTT (ปตท)",
     "lat": 14.89406,
     "lng": 100.4246,
     "googleMapUrl": "https://maps.google.com/?cid=8890082893314726597&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 3.91,
-    "kmMarker": 782.37
+    "kmMarker": 714.050804
   },
   {
-    "id": 128,
+    "id": 135,
     "name": "PTT Station (With Jiffy)",
     "brand": "PTT (ปตท)",
     "lat": 14.88609,
     "lng": 100.428,
     "googleMapUrl": "https://maps.google.com/?cid=17103431117316282949&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 5.7,
-    "kmMarker": 788.07
+    "kmMarker": 719.750804
   },
   {
-    "id": 129,
+    "id": 136,
     "name": "Caltex Siam Singburi",
     "brand": "Caltex (คาลเท็กซ์)",
     "lat": 14.88301,
     "lng": 100.4319,
     "googleMapUrl": "https://maps.google.com/?cid=9491996724972006511&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.55,
-    "kmMarker": 788.62
+    "kmMarker": 720.300804
   },
   {
-    "id": 130,
+    "id": 137,
     "name": "PTT Station",
     "brand": "PTT (ปตท)",
     "lat": 14.8788,
     "lng": 100.4348,
     "googleMapUrl": "https://maps.google.com/?cid=2531858317302188449&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.55,
-    "kmMarker": 789.17
+    "kmMarker": 720.850804
   },
   {
-    "id": 131,
+    "id": 138,
     "name": "PTT EV Station สถานี้ชาร์จรถไฟฟ้า",
     "brand": "PTT (ปตท)",
     "lat": 14.87874,
     "lng": 100.4352,
     "googleMapUrl": "https://maps.google.com/?cid=6878791177020478957&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
-    "distFromPrev": 0,
-    "kmMarker": 789.17
+    "distFromPrev": 0.0,
+    "kmMarker": 720.850804
   },
   {
-    "id": 132,
+    "id": 139,
     "name": "Bangchak Petrol Station",
     "brand": "Bangchak (บางจาก)",
     "lat": 14.84985,
     "lng": 100.4439,
     "googleMapUrl": "https://maps.google.com/?cid=11250785520983164427&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 4.6,
-    "kmMarker": 793.77
+    "kmMarker": 725.450804
   },
   {
-    "id": 133,
+    "id": 140,
     "name": "PTT Station",
     "brand": "PTT (ปตท)",
     "lat": 14.78926,
     "lng": 100.4587,
     "googleMapUrl": "https://maps.google.com/?cid=14326976198506742895&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 6.7,
-    "kmMarker": 800.47
+    "kmMarker": 732.150804
   },
   {
-    "id": 134,
+    "id": 141,
     "name": "ปั้ม PT สาขาพรหมบุรี",
     "brand": "PT (พีที)",
     "lat": 14.74381,
     "lng": 100.4532,
     "googleMapUrl": "https://maps.google.com/?cid=13286467120397235399&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 5.29,
-    "kmMarker": 805.76
+    "kmMarker": 737.440804
   },
   {
-    "id": 135,
+    "id": 142,
     "name": "Shell Asia Station",
     "brand": "Shell (เชลล์)",
     "lat": 14.74121,
     "lng": 100.4534,
     "googleMapUrl": "https://maps.google.com/?cid=17301189840590487658&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 4.9,
-    "kmMarker": 810.66
+    "kmMarker": 742.340804
   },
   {
-    "id": 136,
+    "id": 143,
     "name": "PTT Station (Petrol+LPG+EV)",
     "brand": "PTT (ปตท)",
     "lat": 14.73217,
     "lng": 100.4554,
     "googleMapUrl": "https://maps.google.com/?cid=15453005973123862272&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.08,
-    "kmMarker": 812.74
+    "kmMarker": 744.420804
   },
   {
-    "id": 137,
+    "id": 144,
     "name": "Bangchak Station (Petrol+EV) Ilada Petroleum",
     "brand": "Bangchak (บางจาก)",
     "lat": 14.72516,
     "lng": 100.4543,
     "googleMapUrl": "https://maps.google.com/?cid=13309065751391681308&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 3.3,
-    "kmMarker": 816.04
+    "kmMarker": 747.720804
   },
   {
-    "id": 138,
+    "id": 145,
     "name": "ปั๊มน้ำมัน พีที ไชโย",
     "brand": "PT (พีที)",
     "lat": 14.6868,
     "lng": 100.4639,
     "googleMapUrl": "https://maps.google.com/?cid=10815032875539773705&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 4.33,
-    "kmMarker": 820.37
+    "kmMarker": 752.050804
   },
   {
-    "id": 139,
+    "id": 146,
     "name": "PT Gas Station",
     "brand": "PT (พีที)",
     "lat": 14.6814,
     "lng": 100.4655,
     "googleMapUrl": "https://maps.google.com/?cid=16284789153146647931&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.2,
-    "kmMarker": 822.57
+    "kmMarker": 754.250804
   },
   {
-    "id": 140,
+    "id": 147,
     "name": "PTT Station (Petrol+EV) Chai Yo",
     "brand": "PTT (ปตท)",
     "lat": 14.66362,
     "lng": 100.4713,
     "googleMapUrl": "https://maps.google.com/?cid=8392146599372988499&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.18,
-    "kmMarker": 824.75
+    "kmMarker": 756.430804
   },
   {
-    "id": 141,
+    "id": 148,
     "name": "Bangchak (Petrol+EV) Chaiyo",
     "brand": "Bangchak (บางจาก)",
     "lat": 14.6655,
     "lng": 100.4726,
     "googleMapUrl": "https://maps.google.com/?cid=7500075144312307240&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
-    "distFromPrev": 0,
-    "kmMarker": 824.75
+    "distFromPrev": 0.0,
+    "kmMarker": 756.430804
   },
   {
-    "id": 142,
+    "id": 149,
     "name": "Caltex Prasert Chaiyo",
     "brand": "Caltex (คาลเท็กซ์)",
     "lat": 14.66201,
     "lng": 100.4731,
     "googleMapUrl": "https://maps.google.com/?cid=16049004622946130026&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.59,
-    "kmMarker": 825.34
+    "kmMarker": 757.020804
   },
   {
-    "id": 143,
+    "id": 150,
     "name": "PTT Station (NGV+Petrol+EV) Chaiyo (Inbound Bangkok) (Truck Park)",
     "brand": "PTT (ปตท)",
     "lat": 14.65651,
     "lng": 100.4742,
     "googleMapUrl": "https://maps.google.com/?cid=6469850808433877229&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.58,
-    "kmMarker": 825.92
+    "kmMarker": 757.600804
   },
   {
-    "id": 144,
+    "id": 151,
     "name": "PTT Station (LPG+EV)",
     "brand": "PTT (ปตท)",
     "lat": 14.57445,
     "lng": 100.4893,
     "googleMapUrl": "https://maps.google.com/?cid=6118538830717383498&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 9.78,
-    "kmMarker": 835.7
+    "kmMarker": 767.380804
   },
   {
-    "id": 145,
+    "id": 152,
     "name": "Shell",
     "brand": "Shell (เชลล์)",
     "lat": 14.55816,
     "lng": 100.4976,
     "googleMapUrl": "https://maps.google.com/?cid=254990715644869762&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.02,
-    "kmMarker": 837.72
+    "kmMarker": 769.400804
   },
   {
-    "id": 146,
+    "id": 153,
     "name": "PTT Station (With Jiffy)",
     "brand": "PTT (ปตท)",
     "lat": 14.55483,
     "lng": 100.4988,
     "googleMapUrl": "https://maps.google.com/?cid=3294833536275133592&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
-    "distFromPrev": 0,
-    "kmMarker": 837.72
+    "distFromPrev": 0.0,
+    "kmMarker": 769.400804
   },
   {
-    "id": 147,
+    "id": 154,
     "name": "Caltex หลวงปู่ทวด กม.44",
     "brand": "Caltex (คาลเท็กซ์)",
     "lat": 14.53422,
     "lng": 100.5033,
     "googleMapUrl": "https://maps.google.com/?cid=4663071824128339349&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.64,
-    "kmMarker": 840.36
+    "kmMarker": 772.040804
   },
   {
-    "id": 148,
+    "id": 155,
     "name": "บางจาก พงษ์สุภาพร ออยล์",
     "brand": "Bangchak (บางจาก)",
     "lat": 14.50712,
     "lng": 100.5179,
     "googleMapUrl": "https://maps.google.com/?cid=2091143178332465127&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 3.17,
-    "kmMarker": 843.53
+    "kmMarker": 775.210804
   },
   {
-    "id": 149,
+    "id": 156,
     "name": "PTT Station",
     "brand": "PTT (ปตท)",
     "lat": 14.50203,
     "lng": 100.5202,
     "googleMapUrl": "https://maps.google.com/?cid=3265198286098244250&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.53,
-    "kmMarker": 844.06
+    "kmMarker": 775.740804
   },
   {
-    "id": 150,
+    "id": 157,
     "name": "PT สาขาโชคดี ออยล์",
     "brand": "PT (พีที)",
     "lat": 14.50417,
     "lng": 100.5213,
     "googleMapUrl": "https://maps.google.com/?cid=15817508393028576232&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
-    "distFromPrev": 0,
-    "kmMarker": 844.06
+    "distFromPrev": 0.0,
+    "kmMarker": 775.740804
   },
   {
-    "id": 151,
-    "name": "\"PT Gas Station Bangpahan (Punthai",
-    "brand": "Max Mart)\"",
-    "lat": null,
-    "lng": 14.48485,
-    "googleMapUrl": "100.527",
-    "distFromPrev": 0,
-    "kmMarker": 844.06
+    "id": 158,
+    "name": "PT Gas Station Bangpahan (Punthai , Max Mart)",
+    "brand": "PT (พีที)",
+    "lat": 14.48485,
+    "lng": 100.527,
+    "googleMapUrl": "https://maps.google.com/?cid=4768530345018063564&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
+    "distFromPrev": 11.7,
+    "kmMarker": 787.440804
   },
   {
-    "id": 152,
+    "id": 159,
     "name": "PTT Station",
     "brand": "PTT (ปตท)",
     "lat": 14.47522,
     "lng": 100.5318,
     "googleMapUrl": "https://maps.google.com/?cid=7623577799370832263&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.05,
-    "kmMarker": 845.11
+    "kmMarker": 788.490804
   },
   {
-    "id": 153,
+    "id": 160,
     "name": "PTT Station",
     "brand": "PTT (ปตท)",
     "lat": 14.45775,
     "lng": 100.5381,
     "googleMapUrl": "https://maps.google.com/?cid=2091143176839146950&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.13,
-    "kmMarker": 847.24
+    "kmMarker": 790.620804
   },
   {
-    "id": 154,
+    "id": 161,
     "name": "PTT Station",
     "brand": "PTT (ปตท)",
     "lat": 14.42443,
     "lng": 100.5613,
     "googleMapUrl": "https://maps.google.com/?cid=13111483373527312017&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 4.71,
-    "kmMarker": 851.95
+    "kmMarker": 795.330804
   },
   {
-    "id": 155,
+    "id": 162,
     "name": "PT",
     "brand": "PT (พีที)",
     "lat": 14.41787,
     "lng": 100.5674,
     "googleMapUrl": "https://maps.google.com/?cid=16132546297640685341&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.09,
-    "kmMarker": 853.04
+    "kmMarker": 796.420804
   },
   {
-    "id": 156,
+    "id": 163,
     "name": "PT Gas Station Nakhonloung4 (Max Mart)",
     "brand": "PT (พีที)",
     "lat": 14.40738,
     "lng": 100.5828,
     "googleMapUrl": "https://maps.google.com/?cid=6938013691355356076&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.18,
-    "kmMarker": 855.22
+    "kmMarker": 798.600804
   },
   {
-    "id": 157,
+    "id": 164,
     "name": "PT Gas Station Nakhonluang2 (Punthai)",
     "brand": "PT (พีที)",
     "lat": 14.40527,
     "lng": 100.5824,
     "googleMapUrl": "https://maps.google.com/?cid=8104639085486572582&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.2,
-    "kmMarker": 856.42
+    "kmMarker": 799.800804
   },
   {
-    "id": 158,
+    "id": 165,
     "name": "PTT",
     "brand": "PTT (ปตท)",
     "lat": 14.39503,
     "lng": 100.5938,
     "googleMapUrl": "https://maps.google.com/?cid=80219668706024841&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.63,
-    "kmMarker": 858.05
+    "kmMarker": 801.430804
   },
   {
-    "id": 159,
+    "id": 166,
     "name": "PTT Station (LPG+EV)",
     "brand": "PTT (ปตท)",
     "lat": 14.39121,
     "lng": 100.5976,
     "googleMapUrl": "https://maps.google.com/?cid=8106917783638113482&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.55,
-    "kmMarker": 858.6
+    "kmMarker": 801.980804
   },
   {
-    "id": 160,
+    "id": 167,
     "name": "PTT Station",
     "brand": "PTT (ปตท)",
     "lat": 14.37999,
     "lng": 100.6075,
     "googleMapUrl": "https://maps.google.com/?cid=10193184517412522004&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 5.3,
-    "kmMarker": 863.9
+    "kmMarker": 807.280804
   },
   {
-    "id": 161,
+    "id": 168,
     "name": "ปั๊มบางจาก (บจก.พร้อมทรัพย์)",
     "brand": "Bangchak (บางจาก)",
     "lat": 14.35437,
     "lng": 100.6124,
     "googleMapUrl": "https://maps.google.com/?cid=12777542639038978416&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 3.2,
-    "kmMarker": 867.1
+    "kmMarker": 810.480804
   },
   {
-    "id": 162,
+    "id": 169,
     "name": "PTT NGV ปตท.เอ็นจีวี อยุธยา ดีเวลล๊อปเม้นท์",
     "brand": "PTT (ปตท)",
     "lat": 14.33566,
     "lng": 100.6186,
     "googleMapUrl": "https://maps.google.com/?cid=9575476059024513059&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.1,
-    "kmMarker": 869.2
+    "kmMarker": 812.580804
   },
   {
-    "id": 163,
+    "id": 170,
     "name": "Bangchak Station (Petrol+EV) Asian Highway 2",
     "brand": "Bangchak (บางจาก)",
     "lat": 14.32422,
     "lng": 100.6141,
     "googleMapUrl": "https://maps.google.com/?cid=8804586544022985587&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
-    "distFromPrev": 0,
-    "kmMarker": 869.2
+    "distFromPrev": 0.0,
+    "kmMarker": 812.580804
   },
   {
-    "id": 164,
+    "id": 171,
     "name": "PTT Gas Station",
     "brand": "PTT (ปตท)",
     "lat": 14.32248,
     "lng": 100.6143,
     "googleMapUrl": "https://maps.google.com/?cid=11284508652725984132&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.4,
-    "kmMarker": 869.6
+    "kmMarker": 812.980804
   },
   {
-    "id": 165,
+    "id": 172,
     "name": "ปตท.ทางเข้าอยุธยา",
     "brand": "PTT (ปตท)",
     "lat": 14.3131,
     "lng": 100.6124,
     "googleMapUrl": "https://maps.google.com/?cid=8987780833758180408&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.6,
-    "kmMarker": 871.2
+    "kmMarker": 814.580804
   },
   {
-    "id": 166,
+    "id": 173,
     "name": "PTT Station (Petrol+EV)",
     "brand": "PTT (ปตท)",
     "lat": 14.30416,
     "lng": 100.6143,
     "googleMapUrl": "https://maps.google.com/?cid=13571706379007212698&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.03,
-    "kmMarker": 872.23
+    "kmMarker": 815.610804
   },
   {
-    "id": 167,
+    "id": 174,
     "name": "Shell",
     "brand": "Shell (เชลล์)",
     "lat": 14.29672,
     "lng": 100.6122,
     "googleMapUrl": "https://maps.google.com/?cid=14375331336399741616&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.03,
-    "kmMarker": 873.26
+    "kmMarker": 816.640804
   },
   {
-    "id": 168,
+    "id": 175,
     "name": "PTT Bang Pa IN",
     "brand": "PTT (ปตท)",
     "lat": 14.2665,
     "lng": 100.6122,
     "googleMapUrl": "https://maps.google.com/?cid=10302303993550873998&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
-    "distFromPrev": 0,
-    "kmMarker": 873.26
+    "distFromPrev": 0.0,
+    "kmMarker": 816.640804
   },
   {
-    "id": 169,
+    "id": 176,
     "name": "ปั๊มบางจาก (น้ำมัน+EV) สายเอเซีย",
     "brand": "Bangchak (บางจาก)",
     "lat": 14.26547,
     "lng": 100.6125,
     "googleMapUrl": "https://maps.google.com/?cid=5242457343042499154&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.2,
-    "kmMarker": 873.46
+    "kmMarker": 816.840804
   },
   {
-    "id": 170,
+    "id": 177,
     "name": "ปตท ก่อนแยกเข้าโรจนะ",
     "brand": "PTT (ปตท)",
     "lat": 14.26642,
     "lng": 100.6131,
     "googleMapUrl": "https://maps.google.com/?cid=14123904150836046568&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.2,
-    "kmMarker": 873.66
+    "kmMarker": 817.040804
   },
   {
-    "id": 171,
+    "id": 178,
     "name": "ปั๊ม Sinopec Susco สาขา อยุธยา ก.ม. 63",
     "brand": "Susco (ซัสโก้)",
     "lat": 14.26822,
     "lng": 100.6122,
     "googleMapUrl": "https://maps.google.com/?cid=9393359971148176591&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.3,
-    "kmMarker": 873.96
+    "kmMarker": 817.340804
   },
   {
-    "id": 172,
+    "id": 179,
     "name": "Shell",
     "brand": "Shell (เชลล์)",
     "lat": 14.21848,
     "lng": 100.6109,
     "googleMapUrl": "https://maps.google.com/?cid=13822760516372970719&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 4.9,
-    "kmMarker": 878.86
+    "kmMarker": 822.240804
   },
   {
-    "id": 173,
+    "id": 180,
     "name": "PTT Station (Petrol+EV) Bang Pa-in",
     "brand": "PTT (ปตท)",
     "lat": 14.22848,
     "lng": 100.6103,
     "googleMapUrl": "https://maps.google.com/?cid=16505640215371376424&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 4.22,
-    "kmMarker": 883.08
+    "kmMarker": 826.460804
   },
   {
-    "id": 174,
+    "id": 181,
     "name": "Bangchak Siam Suksawat - Bang Pa-In Station",
     "brand": "Bangchak (บางจาก)",
     "lat": 14.21201,
     "lng": 100.6099,
     "googleMapUrl": "https://maps.google.com/?cid=11859373518031656428&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.6,
-    "kmMarker": 883.68
+    "kmMarker": 827.060804
   },
   {
-    "id": 175,
+    "id": 182,
     "name": "PTT Station (With Jiffy)",
     "brand": "PTT (ปตท)",
     "lat": 14.2029,
     "lng": 100.6079,
     "googleMapUrl": "https://maps.google.com/?cid=4628959011320103193&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.53,
-    "kmMarker": 884.21
+    "kmMarker": 827.590804
   },
   {
-    "id": 176,
+    "id": 183,
     "name": "CALTEX",
     "brand": "Caltex (คาลเท็กซ์)",
     "lat": 14.18994,
     "lng": 100.6102,
     "googleMapUrl": "https://maps.google.com/?cid=29867812625853841&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.63,
-    "kmMarker": 885.84
+    "kmMarker": 829.220804
   },
   {
-    "id": 177,
+    "id": 184,
     "name": "ปั๊มบางจาก สาขาบางปะอิน 1 (ขาขึ้นภาคเหนือ)",
     "brand": "Bangchak (บางจาก)",
     "lat": 14.18474,
     "lng": 100.6127,
     "googleMapUrl": "https://maps.google.com/?cid=15228491273830382152&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.4,
-    "kmMarker": 886.24
+    "kmMarker": 829.620804
   },
   {
-    "id": 178,
+    "id": 185,
     "name": "PTT Station (With Jiffy)",
     "brand": "PTT (ปตท)",
     "lat": 14.16834,
     "lng": 100.6189,
     "googleMapUrl": "https://maps.google.com/?cid=16636626509160575175&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.3,
-    "kmMarker": 887.54
+    "kmMarker": 830.920804
   },
   {
-    "id": 179,
+    "id": 186,
     "name": "PTT Station",
     "brand": "PTT (ปตท)",
     "lat": 14.15318,
     "lng": 100.5608,
     "googleMapUrl": "https://maps.google.com/?cid=7077905371369050165&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 6.34,
-    "kmMarker": 893.88
+    "kmMarker": 837.260804
   },
   {
-    "id": 180,
+    "id": 187,
     "name": "PTT Station พรอรุณ เชียงรากน้อย กาญจนาภิเษก (ขาเข้า)",
     "brand": "PTT (ปตท)",
     "lat": 14.15222,
     "lng": 100.5613,
     "googleMapUrl": "https://maps.google.com/?cid=15872160367690293902&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
-    "distFromPrev": 0,
-    "kmMarker": 893.88
+    "distFromPrev": 0.0,
+    "kmMarker": 837.260804
   },
   {
-    "id": 181,
+    "id": 188,
     "name": "ปั๊มน้ำมันคาลเท็กซ์ สามโคก",
     "brand": "Caltex (คาลเท็กซ์)",
     "lat": 14.12001,
     "lng": 100.5703,
     "googleMapUrl": "https://maps.google.com/?cid=17026374684681735183&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 8.6,
-    "kmMarker": 902.48
+    "kmMarker": 845.860804
   },
   {
-    "id": 182,
+    "id": 189,
     "name": "PTT Lpg+",
     "brand": "PTT (ปตท)",
     "lat": 14.1132,
     "lng": 100.5694,
     "googleMapUrl": "https://maps.google.com/?cid=6814902160085576221&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.51,
-    "kmMarker": 902.99
+    "kmMarker": 846.370804
   },
   {
-    "id": 183,
+    "id": 190,
     "name": "PT Station Samkhok3",
     "brand": "PT (พีที)",
     "lat": 14.1092,
     "lng": 100.5709,
     "googleMapUrl": "https://maps.google.com/?cid=11021122677789253144&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.52,
-    "kmMarker": 903.51
+    "kmMarker": 846.890804
   },
   {
-    "id": 184,
+    "id": 191,
     "name": "Caltex Purethai Chiang Rak Noi",
     "brand": "Caltex (คาลเท็กซ์)",
     "lat": 14.09096,
     "lng": 100.5701,
     "googleMapUrl": "https://maps.google.com/?cid=17629158456767872564&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.04,
-    "kmMarker": 905.55
+    "kmMarker": 848.930804
   },
   {
-    "id": 185,
+    "id": 192,
     "name": "PT Gas Station Sam Khok 2",
     "brand": "PT (พีที)",
     "lat": 14.08972,
     "lng": 100.5701,
     "googleMapUrl": "https://maps.google.com/?cid=9888439910697156623&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
-    "distFromPrev": 0,
-    "kmMarker": 905.55
+    "distFromPrev": 0.0,
+    "kmMarker": 848.930804
   },
   {
-    "id": 186,
-    "name": "\"ปั๊มน้ำมันพีที บางพูน (กาแฟพันธุ์ไทย",
-    "brand": "Max Mart)\"",
-    "lat": null,
-    "lng": 13.99931,
-    "googleMapUrl": "100.5724",
-    "distFromPrev": 0,
-    "kmMarker": 905.55
+    "id": 193,
+    "name": "ปั๊มน้ำมันพีที บางพูน (กาแฟพันธุ์ไทย, Max Mart)",
+    "brand": "PT (พีที)",
+    "lat": 13.99931,
+    "lng": 100.5724,
+    "googleMapUrl": "https://maps.google.com/?cid=4518146631778373176&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
+    "distFromPrev": 9.6,
+    "kmMarker": 858.530804
   },
   {
-    "id": 187,
+    "id": 194,
     "name": "Shell",
     "brand": "Shell (เชลล์)",
     "lat": 13.99746,
     "lng": 100.5746,
     "googleMapUrl": "https://maps.google.com/?cid=50539138578917299&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.2,
-    "kmMarker": 905.75
+    "kmMarker": 858.730804
   },
   {
-    "id": 188,
+    "id": 195,
     "name": "Bangchak",
     "brand": "Bangchak (บางจาก)",
     "lat": 13.97509,
     "lng": 100.5767,
     "googleMapUrl": "https://maps.google.com/?cid=2740651700552310946&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 3.2,
-    "kmMarker": 908.95
+    "kmMarker": 861.930804
   },
   {
-    "id": 189,
+    "id": 196,
     "name": "PTT Station Rangsit-Tiwanon",
     "brand": "PTT (ปตท)",
     "lat": 13.97207,
     "lng": 100.5642,
     "googleMapUrl": "https://maps.google.com/?cid=1704937418813507018&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.3,
-    "kmMarker": 911.25
+    "kmMarker": 864.230804
   },
   {
-    "id": 190,
+    "id": 197,
     "name": "PTT station - Active Park",
     "brand": "PTT (ปตท)",
     "lat": 13.91144,
     "lng": 100.5424,
     "googleMapUrl": "https://maps.google.com/?cid=2078481159503357207&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
-    "distFromPrev": 8,
-    "kmMarker": 919.25
+    "distFromPrev": 8.0,
+    "kmMarker": 872.230804
   },
   {
-    "id": 191,
+    "id": 198,
     "name": "ปั๊มน้ำมันบางจาก - เมืองทองธานี",
     "brand": "Bangchak (บางจาก)",
     "lat": 13.90955,
     "lng": 100.5384,
     "googleMapUrl": "",
     "distFromPrev": 0.4,
-    "kmMarker": 919.65
+    "kmMarker": 872.630804
   },
   {
-    "id": 192,
+    "id": 199,
     "name": "ปั๊มน้ำมันบางจาก แจ้งวัฒนะ 38 (บจ. เอเวอร์กรีน แจ้งวัฒนะ)​",
     "brand": "Bangchak (บางจาก)",
     "lat": 13.89719,
     "lng": 100.5476,
     "googleMapUrl": "https://maps.google.com/?cid=8772783389217961853&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.1,
-    "kmMarker": 921.75
+    "kmMarker": 874.730804
   },
   {
-    "id": 193,
+    "id": 200,
     "name": "PT Gas Station",
     "brand": "PT (พีที)",
     "lat": 13.90157,
     "lng": 100.5358,
     "googleMapUrl": "https://maps.google.com/?cid=7700502700767239970&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.9,
-    "kmMarker": 922.65
+    "kmMarker": 875.630804
   },
   {
-    "id": 194,
+    "id": 201,
     "name": "Shell",
     "brand": "Shell (เชลล์)",
     "lat": 13.88188,
     "lng": 100.5337,
     "googleMapUrl": "https://maps.google.com/?cid=2675794831682556135&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.4,
-    "kmMarker": 923.05
+    "kmMarker": 876.030804
   },
   {
-    "id": 195,
+    "id": 202,
     "name": "Bangchak",
     "brand": "Bangchak (บางจาก)",
     "lat": 13.85859,
     "lng": 100.5283,
     "googleMapUrl": "https://maps.google.com/?cid=4015570328810372217&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
-    "distFromPrev": 4,
-    "kmMarker": 927.05
+    "distFromPrev": 4.0,
+    "kmMarker": 880.030804
   },
   {
-    "id": 196,
+    "id": 203,
     "name": "Bangchak",
     "brand": "Bangchak (บางจาก)",
     "lat": 13.8585,
     "lng": 100.5301,
     "googleMapUrl": "https://maps.google.com/?cid=17287940954567811156&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.2,
-    "kmMarker": 927.25
+    "kmMarker": 880.230804
   },
   {
-    "id": 197,
+    "id": 204,
     "name": "PTT Station",
     "brand": "PTT (ปตท)",
     "lat": 13.85476,
     "lng": 100.5298,
     "googleMapUrl": "https://maps.google.com/?cid=13476458598644290213&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.1,
-    "kmMarker": 929.35
+    "kmMarker": 882.330804
   },
   {
-    "id": 198,
+    "id": 205,
     "name": "PTT Rest Area",
     "brand": "PTT (ปตท)",
     "lat": 13.84075,
     "lng": 100.534,
     "googleMapUrl": "https://maps.google.com/?cid=14357607030643969018&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 3.8,
-    "kmMarker": 933.15
+    "kmMarker": 886.130804
   },
   {
-    "id": 199,
+    "id": 206,
     "name": "PTT (Pimon Rungruang (1991) Company Limited)",
     "brand": "PTT (ปตท)",
     "lat": 13.83517,
     "lng": 100.54,
     "googleMapUrl": "https://maps.google.com/?cid=12705991043800136068&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 3.8,
-    "kmMarker": 936.95
+    "kmMarker": 889.930804
   },
   {
-    "id": 200,
+    "id": 207,
     "name": "Caltex C.Trac Energy",
     "brand": "Caltex (คาลเท็กซ์)",
     "lat": 13.83041,
     "lng": 100.5436,
     "googleMapUrl": "https://maps.google.com/?cid=10118381257796323888&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.7,
-    "kmMarker": 937.65
+    "kmMarker": 890.630804
   },
   {
-    "id": 201,
+    "id": 208,
     "name": "ปั๊มน้ำมันบางจาก - บจก. กำแพงเพชร ปิโตรเลียม",
     "brand": "Bangchak (บางจาก)",
     "lat": 13.8261,
     "lng": 100.5503,
     "googleMapUrl": "https://maps.google.com/?cid=452197677016901186&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.3,
-    "kmMarker": 938.95
+    "kmMarker": 891.930804
   },
   {
-    "id": 202,
+    "id": 209,
     "name": "PTT",
     "brand": "PTT (ปตท)",
     "lat": 13.80882,
     "lng": 100.5483,
     "googleMapUrl": "https://maps.google.com/?cid=17745672241374093962&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.3,
-    "kmMarker": 940.25
+    "kmMarker": 893.230804
   },
   {
-    "id": 203,
+    "id": 210,
     "name": "Bangchak",
     "brand": "Bangchak (บางจาก)",
     "lat": 13.78853,
     "lng": 100.5363,
     "googleMapUrl": "https://maps.google.com/?cid=12382957879791008004&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 2.1,
-    "kmMarker": 942.35
+    "kmMarker": 895.330804
   },
   {
-    "id": 204,
+    "id": 211,
     "name": "Bangchak",
     "brand": "Bangchak (บางจาก)",
     "lat": 13.80075,
     "lng": 100.5381,
     "googleMapUrl": "https://maps.google.com/?cid=6820678596568239919&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.1,
-    "kmMarker": 943.45
+    "kmMarker": 896.430804
   },
   {
-    "id": 205,
+    "id": 212,
     "name": "Bangchak",
     "brand": "Bangchak (บางจาก)",
     "lat": 13.77771,
     "lng": 100.532,
     "googleMapUrl": "https://maps.google.com/?cid=2219009462404570631&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
-    "distFromPrev": 2,
-    "kmMarker": 945.45
+    "distFromPrev": 2.0,
+    "kmMarker": 898.430804
   },
   {
-    "id": 206,
+    "id": 213,
     "name": "Bangchak petrol station - Public Relations Department",
     "brand": "Bangchak (บางจาก)",
     "lat": 13.78341,
     "lng": 100.5394,
     "googleMapUrl": "https://maps.google.com/?cid=12910315339757474604&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.3,
-    "kmMarker": 946.75
+    "kmMarker": 899.730804
   },
   {
-    "id": 207,
+    "id": 214,
     "name": "Caltex Siambest Service",
     "brand": "Caltex (คาลเท็กซ์)",
     "lat": 13.75551,
     "lng": 100.5249,
     "googleMapUrl": "https://maps.google.com/?cid=13096133585624719900&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 3.2,
-    "kmMarker": 949.95
+    "kmMarker": 902.930804
   },
   {
-    "id": 208,
+    "id": 215,
     "name": "Shell",
     "brand": "Shell (เชลล์)",
     "lat": 13.75129,
     "lng": 100.5256,
     "googleMapUrl": "https://maps.google.com/?cid=15811480290994164795&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.4,
-    "kmMarker": 950.35
+    "kmMarker": 903.330804
   },
   {
-    "id": 209,
+    "id": 216,
     "name": "PT",
     "brand": "PT (พีที)",
     "lat": 13.75666,
     "lng": 100.5105,
     "googleMapUrl": "https://maps.google.com/?cid=11565290655856667173&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 1.5,
-    "kmMarker": 951.85
+    "kmMarker": 904.830804
   },
   {
-    "id": 210,
+    "id": 217,
     "name": "Sinopec Susco Lan Luang",
     "brand": "Susco (ซัสโก้)",
     "lat": 13.75617,
     "lng": 100.5078,
     "googleMapUrl": "https://maps.google.com/?cid=6627175782244586082&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.3,
-    "kmMarker": 952.15
+    "kmMarker": 905.130804
   },
   {
-    "id": 211,
+    "id": 218,
     "name": "Shell",
     "brand": "Shell (เชลล์)",
     "lat": 13.75057,
     "lng": 100.5044,
     "googleMapUrl": "https://maps.google.com/?cid=16126814166967113390&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.8,
-    "kmMarker": 952.95
+    "kmMarker": 905.930804
   },
   {
-    "id": 212,
+    "id": 219,
     "name": "Shell",
     "brand": "Shell (เชลล์)",
     "lat": 13.75001,
     "lng": 100.5001,
     "googleMapUrl": "https://maps.google.com/?cid=4804146395239139473&g_mp=Cilnb29nbGUubWFwcy5wbGFjZXMudjEuUGxhY2VzLlNlYXJjaE5lYXJieRACGAQgAA",
     "distFromPrev": 0.7,
-    "kmMarker": 953.65
+    "kmMarker": 906.630804
   }
 ]

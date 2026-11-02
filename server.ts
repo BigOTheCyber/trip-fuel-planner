@@ -660,7 +660,7 @@ async function getStationsFromCSV() {
 // APP
 // =========================================================
 
-const app =
+export const app =
   new Elysia()
 
 
@@ -684,6 +684,9 @@ const app =
     )
 
 
+
+    .get('/route-matching.js', () => Bun.file('route-matching.js'))
+    .get('/api/route-geometry', () => Bun.file('data/route-geometry.json'))
 
     // =====================================================
     // CARS
@@ -759,7 +762,8 @@ const app =
 
           selectedBrands = [],
 
-          currentKm = 0
+          currentKm = 0,
+          positionToleranceKm = 0
 
         } =
           body || {};
@@ -895,9 +899,9 @@ const app =
         const stationsAhead =
           stations.filter(
             station =>
-              station.kmMarker
-              >
-              currentPositionKm
+              station.kmMarker >= currentPositionKm - Math.min(
+                0.1, Math.max(0, Number(positionToleranceKm) || 0)
+              )
           );
 
 
@@ -1839,7 +1843,9 @@ const app =
 
 
 
-    .listen(
+;
+
+if (import.meta.main) app.listen(
 
       {
 
