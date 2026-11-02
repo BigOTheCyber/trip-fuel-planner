@@ -564,7 +564,7 @@
             <div class="min-w-0">
 
               <p class="text-[9px] uppercase tracking-widest text-slate-300 font-bold">
-                Nearest route station
+                Current route position
               </p>
 
 
@@ -1424,6 +1424,57 @@
     let currentKm =
       0;
 
+    // Route position comes from GPS projection, not a nearby station marker.
+    let locationReady = false;
+    let locationRequestId = 0;
+    let locationSource = 'pending';
+
+    // Projection uses station-to-station chords as an APPROXIMATION of the road.
+    // It must not be described as precise road distance.
+    function estimateRoutePosition(lat, lng) {
+      const points = allStations.filter(station =>
+        Number.isFinite(Number(station.lat)) &&
+        Number.isFinite(Number(station.lng)) &&
+        Math.abs(Number(station.lat)) > 0.001 &&
+        Math.abs(Number(station.lng)) > 0.001 &&
+        Number.isFinite(Number(station.kmMarker))
+      );
+      if (points.length < 2) return null;
+
+      const latitudeScale = 111.2;
+      const longitudeScale = 111.2 * Math.cos(lat * Math.PI / 180);
+      let best = null;
+
+      // Consecutive valid stations define an approximate route segment.
+      for (let i = 0; i < points.length - 1; i++) {
+        const a = points[i];
+        const b = points[i + 1];
+        const markerA = Number(a.kmMarker);
+        const markerB = Number(b.kmMarker);
+        if (markerB <= markerA) continue;
+
+        const ax = (Number(a.lng) - lng) * longitudeScale;
+        const ay = (Number(a.lat) - lat) * latitudeScale;
+        const bx = (Number(b.lng) - lng) * longitudeScale;
+        const by = (Number(b.lat) - lat) * latitudeScale;
+        const dx = bx - ax;
+        const dy = by - ay;
+        const lengthSquared = dx * dx + dy * dy;
+        if (lengthSquared < 0.000001) continue;
+
+        const t = Math.max(0, Math.min(1, -(ax * dx + ay * dy) / lengthSquared));
+        const offsetKm = Math.hypot(ax + t * dx, ay + t * dy);
+        const km = markerA + t * (markerB - markerA);
+        if (!best || offsetKm < best.offsetKm) {
+          best = { km, offsetKm };
+        }
+      }
+
+      // If far from the known corridor, do not silently invent a position.
+      return best && best.offsetKm <= 5 ? best : null;
+    }
+
+
 
 
     // =====================================================
@@ -1737,235 +1788,85 @@
     // =====================================================
 
     function autoTrackLocation() {
+      const requestId = ++locationRequestId;
+      locationReady = false;
+      locationSource = 'pending';
+      document.getElementById('gpsBadge').textContent = 'Detecting...';
+      document.getElementById('currentStationName').textContent = 'Updating GPS position...';
 
-      if (
-        !navigator.geolocation
-      ) {
-
-        fallbackStationSelection();
-
+      if (!navigator.geolocation) {
+        fallbackStationSelection(requestId);
         return;
-
       }
-
 
       navigator.geolocation.getCurrentPosition(
-
         position => {
-
-          userLat =
-            position.coords.latitude;
-
-
-          userLng =
-            position.coords.longitude;
-
-
-          updateLocationAndMap(
-            userLat,
-            userLng
-          );
-
+          if (requestId !== locationRequestId) return;
+          userLat = position.coords.latitude;
+          userLng = position.coords.longitude;
+          updateLocationAndMap(userLat, userLng);
         },
-
-
         error => {
-
-          console.warn(
-            'GPS location error or denied:',
-            error
-          );
-
-
-          fallbackStationSelection();
-
+          if (requestId !== locationRequestId) return;
+          console.warn('GPS unavailable:', error);
+          fallbackStationSelection(requestId);
         },
-
-
-        {
-          enableHighAccuracy:
-            true,
-
-          timeout:
-            8000,
-
-          maximumAge:
-            0
-        }
-
+        { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
       );
-
     }
 
-
-
-    function updateLocationAndMap(
-      lat,
-      lng,
-      forcedStation = null
-    ) {
-
-      const mapIframe =
-        document.getElementById(
-          'mapIframe'
-        );
-
-
-      const mapPlaceholder =
-        document.getElementById(
-          'mapPlaceholder'
-        );
-
-
-      const gpsBadge =
-        document.getElementById(
-          'gpsBadge'
-        );
-
-
-      const stationText =
-        document.getElementById(
-          'currentStationName'
-        );
-
-
-      mapIframe.src =
-        `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
-
-
-      mapIframe.classList.remove(
-        'hidden'
-      );
-
-
-      mapPlaceholder.classList.add(
-        'hidden'
-      );
-
-
-      let station =
-        forcedStation;
-
-
-      if (
-        !station
-        &&
-        allStations.length > 0
-      ) {
-
-        let minDist =
-          Infinity;
-
-
-        allStations.forEach(
-          item => {
-
-            if (
-              Number(item.lat) !== 0
-              &&
-              Number(item.lng) !== 0
-            ) {
-
-              const dist =
-                getDistanceInKm(
-                  lat,
-                  lng,
-                  Number(item.lat),
-                  Number(item.lng)
-                );
-
-
-              if (
-                dist
-                <
-                minDist
-              ) {
-
-                minDist =
-                  dist;
-
-
-                station =
-                  item;
-
-              }
-
-            }
-
-          }
-        );
-
+    function updateLocationAndMap(lat, lng, forcedStation = null) {
+      const mapIframe = document.getElementById('mapIframe');
+      const mapPlaceholder = document.getElementById('mapPlaceholder');
+      const gpsBadge = document.getElementById('gpsBadge');
+      const stationText = document.getElementById('currentStationName');
+      if (Number.isFinite(lat) && Number.isFinite(lng) && lat !== 0 && lng !== 0) {
+        mapIframe.src = `https://maps.google.com/maps?q=${lat},${lng}&z=15&output=embed`;
+        mapIframe.classList.remove('hidden');
+        mapPlaceholder.classList.add('hidden');
       }
 
-
-      if (station) {
-
-        currentKm =
-          station.kmMarker;
-
-
-        stationText.innerText =
-          `${station.name} (${station.brand})`;
-
-
-        gpsBadge.className =
-          'text-[9px] font-bold px-2.5 py-1 rounded-full bg-[#DDF7E8] text-[#2F8A5C]';
-
-
-        gpsBadge.innerText =
-          'GPS Live';
-
-
+      if (forcedStation) {
+        currentKm = Number(forcedStation.kmMarker);
+        locationReady = true;
+        locationSource = 'manual';
+        stationText.innerText = `${forcedStation.name} (${forcedStation.brand})`;
+        gpsBadge.className = 'text-[9px] font-bold px-2.5 py-1 rounded-full bg-[#FFF0C9] text-[#A46A00]';
+        gpsBadge.innerText = 'Manual Mode';
         updateTripProgress();
-
+        return;
       }
 
-    }
-
-
-
-    function fallbackStationSelection() {
-
-      const gpsBadge =
-        document.getElementById(
-          'gpsBadge'
-        );
-
-
-      gpsBadge.className =
-        'text-[9px] font-bold px-2.5 py-1 rounded-full bg-[#FFF0C9] text-[#A46A00]';
-
-
-      gpsBadge.innerText =
-        'Manual Mode';
-
-
-      if (
-        allStations.length > 0
-      ) {
-
-        const defaultStation =
-          allStations[0];
-
-
-        updateLocationAndMap(
-
-          defaultStation.lat
-          ||
-          19.907,
-
-          defaultStation.lng
-          ||
-          99.832,
-
-          defaultStation
-
-        );
-
+      const position = estimateRoutePosition(lat, lng);
+      if (!position) {
+        locationReady = false;
+        locationSource = 'unmatched';
+        stationText.innerText = 'Could not match route — choose a station';
+        gpsBadge.className = 'text-[9px] font-bold px-2.5 py-1 rounded-full bg-[#FFF0C9] text-[#A46A00]';
+        gpsBadge.innerText = 'Choose Station';
+        return;
       }
 
+      currentKm = position.km;
+      locationReady = true;
+      locationSource = 'gps-estimate';
+      stationText.innerText = `Current route position · approx. KM ${currentKm.toFixed(1)}`;
+      gpsBadge.className = 'text-[9px] font-bold px-2.5 py-1 rounded-full bg-[#DDF7E8] text-[#2F8A5C]';
+      gpsBadge.innerText = 'GPS Approx.';
+      updateTripProgress();
     }
 
+    function fallbackStationSelection(requestId = locationRequestId) {
+      if (requestId !== locationRequestId) return;
+      locationReady = false;
+      locationSource = 'manual-required';
+      const gpsBadge = document.getElementById('gpsBadge');
+      gpsBadge.className = 'text-[9px] font-bold px-2.5 py-1 rounded-full bg-[#FFF0C9] text-[#A46A00]';
+      gpsBadge.innerText = 'Manual Mode';
+      document.getElementById('currentStationName').innerText = 'Choose your starting station';
+      // Deliberately do not default to the first station: that would calculate
+      // from Chiang Rai even if the driver were hundreds of kilometres away.
+    }
 
 
     // =====================================================
@@ -2208,9 +2109,9 @@
       }
 
 
-      currentKm =
-        station.kmMarker;
-
+      // Cancel a pending GPS callback so it cannot overwrite manual selection.
+      locationRequestId++;
+      currentKm = station.kmMarker;
 
       updateLocationAndMap(
         station.lat,
@@ -3771,6 +3672,11 @@
 
       }
 
+
+      if (!locationReady) {
+        alert('Please wait for GPS or choose a starting station before calculating.');
+        return;
+      }
 
       showLoadingView();
 
