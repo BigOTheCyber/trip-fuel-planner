@@ -1820,22 +1820,26 @@
         return;
       }
 
-      const position = estimateRoutePosition(lat, lng);
-      if (!position) {
-        locationReady = false;
-        locationSource = 'unmatched';
-        stationText.innerText = 'GPS uncertain or outside outbound route — choose a station';
-        gpsBadge.className = 'text-[9px] font-bold px-2.5 py-1 rounded-full bg-[#FFF0C9] text-[#A46A00]';
-        gpsBadge.innerText = 'Choose Station';
+      // GPS is the user's location. A nearby station is only a label.
+      if (!RouteMatching.validPoint({lat, lng})) {
+        fallbackStationSelection();
         return;
       }
-
-      currentKm = position.km;
+      userLat = lat;
+      userLng = lng;
+      const position = estimateRoutePosition(lat, lng);
+      currentKm = position ? position.km : 0; // Only a progress indicator in GPS mode.
       locationReady = true;
-      locationSource = 'gps-estimate';
-      stationText.innerText = `Current route position · approx. KM ${currentKm.toFixed(1)}`;
+      locationSource = 'gps';
+      const nearest = allStations.filter(s => RouteMatching.validPoint({lat: Number(s.lat), lng: Number(s.lng)}))
+        .map(s => ({station: s, distance: getDistanceInKm(lat, lng, Number(s.lat), Number(s.lng))}))
+        .sort((a, b) => a.distance - b.distance)[0];
+      stationText.innerText = nearest && nearest.distance <= 0.1
+        ? `Near ${nearest.station.name} · GPS location`
+        : 'Current GPS location · ready to calculate';
       gpsBadge.className = 'text-[9px] font-bold px-2.5 py-1 rounded-full bg-[#DDF7E8] text-[#2F8A5C]';
-      gpsBadge.innerText = position.geometry ? 'GPS Route' : 'GPS Approx.';
+      gpsBadge.innerText = Number.isFinite(gpsDetails.accuracy) && gpsDetails.accuracy > 100
+        ? 'GPS · low accuracy' : 'GPS Ready';
       updateTripProgress();
     }
 
@@ -3698,8 +3702,9 @@
                       preferredBrands,
 
                     currentKm,
-                    positionToleranceKm: locationSource === 'gps-estimate'
-                      ? Math.min(0.1, Math.max(0.02, (gpsDetails.accuracy || 20) / 1000)) : 0
+                    positionToleranceKm: 0,
+                    userPosition: locationSource === 'gps'
+                      ? {lat: userLat, lng: userLng} : null
 
                   }
                 )
@@ -3749,6 +3754,9 @@
         }
 
 
+        if (data.distanceBasis === 'straight-line-estimate') {
+          alert('Road routing is unavailable. Distances are approximate, using a straight-line distance to the first station.');
+        }
         renderResultsPage(
           data,
           selectedCar

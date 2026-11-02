@@ -656,6 +656,51 @@ async function getStationsFromCSV() {
 
 
 
+// GPS remains the origin. The first station is a destination, never the origin.
+function validGPS(p: any) {
+  return p && typeof p.lat === 'number' && typeof p.lng === 'number' &&
+    Number.isFinite(p.lat) && Number.isFinite(p.lng) &&
+    Math.abs(p.lat) <= 90 && Math.abs(p.lng) <= 180 && p.lat !== 0 && p.lng !== 0;
+}
+function directDistance(a: any, b: any) {
+  const rad = Math.PI / 180;
+  const dlat = (b.lat - a.lat) * rad, dlng = (b.lng - a.lng) * rad;
+  const h = Math.sin(dlat / 2) ** 2 + Math.cos(a.lat * rad) * Math.cos(b.lat * rad) * Math.sin(dlng / 2) ** 2;
+  return 6371 * 2 * Math.asin(Math.sqrt(Math.min(1, h)));
+}
+export async function findGPSDestination(stations: any[], origin: any, request = fetch) {
+  const candidates = stations.filter(validGPS)
+    .map(station => ({station, distance: directDistance(origin, station)}))
+    .sort((a, b) => a.distance - b.distance);
+  if (!candidates.length) return null;
+  let best: any = null;
+  // Straight-line distance is a lower bound: once the next candidate is
+  // farther than the best driving distance, no remaining station can win.
+  const deadline = Date.now() + 7000;
+  let incomplete = false;
+  for (const candidate of candidates) {
+    if (best && candidate.distance > best.distance) break;
+    if (Date.now() >= deadline) { incomplete = true; break; }
+    try {
+      const s = candidate.station;
+      const url = `https://routing.openstreetmap.de/routed-car/route/v1/driving/${origin.lng},${origin.lat};${s.lng},${s.lat}?overview=false&steps=false`;
+      const response = await request(url, {signal: AbortSignal.timeout(Math.max(1, Math.min(2500, deadline - Date.now())))});
+      if (!response.ok) throw new Error('Routing unavailable');
+      const result: any = await response.json();
+      const metres = result.routes?.[0]?.distance;
+      if (result.code === 'NoRoute') continue;
+      if (result.code !== 'Ok' || !Number.isFinite(metres) || metres < 0) throw new Error('Invalid route');
+      // OSRM may snap an origin far from a road: do not conceal that gap.
+      const snapGap = (result.waypoints || []).reduce((sum: number, p: any) => sum + (Number(p.distance) || 0), 0);
+      const distance = (metres + snapGap) / 1000;
+      if (!best || distance < best.distance) best = {station: s, distance};
+    } catch { incomplete = true; break; }
+  }
+  if (best && !incomplete) return {...best, basis: 'road-to-first-station'};
+  // Explicitly marked approximation; never pretend a station is the GPS fix.
+  return {...candidates[0], basis: 'straight-line-estimate'};
+}
+
 // =========================================================
 // APP
 // =========================================================
@@ -763,7 +808,8 @@ export const app =
           selectedBrands = [],
 
           currentKm = 0,
-          positionToleranceKm = 0
+          positionToleranceKm = 0,
+          userPosition = null
 
         } =
           body || {};
@@ -880,7 +926,7 @@ export const app =
 
 
 
-        const currentPositionKm =
+        let currentPositionKm =
           Number(currentKm)
           ||
           0;
@@ -896,15 +942,26 @@ export const app =
 
 
 
-        const stationsAhead =
-          stations.filter(
-            station =>
-              station.kmMarker >= currentPositionKm - Math.min(
-                0.1, Math.max(0, Number(positionToleranceKm) || 0)
-              )
-          );
-
-
+        let distanceBasis = 'station-distance-estimate';
+        let firstGPSStationId: string | null = null;
+        if (userPosition !== null) {
+          if (!validGPS(userPosition)) {
+            return new Response(JSON.stringify({message: 'Invalid GPS position'}), {status: 400, headers: {'Content-Type': 'application/json'}});
+          }
+          const destination = await findGPSDestination(stations, userPosition);
+          if (destination) {
+            firstGPSStationId = destination.station.id;
+            // Virtual chainage preserves distance FROM GPS to the first stop,
+            // plus existing station-to-station distances for later options.
+            currentPositionKm = destination.station.kmMarker - destination.distance;
+            distanceBasis = destination.basis;
+          }
+        }
+        const firstIndex = firstGPSStationId ? stations.findIndex(s => s.id === firstGPSStationId) : -1;
+        const stationsAhead = userPosition !== null
+          ? (firstIndex >= 0 ? stations.slice(firstIndex) : [])
+          : stations.filter(station => station.kmMarker >= currentPositionKm - Math.min(
+              0.1, Math.max(0, Number(positionToleranceKm) || 0)));
 
         const maximumReachKm =
           currentPositionKm
@@ -931,7 +988,8 @@ export const app =
 
           return {
 
-            estimatedRemainingRange:
+            distanceBasis,
+          estimatedRemainingRange:
               Math.round(
                 remainingKmCapacity
                 *
@@ -1823,6 +1881,7 @@ export const app =
 
         return {
 
+          distanceBasis,
           estimatedRemainingRange:
             Math.round(
               remainingKmCapacity
